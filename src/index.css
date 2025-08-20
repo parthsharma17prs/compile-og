@@ -1,0 +1,277 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Dark theme (default) - Enhanced black & white with glow */
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 142.1 76.2% 36.3%;
+    --primary-foreground: 355.7 100% 97.3%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 142.1 76.2% 36.3%;
+
+    /* Enhanced glow system */
+    --glow-primary: 142.1 76.2% 36.3%;
+    --glow-secondary: 217 92% 76%;
+    --glow-accent: 47 96% 53%;
+    --glow-soft: 0 0% 100%;
+    
+    /* Enhanced gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--glow-secondary)) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(var(--glow-accent)) 0%, hsl(var(--primary)) 100%);
+    --gradient-radial: radial-gradient(circle at center, hsl(var(--glow-primary) / 0.15) 0%, transparent 70%);
+    --gradient-hero: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(240 10% 8%) 50%, hsl(var(--background)) 100%);
+    --gradient-blend: linear-gradient(180deg, hsl(var(--background)) 0%, hsl(240 8% 12%) 50%, hsl(var(--background)) 100%);
+    --gradient-divider: linear-gradient(90deg, transparent 0%, hsl(var(--border)) 50%, transparent 100%);
+    
+    /* Enhanced shadows & glows */
+    --shadow-soft: 0 2px 8px -2px hsl(var(--glow-primary) / 0.1);
+    --shadow-medium: 0 8px 24px -4px hsl(var(--glow-primary) / 0.15);
+    --shadow-strong: 0 16px 48px -8px hsl(var(--glow-primary) / 0.25);
+    --shadow-glow: 0 0 32px hsl(var(--glow-primary) / 0.3);
+    --text-glow: 0 0 20px hsl(var(--glow-primary) / 0.6);
+    
+    /* Enhanced transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .light {
+    /* Light theme with intentional design */
+    --background: 0 0% 98%;
+    --foreground: 240 10% 8%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 8%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 8%;
+    --primary: 142.1 70.6% 45.3%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 92%;
+    --secondary-foreground: 240 8% 20%;
+    --muted: 240 4.8% 95%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95%;
+    --accent-foreground: 240 8% 20%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 85%;
+    --input: 240 5.9% 90%;
+    --ring: 142.1 70.6% 45.3%;
+
+    /* Light theme enhanced glow system */
+    --glow-primary: 142.1 70.6% 45.3%;
+    --glow-secondary: 217 92% 65%;
+    --glow-accent: 47 96% 48%;
+    --glow-soft: 240 10% 8%;
+    
+    /* Light theme enhanced gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--glow-secondary)) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(var(--glow-accent)) 0%, hsl(var(--primary)) 100%);
+    --gradient-radial: radial-gradient(circle at center, hsl(var(--glow-primary) / 0.08) 0%, transparent 70%);
+    --gradient-hero: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(240 4% 95%) 50%, hsl(var(--background)) 100%);
+    --gradient-blend: linear-gradient(180deg, hsl(var(--background)) 0%, hsl(240 4% 94%) 50%, hsl(var(--background)) 100%);
+    --gradient-divider: linear-gradient(90deg, transparent 0%, hsl(var(--border)) 50%, transparent 100%);
+    
+    /* Light theme enhanced shadows */
+    --shadow-soft: 0 2px 8px -2px hsl(var(--glow-primary) / 0.08);
+    --shadow-medium: 0 8px 24px -4px hsl(var(--glow-primary) / 0.12);
+    --shadow-strong: 0 16px 48px -8px hsl(var(--glow-primary) / 0.18);
+    --shadow-glow: 0 0 32px hsl(var(--glow-primary) / 0.2);
+    --text-glow: 0 0 20px hsl(var(--glow-primary) / 0.4);
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border transition-colors duration-300;
+  }
+
+  body {
+    @apply bg-background text-foreground font-inter transition-all duration-500;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-space-grotesk;
+  }
+}
+
+@layer components {
+  /* Glow Effects */
+  .glow-text {
+    text-shadow: var(--text-glow);
+  }
+  
+  .glow-border {
+    box-shadow: var(--shadow-glow);
+  }
+  
+  .glow-border-lg {
+    box-shadow: var(--shadow-glow-lg);
+  }
+
+  /* Button Variants */
+  .btn-glow {
+    @apply relative overflow-hidden transition-all duration-300;
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+  }
+  
+  .btn-glow:hover {
+    box-shadow: 0 0 30px hsl(var(--primary) / 0.5);
+    transform: translateY(-2px);
+  }
+  
+  .btn-glow::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] transition-transform duration-700;
+  }
+  
+  .btn-glow:hover::before {
+    @apply translate-x-[100%];
+  }
+
+  /* Card Variants */
+  .card-glow {
+    @apply bg-card border border-border/50 backdrop-blur-sm;
+    box-shadow: var(--shadow-soft), inset 0 1px 0 hsl(var(--border) / 0.1);
+  }
+  
+  .card-glow:hover {
+    @apply border-border;
+    box-shadow: var(--shadow-glow), var(--shadow-soft);
+  }
+
+  /* Geometric Patterns */
+  .pattern-dots {
+    background-image: radial-gradient(circle at 1px 1px, hsl(var(--border) / 0.3) 1px, transparent 0);
+    background-size: 20px 20px;
+  }
+  
+  .pattern-grid {
+    background-image: 
+      linear-gradient(hsl(var(--border) / 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--border) / 0.1) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* New utility classes */
+  .bg-blend {
+    background: var(--gradient-blend);
+  }
+
+  .bg-grain {
+    position: relative;
+  }
+
+  .bg-grain::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    background-image: 
+      radial-gradient(circle at 25% 25%, hsl(var(--foreground)) 1px, transparent 1px),
+      radial-gradient(circle at 75% 75%, hsl(var(--foreground)) 1px, transparent 1px);
+    background-size: 3px 3px, 4px 4px;
+    pointer-events: none;
+  }
+
+  .gradient-divider {
+    height: 1px;
+    background: var(--gradient-divider);
+  }
+
+  .section-glow {
+    position: relative;
+  }
+
+  .section-glow::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-radial);
+    pointer-events: none;
+    opacity: 0.6;
+  }
+
+  /* Animations */
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite alternate;
+  }
+  
+  .animate-rotate-slow {
+    animation: rotate-slow 20s linear infinite;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+/* Keyframes */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 20px hsl(var(--primary) / 0.2); }
+  100% { box-shadow: 0 0 40px hsl(var(--primary) / 0.4); }
+}
+
+@keyframes rotate-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
