@@ -102,53 +102,294 @@ const Index = () => {
             <span className="text-sm font-medium text-primary mb-4 tracking-wider uppercase block">
               The Future of Regulatory Compliance
             </span>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-gradient leading-tight">
-              CompliLedger: Provable Compliance<br />
-              With Zero Data Exposure
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-gradient leading-tight glow-text">
+              CompliLedger : Compliance you can prove.
+              
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed mb-12">
-              Revolutionary compliance platform using zero-knowledge cryptography to prove regulatory adherence 
-              without compromising sensitive data privacy.
+            CompliLedger automates compliance across Web3, financial services, healthcare, and government by turning your SBOMs, code, configs, and smart contracts into audit-ready evidence and zero-knowledge attestations
             </p>
           </div>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
             <Link to="/demo">
               <Button size="lg" className="px-8 py-4 text-lg">
-                Request Demo
+              Book a Demo
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
             <Link to="/how-it-works">
               <Button variant="outline" size="lg" className="px-8 py-4 text-lg">
-                Learn How It Works
+                See How It Works
               </Button>
             </Link>
           </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-3xl font-bold text-gradient mb-2">100%</div>
-              <div className="text-sm text-muted-foreground">Data Privacy</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-gradient mb-2">90%</div>
-              <div className="text-sm text-muted-foreground">Cost Reduction</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-gradient mb-2">24/7</div>
-              <div className="text-sm text-muted-foreground">Monitoring</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-gradient mb-2">Instant</div>
-              <div className="text-sm text-muted-foreground">Proof Generation</div>
+          <div className="mt-16">
+            <p className="text-sm text-muted-foreground mb-6">SUPPORTED COMPLIANCE FRAMEWORKS</p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 justify-items-center">
+              <div className="flex flex-col items-center">
+                <div className="h-20 w-20 mb-2 bg-white rounded-lg p-2 flex items-center justify-center shadow-sm">
+                  <img 
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_ordgGltxJ9IOadHsMpdh-MGRJcorfG84Bg&s" 
+                    alt="SOC 2" 
+                    className="h-12 w-auto object-contain"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.onerror = null;
+                      target.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_ordgGltxJ9IOadHsMpdh-MGRJcorfG84Bg&s';
+                    }}
+                  />
+                </div>
+                <span className="text-sm font-medium">SOC 2</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="h-20 w-20 mb-2 bg-white rounded-lg p-2 flex items-center justify-center shadow-sm">
+                  <img 
+                    src="https://www.ardentprivacy.ai/assets/img/gdpr_act.png" 
+                    alt="GDPR" 
+                    className="h-12 w-auto object-contain"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.onerror = null;
+                      target.src = 'https://www.ardentprivacy.ai/assets/img/gdpr_act.png';
+                    }}
+                  />
+                </div>
+                <span className="text-sm font-medium">GDPR</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="h-20 w-20 mb-2 bg-white rounded-lg p-2 flex items-center justify-center shadow-sm">
+                  <img 
+                    src="https://www.hipaajournal.com/wp-content/uploads/2021/12/HIPAA-civil-monetary-penalties-2021.jpg" 
+                    alt="HIPAA" 
+                    className="h-12 w-auto object-contain"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.onerror = null;
+                      target.src = 'https://www.hipaajournal.com/wp-content/uploads/2021/12/HIPAA-civil-monetary-penalties-2021.jpg';
+                    }}
+                  />
+                </div>
+                <span className="text-sm font-medium">HIPAA</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="h-20 w-20 mb-2 bg-white rounded-lg p-2 flex items-center justify-center shadow-sm">
+                  <img 
+                    src="https://hyperproof.io/wp-content/uploads/2023/06/framework-informational-page_hero-badges-sox.png" 
+                    alt="SOX" 
+                    className="h-12 w-auto object-contain"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.onerror = null;
+                      target.src = 'https://hyperproof.io/wp-content/uploads/2023/06/framework-informational-page_hero-badges-sox.png';
+                    }}
+                  />
+                </div>
+                <span className="text-sm font-medium">SOX</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="h-20 w-20 mb-2 bg-white rounded-lg p-2 flex items-center justify-center shadow-sm">
+                  <img 
+                    src="https://www.qassurance.com/wp-content/uploads/QAssurance-logos.png" 
+                    alt="ISO 27001" 
+                    className="h-12 w-auto object-contain"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.onerror = null;
+                      target.src = 'https://www.qassurance.com/wp-content/uploads/QAssurance-logos.png';
+                    }}
+                  />
+                </div>
+                <span className="text-sm font-medium">ISO 27001</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="h-20 w-20 mb-2 bg-white rounded-lg p-2 flex items-center justify-center shadow-sm">
+                  <img 
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcST0IX-vabefXDYofRMrkzWgXMaDiLB0RQXpQ&s" 
+                    alt="NIST" 
+                    className="h-12 w-auto object-contain"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.onerror = null;
+                      target.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcST0IX-vabefXDYofRMrkzWgXMaDiLB0RQXpQ&s';
+                    }}
+                  />
+                </div>
+                <span className="text-sm font-medium">NIST</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="h-20 w-20 mb-2 bg-white rounded-lg p-2 flex items-center justify-center shadow-sm">
+                  <img 
+                    src="https://www.holmsecurity.com/hs-fs/hubfs/Website%20material/Images/PCI%20DSS_logo.png?width=740&name=PCI%20DSS_logo.png" 
+                    alt="PCI DSS" 
+                    className="h-12 w-auto object-contain"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.onerror = null;
+                      target.src = 'https://www.holmsecurity.com/hs-fs/hubfs/Website%20material/Images/PCI%20DSS_logo.png?width=740&name=PCI%20DSS_logo.png';
+                    }}
+                  />
+                </div>
+                <span className="text-sm font-medium">PCI DSS</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="h-20 w-20 mb-2 bg-white rounded-lg p-2 flex items-center justify-center shadow-sm">
+                  <img 
+                    src="https://www.ardentprivacy.ai/assets/img/CCPA_logo.jpg" 
+                    alt="CCPA" 
+                    className="h-12 w-auto object-contain"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.onerror = null;
+                      target.src = 'https://www.ardentprivacy.ai/assets/img/CCPA_logo.jpg';
+                    }}
+                  />
+                </div>
+                <span className="text-sm font-medium">CCPA</span>
+              </div>
             </div>
           </div>
         </div>
       </Section>
 
-      {/* Problem & Mission Section */}
+      {/* Value Proposition Section */}
+      <Section variant="default">
+        <div className="max-w-6xl mx-auto px-4">
+          <SectionHeader 
+            title="Streamline Compliance with Privacy-Preserving Technology"
+            description="CompliLedger transforms how organizations achieve and maintain compliance"
+            className="text-center mb-12"
+          />
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="bg-muted/50 p-6 rounded-lg">
+              <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  <path d="m9 12 2 2 4-4"/>
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold mb-2">Evidence → Attestation</h3>
+              <p className="text-muted-foreground">Convert live technical evidence into verifiable, privacy-preserving proofs.</p>
+            </div>
+            
+            <div className="bg-muted/50 p-6 rounded-lg">
+              <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M12 6v6l4 2"/>
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold mb-2">Continuous, not quarterly</h3>
+              <p className="text-muted-foreground">Detect drift, auto-remediate, and stay audit-ready at all times.</p>
+            </div>
+            
+            <div className="bg-muted/50 p-6 rounded-lg">
+              <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  <path d="m9 12 2 2 4-4"/>
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold mb-2">Auditor & Legal Friendly</h3>
+              <p className="text-muted-foreground">AuditSync™ portal enables scoped, immutable evidence sharing for auditors, regulators, and legal teams.</p>
+            </div>
+            
+            <div className="bg-muted/50 p-6 rounded-lg">
+              <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
+                  <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                  <path d="M16 13H8"/>
+                  <path d="M16 17H8"/>
+                  <path d="M10 9H8"/>
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold mb-2">SBOM-first by design</h3>
+              <p className="text-muted-foreground">Integrate SBOMs, repos, and cloud configs into compliance workflows.</p>
+            </div>
+          </div>
+        </div>
+      </Section>
+
+      {/* How It Works Section */}
       <Section variant="blend">
+        <div className="max-w-6xl mx-auto px-4">
+          <SectionHeader 
+            title="How CompliLedger Works"
+            description="A streamlined approach to compliance management"
+            className="text-center mb-12"
+          />
+          
+          <div className="relative">
+            {/* Connecting line */}
+            
+            
+            {/* Steps */}
+            <div className="space-y-8 md:grid md:grid-cols-5 md:gap-8 md:space-y-0">
+              {/* Step 1 */}
+              <div className="relative z-10 flex items-start gap-4 md:flex-col md:items-center md:text-center">
+                <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-primary text-sm font-medium text-primary-foreground">1</div>
+                <div>
+                  <h3 className="text-lg font-semibold">Connect</h3>
+                  <p className="text-muted-foreground text-sm">Repos, SBOMs, cloud accounts, and smart contracts</p>
+                </div>
+              </div>
+
+              {/* Step 2 */}
+              <div className="relative z-10 flex items-start gap-4 md:flex-col md:items-center md:text-center">
+                <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-primary text-sm font-medium text-primary-foreground">2</div>
+                <div>
+                  <h3 className="text-lg font-semibold">Map & Ingest</h3>
+                  <p className="text-muted-foreground text-sm">To SOX, ISO, FedRAMP, MiCA, HIPAA, PCI, AML/BSA</p>
+                </div>
+              </div>
+
+              {/* Step 3 */}
+              <div className="relative z-10 flex items-start gap-4 md:flex-col md:items-center md:text-center">
+                <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-primary text-sm font-medium text-primary-foreground">3</div>
+                <div>
+                  <h3 className="text-lg font-semibold">Continuous Testing</h3>
+                  <p className="text-muted-foreground text-sm">For drift, vulnerabilities, and policy violations</p>
+                </div>
+              </div>
+
+              {/* Step 4 */}
+              <div className="relative z-10 flex items-start gap-4 md:flex-col md:items-center md:text-center">
+                <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-primary text-sm font-medium text-primary-foreground">4</div>
+                <div>
+                  <h3 className="text-lg font-semibold">Generate Evidence</h3>
+                  <p className="text-muted-foreground text-sm">OSCAL, SSP, policies, SOPs automatically</p>
+                </div>
+              </div>
+
+              {/* Step 5 */}
+              <div className="relative z-10 flex items-start gap-4 md:flex-col md:items-center md:text-center">
+                <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-primary text-sm font-medium text-primary-foreground">5</div>
+                <div>
+                  <h3 className="text-lg font-semibold">Attest & Share</h3>
+                  <p className="text-muted-foreground text-sm">Via ZKPs, VCs, and AuditSync™ portal</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-12 text-center">
+            <Link to="/how-it-works">
+              <Button variant="default" className="group">
+                Learn More About How It Works
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1">
+                  <path d="M5 12h14"/>
+                  <path d="m12 5 7 7-7 7"/>
+                </svg>
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </Section>
+
+      {/* Problem & Mission Section */}
+      <Section variant="default">
         <div className="max-w-6xl mx-auto px-4">
           <SectionHeader 
             subtitle="The Compliance Challenge"
@@ -176,6 +417,17 @@ const Index = () => {
                   <div className="w-2 h-2 bg-destructive rounded-full mt-2 flex-shrink-0"></div>
                   <p className="text-muted-foreground">High costs for compliance infrastructure and specialized personnel</p>
                 </div>
+              </div>
+              <div className="mt-8">
+                <Button asChild variant="default" className="group">
+                  <Link to="/security">
+                    View Security & Privacy
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1">
+                      <path d="M5 12h14"/>
+                      <path d="m12 5 7 7-7 7"/>
+                    </svg>
+                  </Link>
+                </Button>
               </div>
             </div>
             
@@ -236,38 +488,9 @@ const Index = () => {
         </div>
       </Section>
 
-      {/* Why CompliLedger Section */}
-      <Section variant="blend">
-        <div className="max-w-6xl mx-auto px-4">
-          <SectionHeader 
-            subtitle="Competitive Advantage"
-            title="Why Choose CompliLedger"
-            description="The only compliance platform that guarantees both regulatory adherence and complete data privacy through mathematically proven cryptographic methods."
-          />
-
-          <div className="grid md:grid-cols-2 gap-8">
-            {differentiators.map((item, index) => {
-              const Icon = item.icon;
-              return (
-                <Card key={index} className="p-8 hover-scale">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <Icon className="w-6 h-6 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-                      <p className="text-muted-foreground leading-relaxed">{item.description}</p>
-                    </div>
-                  </div>
-                </Card>
-              );
-            })}
-          </div>
-        </div>
-      </Section>
-
+      
       {/* Target Users & Use Cases Section */}
-      <Section variant="glow">
+<Section variant="glow">
         <div className="max-w-6xl mx-auto px-4">
           <SectionHeader 
             subtitle="Industry Applications"
@@ -300,9 +523,55 @@ const Index = () => {
               );
             })}
           </div>
+
+          <div className="mt-12 text-center max-w-3xl mx-auto">
+            <p className="text-lg text-muted-foreground mb-6">
+              Choose a solution that fits your team. Transparent, flexible, and audit‑ready from day one.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to="/solutions">
+              <Button size="lg" className="px-8" title="View Pricing">
+                Industry Solutions
+              </Button>
+              </Link>
+              
+            </div>
+          </div>
         </div>
       </Section>
 
+
+
+      {/* Pricing Preview Section
+      <Section variant="default" className="text-center">
+        <div className="max-w-4xl mx-auto px-4">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4">Compliance That Scales With You.</h2>
+          <p className="text-muted-foreground mb-8">From startups to exchanges and defense contractors, CompliLedger adapts to your frameworks, scale, and assurance needs.</p>
+          <ul className="grid sm:grid-cols-3 gap-4 text-left max-w-3xl mx-auto" role="list" aria-label="Pricing highlights">
+            <li className="bg-muted/40 rounded-lg p-4">
+              <span className="block font-semibold mb-1">Transparent tiers</span>
+              <span className="text-sm text-muted-foreground">For startups, exchanges, and defense contractors.</span>
+            </li>
+            <li className="bg-muted/40 rounded-lg p-4">
+              <span className="block font-semibold mb-1">Pay as you scale</span>
+              <span className="text-sm text-muted-foreground">Seats, usage, and add‑ons match your growth.</span>
+            </li>
+            <li className="bg-muted/40 rounded-lg p-4">
+              <span className="block font-semibold mb-1">Audit‑ready always</span>
+              <span className="text-sm text-muted-foreground">Continuous evidence and attestations.</span>
+            </li>
+          </ul>
+          <div className="mt-8">
+            <Link to="/pricing" aria-label="View CompliLedger pricing plans">
+              <Button size="lg" className="px-8" title="View Pricing">
+                View Pricing
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </Section> */}
+
+      
       {/* Call to Action Section */}
       <Section variant="blend" className="text-center">
         <div className="max-w-4xl mx-auto px-4">

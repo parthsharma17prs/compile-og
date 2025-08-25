@@ -20,7 +20,11 @@ import {
   Users,
   Award,
   FileText,
-  Settings
+  Settings,
+  MapPin,
+  Phone,
+  Globe,
+  ArrowRight
 } from 'lucide-react';
 
 const Demo = () => {
@@ -353,6 +357,84 @@ const Demo = () => {
                 </p>
               </CardContent>
             </Card>
+          </div>
+        </div>
+      </Section>
+
+      {/* Contact Information Section */}
+      <Section variant="default" className="py-16">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">Get in Touch</h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {/* Contact Information */}
+            <div className="bg-card border border-border/30 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow h-full">
+              <div className="flex items-center mb-6">
+                <div className="p-2 rounded-lg bg-primary/10 text-primary">
+                  <Mail className="w-6 h-6" />
+                </div>
+                <h3 className="text-xl font-semibold ml-3">Email Us</h3>
+              </div>
+              <ul className="space-y-4">
+                {[
+                  { label: 'General Inquiries', email: 'info@compliledger.com' },
+                  { label: 'Sales & Demos', email: 'sales@compliledger.com' },
+                  { label: 'Press & Media', email: 'media@compliledger.com' },
+                  { label: 'Support', email: 'support@compliledger.com' }
+                ].map((item, index) => (
+                  <li key={index} className="group">
+                    <p className="text-sm text-muted-foreground">{item.label}</p>
+                    <a 
+                      href={`mailto:${item.email}`} 
+                      className="font-medium text-foreground hover:text-primary transition-colors flex items-center"
+                    >
+                      {item.email}
+                      <ArrowRight className="ml-2 h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Location Information */}
+            <div className="bg-card border border-border/30 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow h-full">
+              <div className="flex items-center mb-6">
+                <div className="p-2 rounded-lg bg-primary/10 text-primary">
+                  <MapPin className="w-6 h-6" />
+                </div>
+                <h3 className="text-xl font-semibold ml-3">Our Location</h3>
+              </div>
+              <div className="space-y-4">
+                <div className="flex items-start space-x-3">
+                  <div className="p-1.5 bg-muted/50 rounded-md">
+                    <MapPin className="w-4 h-4 text-muted-foreground" />
+                  </div>
+                  <div>
+                    <p className="font-medium">Headquarters</p>
+                    <p className="text-muted-foreground text-sm">123 Compliance Way<br />Arlington, VA 22201<br />United States</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-3">
+                  <div className="p-1.5 bg-muted/50 rounded-md">
+                    <Globe className="w-4 h-4 text-muted-foreground" />
+                  </div>
+                  <div>
+                    <p className="font-medium">Global Reach</p>
+                    <p className="text-muted-foreground text-sm">Serving clients across North America, Europe, and the Middle East</p>
+                  </div>
+                </div>
+                <div className="bg-muted/30 p-4 rounded-lg mt-4">
+                  <div className="flex items-center space-x-3">
+                    <div className="p-1.5 bg-muted/50 rounded-md">
+                      <Phone className="w-4 h-4 text-muted-foreground" />
+                    </div>
+                    <div>
+                      <p className="font-medium">Need immediate help?</p>
+                      <a href="tel:+15551234567" className="text-primary hover:underline text-sm">+1 (555) 123-4567</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </Section>

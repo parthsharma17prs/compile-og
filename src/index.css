@@ -15,8 +15,9 @@ All colors MUST be HSL.
     --card-foreground: 0 0% 98%;
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
-    --primary: 142.1 76.2% 36.3%;
-    --primary-foreground: 355.7 100% 97.3%;
+    /* Monochrome primary */
+    --primary: 0 0% 100%; /* white */
+    --primary-foreground: 0 0% 0%; /* black */
     --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
     --muted: 240 3.7% 15.9%;
@@ -27,17 +28,17 @@ All colors MUST be HSL.
     --destructive-foreground: 0 0% 98%;
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
-    --ring: 142.1 76.2% 36.3%;
+    --ring: 0 0% 100%;
 
-    /* Enhanced glow system */
-    --glow-primary: 142.1 76.2% 36.3%;
-    --glow-secondary: 217 92% 76%;
-    --glow-accent: 47 96% 53%;
+    /* Monochrome glow system */
+    --glow-primary: 0 0% 100%;
+    --glow-secondary: 0 0% 70%;
+    --glow-accent: 0 0% 85%;
     --glow-soft: 0 0% 100%;
     
-    /* Enhanced gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--glow-secondary)) 100%);
-    --gradient-accent: linear-gradient(135deg, hsl(var(--glow-accent)) 0%, hsl(var(--primary)) 100%);
+    /* Monochrome gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(0 0% 70%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(0 0% 85%) 0%, hsl(0 0% 100%) 100%);
     --gradient-radial: radial-gradient(circle at center, hsl(var(--glow-primary) / 0.15) 0%, transparent 70%);
     --gradient-hero: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(240 10% 8%) 50%, hsl(var(--background)) 100%);
     --gradient-blend: linear-gradient(180deg, hsl(var(--background)) 0%, hsl(240 8% 12%) 50%, hsl(var(--background)) 100%);
@@ -81,8 +82,9 @@ All colors MUST be HSL.
     --card-foreground: 240 10% 8%;
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 8%;
-    --primary: 142.1 70.6% 45.3%;
-    --primary-foreground: 0 0% 98%;
+    /* Monochrome primary */
+    --primary: 0 0% 0%; /* black */
+    --primary-foreground: 0 0% 100%; /* white */
     --secondary: 240 4.8% 92%;
     --secondary-foreground: 240 8% 20%;
     --muted: 240 4.8% 95%;
@@ -93,17 +95,17 @@ All colors MUST be HSL.
     --destructive-foreground: 0 0% 98%;
     --border: 240 5.9% 85%;
     --input: 240 5.9% 90%;
-    --ring: 142.1 70.6% 45.3%;
+    --ring: 0 0% 0%;
 
-    /* Light theme enhanced glow system */
-    --glow-primary: 142.1 70.6% 45.3%;
-    --glow-secondary: 217 92% 65%;
-    --glow-accent: 47 96% 48%;
+    /* Light theme monochrome glow system */
+    --glow-primary: 0 0% 0%;
+    --glow-secondary: 0 0% 40%;
+    --glow-accent: 0 0% 20%;
     --glow-soft: 240 10% 8%;
     
-    /* Light theme enhanced gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--glow-secondary)) 100%);
-    --gradient-accent: linear-gradient(135deg, hsl(var(--glow-accent)) 0%, hsl(var(--primary)) 100%);
+    /* Light theme monochrome gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(0 0% 0%) 0%, hsl(0 0% 40%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(0 0% 20%) 0%, hsl(0 0% 0%) 100%);
     --gradient-radial: radial-gradient(circle at center, hsl(var(--glow-primary) / 0.08) 0%, transparent 70%);
     --gradient-hero: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(240 4% 95%) 50%, hsl(var(--background)) 100%);
     --gradient-blend: linear-gradient(180deg, hsl(var(--background)) 0%, hsl(240 4% 94%) 50%, hsl(var(--background)) 100%);
