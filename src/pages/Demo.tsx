@@ -6,10 +6,15 @@ import Layout from '@/components/Layout';
 import Section from '@/components/Section';
 import SectionHeader from '@/components/SectionHeader';
 import GeometricPattern from '@/components/GeometricPattern';
-import { 
-  Calendar, 
-  Play, 
-  Zap, 
+import { Label } from '@/components/ui/label';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from '@/components/ui/dialog';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { useToast } from '@/hooks/use-toast';
+import { useCallback, useMemo, useRef, useState } from 'react';
+import {
+  Calendar,
+  Play,
+  Zap,
   Upload,
   Brain,
   Shield,
@@ -24,10 +29,99 @@ import {
   MapPin,
   Phone,
   Globe,
-  ArrowRight
+  ArrowRight,
+  X
 } from 'lucide-react';
 
 const Demo = () => {
+  const { toast } = useToast();
+  const formRef = useRef<HTMLDivElement | null>(null);
+  const [openBooking, setOpenBooking] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+
+  // Form state
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [company, setCompany] = useState('');
+  const [jobTitle, setJobTitle] = useState('');
+  const [message, setMessage] = useState('');
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const calBaseUrl = import.meta.env.VITE_CALCOM_URL as string | undefined; // e.g. https://cal.com/your-org/your-event
+
+  const bookingUrl = useMemo(() => {
+    const base = calBaseUrl || 'https://cal.com';
+    // If a full URL is provided via env, use it; otherwise fallback placeholder
+    try {
+      const url = new URL(base);
+      if (firstName || lastName || email || company || jobTitle) {
+        const name = [firstName, lastName].filter(Boolean).join(' ').trim();
+        if (name) url.searchParams.set('name', name);
+        if (email) url.searchParams.set('email', email);
+        if (company) url.searchParams.set('notes', `Company: ${company}${jobTitle ? ` | Title: ${jobTitle}` : ''}${message ? `\nNotes: ${message}` : ''}`);
+      }
+      return url.toString();
+    } catch {
+      return base; // if env is not a valid URL, return as-is
+    }
+  }, [calBaseUrl, firstName, lastName, email, company, jobTitle, message]);
+
+  const onHeroScheduleClick = useCallback(() => {
+    if (formRef.current) {
+      formRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, []);
+
+  const clearFieldError = (key: string) => {
+    setErrors((prev) => {
+      if (!prev[key]) return prev;
+      const { [key]: _omit, ...rest } = prev;
+      return rest;
+    });
+  };
+
+  const validate = () => {
+    const errs: Record<string, string> = {};
+    if (!firstName.trim()) errs.firstName = 'First name is required';
+    if (!lastName.trim()) errs.lastName = 'Last name is required';
+    if (!email.trim()) {
+      errs.email = 'Business email is required';
+    } else if (!/.+@.+\..+/.test(email)) {
+      errs.email = 'Enter a valid business email';
+    }
+    if (!company.trim()) errs.company = 'Company is required';
+    if (!jobTitle.trim()) errs.jobTitle = 'Job title is required';
+    return errs;
+  };
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const errs = validate();
+    if (Object.keys(errs).length) {
+      setErrors(errs);
+      const list = Object.values(errs).join(' · ');
+      toast({ title: 'Please fix the highlighted fields', description: list, variant: 'destructive' });
+      const firstKey = Object.keys(errs)[0];
+      // Focus the first invalid field
+      setTimeout(() => {
+        const el = document.getElementById(firstKey);
+        if (el) (el as HTMLElement).focus();
+      }, 0);
+      return;
+    }
+    if (!calBaseUrl) {
+      toast({ title: 'Scheduling not configured', description: 'Set VITE_CALCOM_URL in your environment to enable booking.', variant: 'destructive' });
+      return;
+    }
+    try {
+      setSubmitting(true);
+      setOpenBooking(true);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   const demoOptions = [
     {
       icon: Calendar,
@@ -69,7 +163,7 @@ const Demo = () => {
     },
     {
       icon: Brain,
-      title: "AI Processing Demo", 
+      title: "AI Processing Demo",
       description: "See intelligent classification, control mapping, and anomaly detection across multiple frameworks"
     },
     {
@@ -138,10 +232,10 @@ const Demo = () => {
               <span className="text-gradient">in Action</span>
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              See how automated compliance verification transforms regulatory 
+              See how automated compliance verification transforms regulatory
               processes while protecting your most sensitive data
             </p>
-            <Button size="lg" className="btn-glow text-lg px-8 py-4">
+            <Button size="lg" className="btn-glow text-lg px-8 py-4" onClick={onHeroScheduleClick}>
               Schedule Demo Now
             </Button>
           </div>
@@ -171,7 +265,7 @@ const Demo = () => {
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <p className="text-muted-foreground leading-relaxed">{option.description}</p>
-                  
+
                   <div className="space-y-3">
                     {option.features.map((feature, featureIndex) => (
                       <div key={featureIndex} className="flex items-center space-x-3">
@@ -180,20 +274,32 @@ const Demo = () => {
                       </div>
                     ))}
                   </div>
-                  
+
                   <div className="pt-4 space-y-2 text-center text-sm text-muted-foreground">
                     <p><strong>Duration:</strong> {option.duration}</p>
                     <p><strong>Availability:</strong> {option.availability}</p>
                   </div>
-                  
-                  <Button 
-                    size="lg"
-                    className={`w-full ${option.cta === "Request Access" ? "" : "btn-glow"}`}
-                    variant={option.cta === "Request Access" ? "outline" : "default"}
-                    disabled={option.cta === "Request Access"}
-                  >
-                    {option.cta}
-                  </Button>
+
+                  {option.cta === 'Request Access' ? (
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <span className="block w-full">
+                          <Button size="lg" className="w-full" variant="outline" disabled>
+                            {option.cta}
+                          </Button>
+                        </span>
+                      </TooltipTrigger>
+                      <TooltipContent>Sandbox access is coming soon. Join the waitlist from the form notes.</TooltipContent>
+                    </Tooltip>
+                  ) : (
+                    <Button
+                      size="lg"
+                      className="w-full btn-glow"
+                      onClick={onHeroScheduleClick}
+                    >
+                      {option.cta}
+                    </Button>
+                  )}
                 </CardContent>
               </Card>
             ))}
@@ -289,7 +395,7 @@ const Demo = () => {
       {/* Demo Request Form */}
       <Section variant="glow" spacing="xl">
         <GeometricPattern className="opacity-50" />
-        <div className="container mx-auto px-6 relative z-10">
+        <div className="container mx-auto px-6 relative z-10" id="schedule-demo" ref={formRef}>
           <div className="max-w-3xl mx-auto">
             <Card className="card-glow">
               <CardHeader className="text-center pb-10">
@@ -300,61 +406,135 @@ const Demo = () => {
                   Schedule Your Demo
                 </CardTitle>
                 <p className="text-xl text-muted-foreground mt-4 leading-relaxed">
-                  Connect with our compliance experts to explore how CompliLedger 
+                  Connect with our compliance experts to explore how CompliLedger
                   can transform your regulatory operations
                 </p>
               </CardHeader>
               <CardContent className="space-y-8 p-12">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-3">
-                    <label className="text-sm font-semibold">First Name *</label>
-                    <Input placeholder="John" className="h-12" />
+                <form onSubmit={onSubmit} noValidate>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="firstName" className="text-sm font-semibold">First Name *</Label>
+                      <Input
+                        id="firstName"
+                        name="firstName"
+                        placeholder="John"
+                        className={`h-12 ${errors.firstName ? 'border-black ring-1 ring-black' : ''}`}
+                        required
+                        aria-invalid={!!errors.firstName}
+                        aria-describedby={errors.firstName ? 'firstName-error' : undefined}
+                        value={firstName}
+                        onChange={(e) => { setFirstName(e.target.value); clearFieldError('firstName'); }}
+                      />
+                      {errors.firstName && (
+                        <p id="firstName-error" className="text-xs text-black/70">{errors.firstName}</p>
+                      )}
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="lastName" className="text-sm font-semibold">Last Name *</Label>
+                      <Input
+                        id="lastName"
+                        name="lastName"
+                        placeholder="Doe"
+                        className={`h-12 ${errors.lastName ? 'border-black ring-1 ring-black' : ''}`}
+                        required
+                        aria-invalid={!!errors.lastName}
+                        aria-describedby={errors.lastName ? 'lastName-error' : undefined}
+                        value={lastName}
+                        onChange={(e) => { setLastName(e.target.value); clearFieldError('lastName'); }}
+                      />
+                      {errors.lastName && (
+                        <p id="lastName-error" className="text-xs text-black/70">{errors.lastName}</p>
+                      )}
+                    </div>
                   </div>
-                  <div className="space-y-3">
-                    <label className="text-sm font-semibold">Last Name *</label>
-                    <Input placeholder="Doe" className="h-12" />
+
+                  <div className="space-y-2 mt-2">
+                    <Label htmlFor="email" className="text-sm font-semibold">Business Email *</Label>
+                    <Input
+                      id="email"
+                      name="email"
+                      placeholder="john.doe@company.com"
+                      type="email"
+                      className={`h-12 ${errors.email ? 'border-black ring-1 ring-black' : ''}`}
+                      required
+                      aria-invalid={!!errors.email}
+                      aria-describedby={errors.email ? 'email-error' : undefined}
+                      value={email}
+                      onChange={(e) => { setEmail(e.target.value); clearFieldError('email'); }}
+                    />
+                    {errors.email && (
+                      <p id="email-error" className="text-xs text-black/70">{errors.email}</p>
+                    )}
                   </div>
-                </div>
-                
-                <div className="space-y-3">
-                  <label className="text-sm font-semibold">Business Email *</label>
-                  <Input placeholder="john.doe@company.com" type="email" className="h-12" />
-                </div>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-3">
-                    <label className="text-sm font-semibold">Company *</label>
-                    <Input placeholder="Your Organization" className="h-12" />
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-2">
+                    <div className="space-y-2">
+                      <Label htmlFor="company" className="text-sm font-semibold">Company *</Label>
+                      <Input
+                        id="company"
+                        name="company"
+                        placeholder="Your Organization"
+                        className={`h-12 ${errors.company ? 'border-black ring-1 ring-black' : ''}`}
+                        required
+                        aria-invalid={!!errors.company}
+                        aria-describedby={errors.company ? 'company-error' : undefined}
+                        value={company}
+                        onChange={(e) => { setCompany(e.target.value); clearFieldError('company'); }}
+                      />
+                      {errors.company && (
+                        <p id="company-error" className="text-xs text-black/70">{errors.company}</p>
+                      )}
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="jobTitle" className="text-sm font-semibold">Job Title *</Label>
+                      <Input
+                        id="jobTitle"
+                        name="jobTitle"
+                        placeholder="Compliance Officer, CISO, etc."
+                        className={`h-12 ${errors.jobTitle ? 'border-black ring-1 ring-black' : ''}`}
+                        required
+                        aria-invalid={!!errors.jobTitle}
+                        aria-describedby={errors.jobTitle ? 'jobTitle-error' : undefined}
+                        value={jobTitle}
+                        onChange={(e) => { setJobTitle(e.target.value); clearFieldError('jobTitle'); }}
+                      />
+                      {errors.jobTitle && (
+                        <p id="jobTitle-error" className="text-xs text-black/70">{errors.jobTitle}</p>
+                      )}
+                    </div>
                   </div>
-                  <div className="space-y-3">
-                    <label className="text-sm font-semibold">Job Title *</label>
-                    <Input placeholder="Compliance Officer, CISO, etc." className="h-12" />
+
+                  <div className="space-y-3 mt-2">
+                    <Label htmlFor="message" className="text-sm font-semibold">Current Compliance Challenges</Label>
+                    <Textarea
+                      id="message"
+                      name="message"
+                      placeholder="Tell us about your compliance requirements, frameworks you work with, and specific challenges you're facing..."
+                      rows={5}
+                      className="resize-none"
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                    />
                   </div>
-                </div>
-                
-                <div className="space-y-3">
-                  <label className="text-sm font-semibold">Current Compliance Challenges</label>
-                  <Textarea 
-                    placeholder="Tell us about your compliance requirements, frameworks you work with, and specific challenges you're facing..."
-                    rows={5}
-                    className="resize-none"
-                  />
-                </div>
-                
-                <div className="flex flex-col sm:flex-row gap-6 pt-6">
-                  <Button size="lg" className="flex-1 btn-glow h-14">
-                    <Calendar className="mr-2 h-5 w-5" />
-                    Schedule Demo
-                  </Button>
-                  <Button size="lg" variant="outline" className="flex-1 h-14">
-                    <Mail className="mr-2 h-5 w-5" />
-                    Contact Sales
-                  </Button>
-                </div>
-                
-                <p className="text-sm text-muted-foreground text-center">
-                  * Required fields. We'll respond within 24 hours to schedule your personalized demonstration.
-                </p>
+
+                  <div className="flex flex-col sm:flex-row gap-6 pt-6">
+                    <Button size="lg" className="flex-1 btn-glow h-14" type="submit" disabled={submitting}>
+                      <Calendar className="mr-2 h-5 w-5" />
+                      {submitting ? 'Opening...' : 'Schedule Demo'}
+                    </Button>
+                    <Button size="lg" variant="outline" className="flex-1 h-14" asChild>
+                      <a href={`mailto:sales@compliledger.com?subject=${encodeURIComponent('Demo Request')}&body=${encodeURIComponent(`Name: ${firstName} ${lastName}\nCompany: ${company}\nTitle: ${jobTitle}\nEmail: ${email}\nNotes: ${message}`)}`}>
+                        <Mail className="mr-2 h-5 w-5" />
+                        Contact Sales
+                      </a>
+                    </Button>
+                  </div>
+
+                  <p className="text-sm text-muted-foreground text-center mt-4">
+                    * Required fields. If scheduling is unavailable, email sales@compliledger.com and we'll respond within 24 hours.
+                  </p>
+                </form>
               </CardContent>
             </Card>
           </div>
@@ -383,8 +563,8 @@ const Demo = () => {
                 ].map((item, index) => (
                   <li key={index} className="group">
                     <p className="text-sm text-muted-foreground">{item.label}</p>
-                    <a 
-                      href={`mailto:${item.email}`} 
+                    <a
+                      href={`mailto:${item.email}`}
                       className="font-medium text-foreground hover:text-primary transition-colors flex items-center"
                     >
                       {item.email}
@@ -438,6 +618,35 @@ const Demo = () => {
           </div>
         </div>
       </Section>
+      {/* Booking Modal */}
+      <Dialog open={openBooking} onOpenChange={setOpenBooking}>
+        <DialogContent className="w-[96vw] sm:w-[94vw] md:w-[92vw] lg:w-[90vw] max-w-5xl h-[68vh] md:h-[70vh] p-0 overflow-hidden">
+          {/* Accessibility: hidden title/description for screen readers */}
+          <DialogTitle className="sr-only">Book your demo</DialogTitle>
+          <DialogDescription className="sr-only">Pick a time that works best for you.</DialogDescription>
+          {/* Top bar with close button */}
+          <div className="absolute inset-x-0 top-0 h-12 flex items-center justify-between px-4 bg-white border-b z-10">
+            <p className="text-sm text-foreground">Book your demo</p>
+            <DialogClose asChild>
+              <button
+                aria-label="Close"
+                className="inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-muted/60 transition-colors"
+              >
+                <X className="h-4 w-4 text-black" />
+              </button>
+            </DialogClose>
+          </div>
+          <div className="w-full h-full pt-12">
+            <iframe
+              src={bookingUrl}
+              title="Schedule demo"
+              className="w-full h-full border-0"
+              referrerPolicy="no-referrer"
+              allow="camera; microphone; fullscreen; picture-in-picture"
+            />
+          </div>
+        </DialogContent>
+      </Dialog>
     </Layout>
   );
 };
