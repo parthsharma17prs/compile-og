@@ -50,6 +50,14 @@ const App = () => (
                 </Suspense>
               }
             />
+            <Route
+              path="/schedule-call"
+              element={
+                <Suspense fallback={<div />}>
+                  <Demo />
+                </Suspense>
+              }
+            />
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/solutions" element={<Solutions />} />
             <Route path="/platform" element={<Platform />} />
