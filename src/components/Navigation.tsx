@@ -13,8 +13,8 @@ const Navigation = () => {
     { name: 'How It Works', path: '/how-it-works' },
     { name: 'About', path: '/about' },
     { name: 'Partners', path: '/partners' },
-    
-  
+
+
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -54,9 +54,9 @@ const Navigation = () => {
             ))}
             <div className="flex items-center space-x-4">
               <ThemeToggle />
-              <Link to="/demo">
+              <Link to="/schedule-call">
                 <Button variant="outline" className="btn-glow">
-                  Book Demo
+                  Schedule Call
                 </Button>
               </Link>
             </div>
@@ -92,9 +92,9 @@ const Navigation = () => {
                   {item.name}
                 </Link>
               ))}
-              <Link to="/demo" onClick={() => setIsOpen(false)}>
+              <Link to="/schedule-call" onClick={() => setIsOpen(false)}>
                 <Button variant="outline" className="btn-glow w-full">
-                  Book Demo
+                  Schedule Call
                 </Button>
               </Link>
             </div>

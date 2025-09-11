@@ -6,9 +6,9 @@ import Layout from '@/components/Layout';
 import Section from '@/components/Section';
 import SectionHeader from '@/components/SectionHeader';
 import GeometricPattern from '@/components/GeometricPattern';
-import { 
-  Mail, 
-  ArrowRight, 
+import {
+  Mail,
+  ArrowRight,
   BookOpen,
   FileText,
   Users,
@@ -19,12 +19,12 @@ import {
 
 const Blog = () => {
   const [activeCategory, setActiveCategory] = useState("All");
-  
+
   const categories = [
-    "All", 
-    "Thought Leadership", 
-    "Product Updates", 
-    "Industry Insights", 
+    "All",
+    "Thought Leadership",
+    "Product Updates",
+    "Industry Insights",
     "Technical Deep Dives"
   ];
 
@@ -53,7 +53,7 @@ const Blog = () => {
     },
     {
       icon: TrendingUp,
-      title: "Regulatory Trends", 
+      title: "Regulatory Trends",
       description: "Analysis of emerging compliance requirements",
       articleCount: "15 articles"
     },
@@ -76,7 +76,7 @@ const Blog = () => {
     {
       title: "Financial Services and Digital Asset Compliance",
       description: "How traditional financial institutions are adapting to cryptocurrency and DeFi regulations",
-      category: "Industry Insights", 
+      category: "Industry Insights",
       date: "1 week ago",
       readTime: "5 min read"
     },
@@ -84,7 +84,7 @@ const Blog = () => {
       title: "Building Privacy-First Audit Trails",
       description: "Technical approaches to maintaining comprehensive audit logs while protecting sensitive data",
       category: "Technical Deep Dives",
-      date: "2 weeks ago", 
+      date: "2 weeks ago",
       readTime: "7 min read"
     }
   ];
@@ -100,7 +100,7 @@ const Blog = () => {
               Compliance <span className="text-gradient">Insights</span>
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
-              Expert perspectives on compliance automation, privacy technology, 
+              Expert perspectives on compliance automation, privacy technology,
               and the future of regulatory verification
             </p>
           </div>
@@ -115,7 +115,7 @@ const Blog = () => {
             subtitle="Content Categories"
             description="Discover insights tailored to your interests and expertise level"
           />
-          
+
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {topics.map((topic, index) => (
               <Card key={index} className="card-glow text-center h-full group hover:border-primary/50 transition-all duration-300">
@@ -143,7 +143,7 @@ const Blog = () => {
             subtitle="Latest Insights"
             description="Our most recent analysis on compliance innovation and regulatory technology"
           />
-          
+
           <div className="max-w-6xl mx-auto">
             <Card className="card-glow border-2 border-primary/30 overflow-hidden">
               <div className="md:flex">
@@ -173,7 +173,7 @@ const Blog = () => {
                       </p>
                     </div>
                     <Button size="lg" className="btn-glow">
-                      Read Full Article
+                      Coming Soon
                       <ArrowRight className="ml-2 h-5 w-5" />
                     </Button>
                   </div>
@@ -214,7 +214,7 @@ const Blog = () => {
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-muted-foreground">{article.readTime}</span>
                     <Button variant="ghost" size="sm" className="group-hover:text-primary transition-colors p-0">
-                      Read more
+                      Coming Soon
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </div>
@@ -240,13 +240,13 @@ const Blog = () => {
                     Stay Informed
                   </h2>
                   <p className="text-xl text-muted-foreground leading-relaxed">
-                    Subscribe to receive insights on compliance innovation, 
+                    Subscribe to receive insights on compliance innovation,
                     regulatory updates, and platform developments
                   </p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto">
-                  <input 
-                    type="email" 
+                  <input
+                    type="email"
                     placeholder="Enter your email address"
                     className="flex-1 px-6 py-4 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary text-base"
                   />

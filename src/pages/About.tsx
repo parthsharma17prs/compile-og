@@ -5,12 +5,12 @@ import Layout from '@/components/Layout';
 import Section from '@/components/Section';
 import SectionHeader from '@/components/SectionHeader';
 import GeometricPattern from '@/components/GeometricPattern';
-import { 
-  Shield, 
-  Eye, 
-  Lock, 
-  Zap, 
-  Target, 
+import {
+  Shield,
+  Eye,
+  Lock,
+  Zap,
+  Target,
   Heart,
   Mail,
   ArrowRight,
@@ -73,7 +73,7 @@ const About = () => {
 
   const differentiators = [
     "Native OSCAL and SBOM integration for complete automation",
-    "Zero-Knowledge architecture enabling privacy-first attestations", 
+    "Zero-Knowledge architecture enabling privacy-first attestations",
     "Multi-framework interoperability across global standards",
     "Composable platform designed for modern digital infrastructure"
   ];
@@ -92,11 +92,11 @@ const About = () => {
               Building the future of compliance through strategic partnerships,
               technology integrations, and collaborative innovation
             </p>
-            
+
             <p className="text-lg md:text-xl text-foreground/70 max-w-3xl mx-auto leading-relaxed">
               CompliLedger is on a mission to make compliance programmable, provable, and privacy-preserving — across finance, Web3, government, healthcare, and enterprise SaaS.
             </p>
-            
+
             <div className="flex flex-wrap justify-center gap-3 mt-8">
               {['Finance', 'Web3', 'Healthcare', 'SaaS', 'Government'].map((industry) => (
                 <div key={industry} className="px-4 py-2 bg-foreground/5 backdrop-blur-sm rounded-full border border-foreground/10 text-sm font-medium text-foreground/80 hover:bg-foreground/5 transition-colors">
@@ -104,8 +104,8 @@ const About = () => {
                 </div>
               ))}
             </div>
-            
-            
+
+
           </div>
         </div>
       </Section>
@@ -122,7 +122,7 @@ const About = () => {
                   Make compliance <span className="text-foreground/90">continuous</span> and <span className="text-foreground/90">provable</span>.
                 </h2>
               </div>
-              
+
               <div className="md:w-2/3 space-y-6 text-lg text-foreground/70 leading-relaxed">
                 <div className="bg-background/80 backdrop-blur-sm p-8 rounded-2xl border border-foreground/10 shadow-sm">
                   <div className="h-12 w-12 rounded-lg bg-foreground/5 flex items-center justify-center mb-6 border border-foreground/10">
@@ -135,7 +135,7 @@ const About = () => {
                     CompliLedger turns SBOMs, repos, configs, and smart contracts into audit-ready evidence and zero-knowledge attestations — so businesses can prove compliance without slowing innovation.
                   </p>
                 </div>
-                
+
                 <div className="grid grid-cols-2 gap-4">
                   <div className="bg-foreground/5 p-4 rounded-xl border border-foreground/10 hover:border-foreground/20 transition-colors">
                     <h4 className="font-medium mb-2 text-foreground/90">For Enterprises</h4>
@@ -169,7 +169,7 @@ const About = () => {
                 The future of compliance isn't about paperwork — it's about proof. We envision a world where:
               </p>
             </div>
-            
+
             <div className="grid md:grid-cols-3 gap-6 mt-12">
               {[
                 {
@@ -208,8 +208,8 @@ const About = () => {
 
           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
             {coreValues.map((value, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="group relative h-full bg-background rounded-xl border border-foreground/10 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
               >
                 <div className="h-full p-6 group-hover:bg-foreground/2.5 transition-colors">
@@ -315,7 +315,7 @@ const About = () => {
             </p>
           </div>
         </div>
-        
+
       </Section>
 
       {/* Join Us */}

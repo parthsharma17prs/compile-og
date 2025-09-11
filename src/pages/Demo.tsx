@@ -236,7 +236,7 @@ const Demo = () => {
               processes while protecting your most sensitive data
             </p>
             <Button size="lg" className="btn-glow text-lg px-8 py-4" onClick={onHeroScheduleClick}>
-              Schedule Demo Now
+              Schedule a Call
             </Button>
           </div>
         </div>
@@ -403,7 +403,7 @@ const Demo = () => {
                   <Calendar className="h-10 w-10 text-primary" />
                 </div>
                 <CardTitle className="text-3xl md:text-4xl font-space-grotesk font-bold">
-                  Schedule Your Demo
+                  Schedule Your Call
                 </CardTitle>
                 <p className="text-xl text-muted-foreground mt-4 leading-relaxed">
                   Connect with our compliance experts to explore how CompliLedger
@@ -521,7 +521,7 @@ const Demo = () => {
                   <div className="flex flex-col sm:flex-row gap-6 pt-6">
                     <Button size="lg" className="flex-1 btn-glow h-14" type="submit" disabled={submitting}>
                       <Calendar className="mr-2 h-5 w-5" />
-                      {submitting ? 'Opening...' : 'Schedule Demo'}
+                      {submitting ? 'Opening...' : 'Schedule Call'}
                     </Button>
                     <Button size="lg" variant="outline" className="flex-1 h-14" asChild>
                       <a href={`mailto:sales@compliledger.com?subject=${encodeURIComponent('Demo Request')}&body=${encodeURIComponent(`Name: ${firstName} ${lastName}\nCompany: ${company}\nTitle: ${jobTitle}\nEmail: ${email}\nNotes: ${message}`)}`}>
@@ -602,17 +602,6 @@ const Demo = () => {
                     <p className="text-muted-foreground text-sm">Serving clients across North America, Europe, and the Middle East</p>
                   </div>
                 </div>
-                <div className="bg-muted/30 p-4 rounded-lg mt-4">
-                  <div className="flex items-center space-x-3">
-                    <div className="p-1.5 bg-muted/50 rounded-md">
-                      <Phone className="w-4 h-4 text-muted-foreground" />
-                    </div>
-                    <div>
-                      <p className="font-medium">Need immediate help?</p>
-                      <a href="tel:+15551234567" className="text-primary hover:underline text-sm">+1 (555) 123-4567</a>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -639,7 +628,7 @@ const Demo = () => {
           <div className="w-full h-full pt-12">
             <iframe
               src={bookingUrl}
-              title="Schedule demo"
+              title="Schedule Call"
               className="w-full h-full border-0"
               referrerPolicy="no-referrer"
               allow="camera; microphone; fullscreen; picture-in-picture"

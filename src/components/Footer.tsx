@@ -27,18 +27,24 @@ const Footer = () => {
             </p>
           </div>
 
-          {/* Navigation */}
+          {/* Product */}
           <div className="space-y-4">
             <h3 className="font-semibold">Product</h3>
             <div className="space-y-2 text-sm">
               <Link to="/how-it-works" className="block text-muted-foreground hover:text-foreground transition-colors">
                 How It Works
               </Link>
+              <Link to="/platform" className="block text-muted-foreground hover:text-foreground transition-colors">
+                Platform
+              </Link>
+              <Link to="/solutions" className="block text-muted-foreground hover:text-foreground transition-colors">
+                Solutions
+              </Link>
+              <Link to="/security" className="block text-muted-foreground hover:text-foreground transition-colors">
+                Security
+              </Link>
               <Link to="/demo" className="block text-muted-foreground hover:text-foreground transition-colors">
                 Book Demo
-              </Link>
-              <Link to="/partners" className="block text-muted-foreground hover:text-foreground transition-colors">
-                Partners
               </Link>
             </div>
           </div>
@@ -48,13 +54,19 @@ const Footer = () => {
             <h3 className="font-semibold">Company</h3>
             <div className="space-y-2 text-sm">
               <Link to="/about" className="block text-muted-foreground hover:text-foreground transition-colors">
-                About
+                About Us
+              </Link>
+              <Link to="/founder" className="block text-muted-foreground hover:text-foreground transition-colors">
+                Our Founder
               </Link>
               <Link to="/blog" className="block text-muted-foreground hover:text-foreground transition-colors">
                 Blog
               </Link>
+              <Link to="/partners" className="block text-muted-foreground hover:text-foreground transition-colors">
+                Partners
+              </Link>
               <a href="mailto:maranda@compliledger.com" className="block text-muted-foreground hover:text-foreground transition-colors">
-                Contact
+                Contact Us
               </a>
             </div>
           </div>
