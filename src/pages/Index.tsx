@@ -4,12 +4,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import Layout from '@/components/Layout';
 import Section from '@/components/Section';
 import SectionHeader from '@/components/SectionHeader';
-import { 
-  Shield, 
-  Lock, 
-  Eye, 
-  Zap, 
-  CheckCircle, 
+import {
+  Shield,
+  Lock,
+  Eye,
+  Zap,
+  CheckCircle,
   ArrowRight,
   Building2,
   Users,
@@ -104,17 +104,17 @@ const Index = () => {
             </span>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-gradient leading-tight glow-text">
               CompliLedger : Compliance you can prove.
-              
+
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed mb-12">
             CompliLedger automates compliance across Web3, financial services, healthcare, and government by turning your SBOMs, code, configs, and smart contracts into audit-ready evidence and zero-knowledge attestations
             </p>
           </div>
-          
+
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
             <Link to="/demo">
               <Button size="lg" className="px-8 py-4 text-lg">
-              Book a Demo
+              Schedule a call
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
@@ -134,9 +134,9 @@ const Index = () => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 justify-items-center">
               <div className="flex flex-col items-center">
                 <div className="h-20 w-20 mb-2 bg-white rounded-lg p-2 flex items-center justify-center shadow-sm">
-                  <img 
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_ordgGltxJ9IOadHsMpdh-MGRJcorfG84Bg&s" 
-                    alt="SOC 2" 
+                  <img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_ordgGltxJ9IOadHsMpdh-MGRJcorfG84Bg&s"
+                    alt="SOC 2"
                     className="h-12 w-auto object-contain"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
@@ -149,9 +149,9 @@ const Index = () => {
               </div>
               <div className="flex flex-col items-center">
                 <div className="h-20 w-20 mb-2 bg-white rounded-lg p-2 flex items-center justify-center shadow-sm">
-                  <img 
-                    src="https://www.ardentprivacy.ai/assets/img/gdpr_act.png" 
-                    alt="GDPR" 
+                  <img
+                    src="https://www.ardentprivacy.ai/assets/img/gdpr_act.png"
+                    alt="GDPR"
                     className="h-12 w-auto object-contain"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
@@ -164,9 +164,9 @@ const Index = () => {
               </div>
               <div className="flex flex-col items-center">
                 <div className="h-20 w-20 mb-2 bg-white rounded-lg p-2 flex items-center justify-center shadow-sm">
-                  <img 
-                    src="https://www.hipaajournal.com/wp-content/uploads/2021/12/HIPAA-civil-monetary-penalties-2021.jpg" 
-                    alt="HIPAA" 
+                  <img
+                    src="https://www.hipaajournal.com/wp-content/uploads/2021/12/HIPAA-civil-monetary-penalties-2021.jpg"
+                    alt="HIPAA"
                     className="h-12 w-auto object-contain"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
@@ -179,9 +179,9 @@ const Index = () => {
               </div>
               <div className="flex flex-col items-center">
                 <div className="h-20 w-20 mb-2 bg-white rounded-lg p-2 flex items-center justify-center shadow-sm">
-                  <img 
-                    src="https://hyperproof.io/wp-content/uploads/2023/06/framework-informational-page_hero-badges-sox.png" 
-                    alt="SOX" 
+                  <img
+                    src="https://hyperproof.io/wp-content/uploads/2023/06/framework-informational-page_hero-badges-sox.png"
+                    alt="SOX"
                     className="h-12 w-auto object-contain"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
@@ -194,9 +194,9 @@ const Index = () => {
               </div>
               <div className="flex flex-col items-center">
                 <div className="h-20 w-20 mb-2 bg-white rounded-lg p-2 flex items-center justify-center shadow-sm">
-                  <img 
-                    src="https://www.qassurance.com/wp-content/uploads/QAssurance-logos.png" 
-                    alt="ISO 27001" 
+                  <img
+                    src="https://www.qassurance.com/wp-content/uploads/QAssurance-logos.png"
+                    alt="ISO 27001"
                     className="h-12 w-auto object-contain"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
@@ -209,9 +209,9 @@ const Index = () => {
               </div>
               <div className="flex flex-col items-center">
                 <div className="h-20 w-20 mb-2 bg-white rounded-lg p-2 flex items-center justify-center shadow-sm">
-                  <img 
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcST0IX-vabefXDYofRMrkzWgXMaDiLB0RQXpQ&s" 
-                    alt="NIST" 
+                  <img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcST0IX-vabefXDYofRMrkzWgXMaDiLB0RQXpQ&s"
+                    alt="NIST"
                     className="h-12 w-auto object-contain"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
@@ -224,9 +224,9 @@ const Index = () => {
               </div>
               <div className="flex flex-col items-center">
                 <div className="h-20 w-20 mb-2 bg-white rounded-lg p-2 flex items-center justify-center shadow-sm">
-                  <img 
-                    src="https://www.holmsecurity.com/hs-fs/hubfs/Website%20material/Images/PCI%20DSS_logo.png?width=740&name=PCI%20DSS_logo.png" 
-                    alt="PCI DSS" 
+                  <img
+                    src="https://www.holmsecurity.com/hs-fs/hubfs/Website%20material/Images/PCI%20DSS_logo.png?width=740&name=PCI%20DSS_logo.png"
+                    alt="PCI DSS"
                     className="h-12 w-auto object-contain"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
@@ -239,9 +239,9 @@ const Index = () => {
               </div>
               <div className="flex flex-col items-center">
                 <div className="h-20 w-20 mb-2 bg-white rounded-lg p-2 flex items-center justify-center shadow-sm">
-                  <img 
-                    src="https://www.ardentprivacy.ai/assets/img/CCPA_logo.jpg" 
-                    alt="CCPA" 
+                  <img
+                    src="https://www.ardentprivacy.ai/assets/img/CCPA_logo.jpg"
+                    alt="CCPA"
                     className="h-12 w-auto object-contain"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
@@ -260,12 +260,12 @@ const Index = () => {
       {/* Value Proposition Section */}
       <Section variant="default">
         <div className="max-w-6xl mx-auto px-4">
-          <SectionHeader 
+          <SectionHeader
             title="Streamline Compliance with Privacy-Preserving Technology"
             description="CompliLedger transforms how organizations achieve and maintain compliance"
             className="text-center mb-12"
           />
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="bg-muted/50 p-6 rounded-lg">
               <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
@@ -277,7 +277,7 @@ const Index = () => {
               <h3 className="text-lg font-semibold mb-2">Evidence → Attestation</h3>
               <p className="text-muted-foreground">Convert live technical evidence into verifiable, privacy-preserving proofs.</p>
             </div>
-            
+
             <div className="bg-muted/50 p-6 rounded-lg">
               <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
@@ -288,7 +288,7 @@ const Index = () => {
               <h3 className="text-lg font-semibold mb-2">Continuous, not quarterly</h3>
               <p className="text-muted-foreground">Detect drift, auto-remediate, and stay audit-ready at all times.</p>
             </div>
-            
+
             <div className="bg-muted/50 p-6 rounded-lg">
               <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
@@ -299,7 +299,7 @@ const Index = () => {
               <h3 className="text-lg font-semibold mb-2">Auditor & Legal Friendly</h3>
               <p className="text-muted-foreground">AuditSync™ portal enables scoped, immutable evidence sharing for auditors, regulators, and legal teams.</p>
             </div>
-            
+
             <div className="bg-muted/50 p-6 rounded-lg">
               <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
@@ -320,16 +320,16 @@ const Index = () => {
       {/* How It Works Section */}
       <Section variant="blend">
         <div className="max-w-6xl mx-auto px-4">
-          <SectionHeader 
+          <SectionHeader
             title="How CompliLedger Works"
             description="A streamlined approach to compliance management"
             className="text-center mb-12"
           />
-          
+
           <div className="relative">
             {/* Connecting line */}
-            
-            
+
+
             {/* Steps */}
             <div className="space-y-8 md:grid md:grid-cols-5 md:gap-8 md:space-y-0">
               {/* Step 1 */}
@@ -396,7 +396,7 @@ const Index = () => {
       {/* Problem & Mission Section */}
       <Section variant="default">
         <div className="max-w-6xl mx-auto px-4">
-          <SectionHeader 
+          <SectionHeader
             subtitle="The Compliance Challenge"
             title="Privacy vs. Transparency"
             description="Organizations face an impossible choice: protect sensitive data or prove regulatory compliance. Traditional approaches force companies to expose confidential information to demonstrate adherence."
@@ -435,7 +435,7 @@ const Index = () => {
                 </Button>
               </div>
             </div>
-            
+
             <div>
               <h3 className="text-2xl font-bold mb-6">CompliLedger Solution</h3>
               <div className="space-y-4">
@@ -464,7 +464,7 @@ const Index = () => {
       {/* Key Capabilities Section */}
       <Section>
         <div className="max-w-6xl mx-auto px-4">
-          <SectionHeader 
+          <SectionHeader
             subtitle="Core Technology"
             title="Advanced Cryptographic Compliance"
             description="Leverage cutting-edge zero-knowledge proof technology to demonstrate compliance while maintaining absolute data confidentiality."
@@ -493,11 +493,11 @@ const Index = () => {
         </div>
       </Section>
 
-      
+
       {/* Target Users & Use Cases Section */}
 <Section variant="glow">
         <div className="max-w-6xl mx-auto px-4">
-          <SectionHeader 
+          <SectionHeader
             subtitle="Industry Applications"
             title="Built for Regulated Industries"
             description="CompliLedger serves organizations across highly regulated sectors that require stringent compliance while handling sensitive data."
@@ -539,7 +539,7 @@ const Index = () => {
                 Industry Solutions
               </Button>
               </Link>
-              
+
             </div>
           </div>
         </div>
@@ -576,16 +576,16 @@ const Index = () => {
         </div>
       </Section> */}
 
-      
+
       {/* Call to Action Section */}
       <Section variant="blend" className="text-center">
         <div className="max-w-4xl mx-auto px-4">
-          <SectionHeader 
+          <SectionHeader
             subtitle="Ready to Transform Compliance?"
             title="Experience Privacy-Preserving Compliance"
             description="Join forward-thinking organizations that have eliminated the trade-off between data privacy and regulatory compliance."
           />
-          
+
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             <Link to="/demo">
               <Button size="lg" className="px-8 py-4 text-lg">
