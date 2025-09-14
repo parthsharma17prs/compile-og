@@ -99,22 +99,23 @@ const Index = () => {
       <Section variant="glow" spacing="xl" className="min-h-screen flex items-center justify-center text-center">
         <div className="max-w-6xl mx-auto px-4">
           <div className="mb-8">
-            <span className="text-sm font-medium text-primary mb-4 tracking-wider uppercase block">
-              The Future of Regulatory Compliance
-            </span>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-gradient leading-tight glow-text">
-              CompliLedger : Compliance you can prove.
-
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 text-gradient leading-tight glow-text">
+            CompliLedger:  Compliance You Can Prove. Blockchain You Can Trust.
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed mb-12">
-            CompliLedger automates compliance across Web3, financial services, healthcare, and government by turning your SBOMs, code, configs, and smart contracts into audit-ready evidence and zero-knowledge attestations
-            </p>
+            <div className="max-w-4xl mx-auto space-y-2 md:space-y-3 mb-12">
+              <p className="text-xl md:text-2xl font-semibold text-foreground/90 leading-relaxed">
+                The First Blockchain-Native Compliance Automation Platform
+              </p>
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                Built on Algorand; XRPL & XDC next. We turn SBOMs, code, configs, and smart contracts into audit-ready evidence, ZK proofs, and immutable on-chain attestations for Web3, finance, healthcare, and government.
+              </p>
+            </div>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
-            <Link to="/demo">
+            <Link to="/schedule-call">
               <Button size="lg" className="px-8 py-4 text-lg">
-              Schedule a call
+                Schedule a call
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
@@ -123,11 +124,6 @@ const Index = () => {
                 See How It Works
               </Button>
             </Link>
-            <Button asChild size="lg" className="px-8 py-4 text-lg">
-              <a href="https://apps.compliledger.com" target="_blank" rel="noopener noreferrer">
-                Join Pilot Program
-              </a>
-            </Button>
           </div>
           <div className="mt-16">
             <p className="text-sm text-muted-foreground mb-6">SUPPORTED COMPLIANCE FRAMEWORKS</p>
@@ -252,6 +248,31 @@ const Index = () => {
                 </div>
                 <span className="text-sm font-medium">CCPA</span>
               </div>
+            </div>
+          </div>
+        </div>
+      </Section>
+
+      {/* Slim Banner: Blockchain-Native by Design */}
+      <Section variant="default" className="py-6 border-t border-border/50">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="rounded-xl border border-border/60 bg-background/60 backdrop-blur-sm p-4 md:p-6">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+              <div className="max-w-2xl">
+                <h3 className="text-sm font-semibold tracking-wide">Blockchain-Native by Design</h3>
+                <p className="text-sm text-muted-foreground">Evidence commitments anchored on Algorand today. XRPL and XDC integrations on our roadmap.</p>
+              </div>
+              <ul className="flex flex-wrap items-center gap-3" aria-label="Supported and planned networks">
+                <li className="px-3 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400">
+                  Algorand <span className="ml-2 text-xs font-medium rounded-full bg-emerald-500/20 text-emerald-300 px-2 py-0.5">Live</span>
+                </li>
+                <li className="px-3 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400">
+                  XRPL <span className="ml-2 text-xs font-medium rounded-full bg-amber-500/20 text-amber-300 px-2 py-0.5">Roadmap</span>
+                </li>
+                <li className="px-3 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400">
+                  XDC <span className="ml-2 text-xs font-medium rounded-full bg-amber-500/20 text-amber-300 px-2 py-0.5">Roadmap</span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>

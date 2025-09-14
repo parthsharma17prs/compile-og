@@ -232,33 +232,47 @@ const About = () => {
       {/* Our Team */}
       <Section variant="default" spacing="xl" className="relative">
         <div className="absolute inset-0 bg-grid-slate-100 dark:bg-grid-slate-800/50 [mask-image:linear-gradient(0deg,white,transparent)]" />
-        <div className="container mx-auto px-6 relative">
+        <div className="container mx-auto px-6 relative " role="region" aria-labelledby="team-heading">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-white/10 text-white mb-4">Our Team</span>
-            <h2 className="text-3xl md:text-4xl font-space-grotesk font-bold tracking-tight mb-4">
+            <h2 id="team-heading" className="text-3xl md:text-4xl font-space-grotesk font-bold tracking-tight mb-4">
               Led by <span className="text-white">Compliance and Security</span> Experts.
             </h2>
             <p className="text-white/70">
               Our team brings deep experience across cybersecurity, compliance automation, blockchain, and AI. We've worked with Fortune 500 enterprises, government agencies, and startups alike.
             </p>
           </div>
-          <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Founder Card (left) */}
-            <div className="group relative h-full bg-gradient-to-br from-white/5 to-white/5 rounded-2xl p-0.5 overflow-hidden">
-              <div className="h-full bg-black/80 backdrop-blur-sm rounded-[calc(1rem-1px)] p-8">
+          <div className="max-w-4xl mx-auto flex justify-center">
+            {/* Founder Card */}
+            <article className="group relative max-w-2xl mx-auto bg-gradient-to-br from-white/5 to-white/5 rounded-2xl p-0.5 overflow-hidden" role="article" aria-labelledby="founder-heading">
+              {/* Subtle glow backdrop */}
+              <div
+                aria-hidden
+                className="pointer-events-none absolute -inset-3 rounded-3xl bg-[radial-gradient(ellipse_at_center,rgba(99,102,241,0.35),rgba(168,85,247,0.2),transparent_70%)] blur-2xl opacity-40 group-hover:opacity-60 transition-opacity"
+              />
+              <div className="relative z-10 h-full bg-black/80 backdrop-blur-sm rounded-[calc(1rem-1px)] p-8 shadow-[0_0_0_1px_rgba(255,255,255,0.08)]">
                 <div className="flex flex-col items-center text-center">
-                  <div className="relative mb-6">
-                    <img src="https://media.licdn.com/dms/image/v2/D5603AQHlC1rJpeqdnQ/profile-displayphoto-shrink_400_400/B56ZcXd8zaHwAo-/0/1748445418119?e=1758758400&v=beta&t=gUx5-3218nZcuOMnqvoYkaFzvb-8TkdvZgimvOut26A" alt="Maranda Harris" className="w-32 h-32 rounded-full object-cover border border-white/20" />
+                  <figure className="relative mb-6">
+                    <img
+                      src="https://media.licdn.com/dms/image/v2/D5603AQHlC1rJpeqdnQ/profile-displayphoto-shrink_400_400/B56ZcXd8zaHwAo-/0/1748445418119?e=1758758400&v=beta&t=gUx5-3218nZcuOMnqvoYkaFzvb-8TkdvZgimvOut26A"
+                      alt="Maranda Harris"
+                      className="w-32 h-32 rounded-full object-cover border border-white/20"
+                      loading="lazy"
+                      decoding="async"
+                      width="128"
+                      height="128"
+                    />
                     <div className="absolute -bottom-2 -right-2 bg-white text-black text-xs font-medium px-3 py-1 rounded-full">
                       Founder
                     </div>
-                  </div>
+                    <figcaption className="sr-only">Portrait of Maranda Harris, Founder</figcaption>
+                  </figure>
                   <div className="space-y-3">
-                    <h3 className="text-2xl font-space-grotesk font-bold">Maranda Harris</h3>
+                  <h3 id="founder-heading" className="text-2xl font-space-grotesk font-bold">Maranda Harris</h3>
                     <p className="text-white font-medium">Chief Digital Compliance Officer</p>
                     <p className="text-white/70 text-sm mb-4">Veteran cybersecurity and compliance architect with experience at IBM, Deloitte, and Maximus, specializing in digital trust initiatives and blockchain-based assurance frameworks.</p>
                     <Link to="/founder" className="block w-full">
-                      <Button variant="outline" className="w-full group border-white/30 hover:bg-white/10 text-white">
+                    <Button aria-label="Learn more about our founder" variant="outline" className="w-full group border-white/30 hover:bg-white/10 text-white">
                         About Our Founder
                         <ArrowRight className="ml-2 h-4 w-4 opacity-70 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
                       </Button>
@@ -266,35 +280,9 @@ const About = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </article>
 
-            {/* Advisory board / Partners (right) */}
-            <div className="bg-black/80 backdrop-blur-sm p-8 rounded-2xl border border-white/30 shadow-sm">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="h-10 w-10 rounded-lg bg-white/10 flex items-center justify-center">
-                  <Heart className="h-6 w-6 text-white" />
-                </div>
-                <h3 className="text-2xl font-space-grotesk font-bold">Advisory Board & Partners</h3>
-              </div>
-              <p className="text-white/70 mb-6">
-                We collaborate with leaders in compliance, blockchain, and cybersecurity. Logos below are placeholders and will be replaced as partnerships are confirmed.
-              </p>
-              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-4">
-                {['Algorand', 'Ripple', 'Hedera', 'IBM'].map((partner, i) => (
-                  <div key={i} className="h-14 rounded-lg bg-white/70 text-black/80 flex items-center justify-center text-sm font-medium border border-white/60">
-                    {partner}
-                  </div>
-                ))}
-              </div>
-              <div className="mt-8 pt-6 border-t border-white/30">
-              <Link to="/partners">
-                <Button variant="outline" className="w-full group">
-                  Partner with Us
-                  <ArrowRight className="ml-2 h-4 w-4 opacity-70 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
-                </Button>
-                </Link>
-              </div>
-            </div>
+
           </div>
         </div>
       </Section>
