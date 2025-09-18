@@ -124,6 +124,11 @@ const Index = () => {
                 See How It Works
               </Button>
             </Link>
+            <Button asChild size="lg" className="px-8 py-4 text-lg">
+              <a href="https://apps.compliledger.com" target="_blank" rel="noopener noreferrer">
+                Join Pilot Program
+              </a>
+            </Button>
           </div>
           <div className="mt-16">
             <p className="text-sm text-muted-foreground mb-6">SUPPORTED COMPLIANCE FRAMEWORKS</p>
