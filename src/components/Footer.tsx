@@ -1,12 +1,20 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, FormEvent } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Mail, Linkedin, Twitter } from 'lucide-react';
+import { Mail } from 'lucide-react';
 
 const Footer = () => {
   const [subscriberEmail, setSubscriberEmail] = useState('');
-  const handleSubscribeClick = () => {
+  const handleSubscribeSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const input = form.querySelector('input[name="email"]') as HTMLInputElement | null;
+    if (!input) return;
+    if (!input.checkValidity()) {
+      input.reportValidity();
+      return;
+    }
     const subject = encodeURIComponent('Subscription request – CompliLedger updates');
     const bodyText = `Hello CompliLedger Team,\n\nI would like to subscribe to CompliLedger news and product updates.\n\nSubscriber details:\n- Email: ${subscriberEmail || '(not provided)'}\n\nIf any additional information is required, please let me know.\n\nThank you.\n\nBest regards,`;
     const body = encodeURIComponent(bodyText);
@@ -85,24 +93,37 @@ const Footer = () => {
             <p className="text-muted-foreground text-sm">
               Get compliance insights and product updates.
             </p>
-            <div className="flex space-x-2">
+            <form className="flex space-x-2" onSubmit={handleSubscribeSubmit} noValidate>
+              <label htmlFor="newsletter-email" className="sr-only">Email address</label>
               <Input
+                id="newsletter-email"
+                name="email"
                 placeholder="Enter email"
                 className="flex-1"
                 value={subscriberEmail}
                 onChange={(e) => setSubscriberEmail(e.target.value)}
                 type="email"
+                autoComplete="email"
+                inputMode="email"
+                required
               />
-              <Button size="sm" className="btn-glow" onClick={handleSubscribeClick} aria-label="Email info@compliledger.com to subscribe">
+              <Button
+                size="sm"
+                className="btn-glow"
+                type="submit"
+                aria-label="Email info@compliledger.com to subscribe"
+                disabled={!subscriberEmail}
+                title={!subscriberEmail ? 'Please enter your email' : undefined}
+              >
                 <Mail size={16} />
               </Button>
-            </div>
+            </form>
           </div>
         </div>
 
         <div className="border-t border-border/50 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-muted-foreground text-sm">
-            © 2024 CompliLedger. All rights reserved.
+            © {new Date().getFullYear()} CompliLedger. All rights reserved.
           </p>
           {/* <div className="flex space-x-4 mt-4 md:mt-0">
             <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
