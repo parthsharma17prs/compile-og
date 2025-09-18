@@ -1,9 +1,17 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Mail, Linkedin, Twitter } from 'lucide-react';
 
 const Footer = () => {
+  const [subscriberEmail, setSubscriberEmail] = useState('');
+  const handleSubscribeClick = () => {
+    const subject = encodeURIComponent('Subscription request – CompliLedger updates');
+    const bodyText = `Hello CompliLedger Team,\n\nI would like to subscribe to CompliLedger news and product updates.\n\nSubscriber details:\n- Email: ${subscriberEmail || '(not provided)'}\n\nIf any additional information is required, please let me know.\n\nThank you.\n\nBest regards,`;
+    const body = encodeURIComponent(bodyText);
+    window.location.href = `mailto:info@compliledger.com?subject=${subject}&body=${body}`;
+  };
   return (
     <footer className="border-t border-border/50 bg-card/50 backdrop-blur-sm">
       <div className="container mx-auto px-4 py-12">
@@ -65,7 +73,7 @@ const Footer = () => {
               <Link to="/partners" className="block text-muted-foreground hover:text-foreground transition-colors">
                 Partners
               </Link>
-              <a href="mailto:maranda@compliledger.com" className="block text-muted-foreground hover:text-foreground transition-colors">
+              <a href="mailto:info@compliledger.com" className="block text-muted-foreground hover:text-foreground transition-colors">
                 Contact Us
               </a>
             </div>
@@ -81,8 +89,11 @@ const Footer = () => {
               <Input
                 placeholder="Enter email"
                 className="flex-1"
+                value={subscriberEmail}
+                onChange={(e) => setSubscriberEmail(e.target.value)}
+                type="email"
               />
-              <Button size="sm" className="btn-glow">
+              <Button size="sm" className="btn-glow" onClick={handleSubscribeClick} aria-label="Email info@compliledger.com to subscribe">
                 <Mail size={16} />
               </Button>
             </div>

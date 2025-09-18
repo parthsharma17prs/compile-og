@@ -151,7 +151,7 @@ const Security = () => {
               Enterprise-grade protection for your most sensitive compliance data
             </p>
           </div>
-          
+
           <div className="max-w-6xl mx-auto bg-card/50 backdrop-blur-sm rounded-2xl p-8 md:p-12 shadow-lg border border-border/50">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
@@ -173,7 +173,7 @@ const Security = () => {
                   ))}
                 </div>
               </div>
-              
+
               <div className="bg-muted/30 rounded-xl p-8 border border-border/30">
                 <div className="space-y-6">
                   <div className="p-4 bg-primary/5 rounded-lg border border-primary/10">
@@ -225,11 +225,11 @@ const Security = () => {
                           <span className="font-medium">{item.score}%</span>
                         </div>
                         <div className="w-full bg-gray-200 rounded-full h-2">
-                          <div 
+                          <div
                             className={`h-2 rounded-full ${
-                              item.score > 95 ? 'bg-green-500' : 
+                              item.score > 95 ? 'bg-green-500' :
                               item.score > 85 ? 'bg-amber-500' : 'bg-red-500'
-                            }`} 
+                            }`}
                             style={{ width: `${item.score}%` }}
                           ></div>
                         </div>
@@ -295,7 +295,7 @@ const Security = () => {
               End-to-end protection for your software supply chain
             </p>
           </div>
-          
+
           <div className="max-w-6xl mx-auto bg-card/50 backdrop-blur-sm rounded-2xl p-8 md:p-12 shadow-lg border border-border/50">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="order-2 md:order-1">
@@ -317,7 +317,7 @@ const Security = () => {
                   ))}
                 </div>
               </div>
-              
+
               <div className="order-1 md:order-2 bg-muted/30 rounded-xl p-8 border border-border/30">
                 <div className="space-y-6">
                   <div className="p-4 bg-primary/5 rounded-lg border border-primary/10">
@@ -353,7 +353,7 @@ const Security = () => {
               Proactive preparation for security incidents and compliance events
             </p>
           </div>
-          
+
           <div className="max-w-6xl mx-auto bg-card/50 backdrop-blur-sm rounded-2xl p-8 md:p-12 shadow-lg border border-border/50">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="order-2 md:order-1">
@@ -375,7 +375,7 @@ const Security = () => {
                   ))}
                 </div>
               </div>
-              
+
               <div className="order-1 md:order-2 bg-muted/30 rounded-xl p-8 border border-border/30">
                 <div className="space-y-6">
                   <div className="p-4 bg-primary/5 rounded-lg border border-primary/10">
@@ -409,36 +409,36 @@ const Security = () => {
             <p className="text-xl text-muted-foreground mb-12 max-w-3xl mx-auto">
               We align our internal practices with industry frameworks and pursue independent certifications to demonstrate our commitment to security and compliance.
             </p>
-            
+
             <div className="grid grid-cols-2 md:grid-cols-3 gap-8 mb-12">
               {[
-                { 
-                  name: "SOC 2", 
-                  status: "certified",
+                {
+                  name: "SOC 2",
+                  status: "Planned",
                   logo: "https://internationalsecurityjournal.com/wp-content/uploads/2021/12/soc-2-1.jpg"
                 },
-                { 
-                  name: "ISO 27001", 
-                  status: "certified",
+                {
+                  name: "ISO 27001",
+                  status: "Planned",
                   logo: "https://www.qassurance.com/wp-content/uploads/QAssurance-logos.png"
                 },
-                { 
-                  name: "FedRAMP", 
-                  status: "in-progress",
+                {
+                  name: "FedRAMP",
+                  status: "Planned",
                   logo: "https://www.acquia.com/sites/default/files/styles/blog_hero_image_mobile/public/media/image/2022-05/FedRAMP%20logo.png?itok=tbett_v_"
                 },
-                { 
-                  name: "HIPAA", 
+                {
+                  name: "HIPAA",
                   status: "planned",
                   logo: "https://www.hipaajournal.com/wp-content/uploads/2021/12/HIPAA-civil-monetary-penalties-2021.jpg"
                 },
-                { 
-                  name: "HITRUST", 
+                {
+                  name: "HITRUST",
                   status: "planned",
                   logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDZrW2JT97cxFf2KGJQyQcgM01-D0ASpJoag&s"
                 },
-                { 
-                  name: "ISO 27701", 
+                {
+                  name: "ISO 27701",
                   status: "planned",
                   logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2uKB8bSgu-N-AlUMaW8R5ik2o2-i_Q1k02A&s"
                 }
@@ -446,9 +446,9 @@ const Security = () => {
                 <div key={index} className="flex flex-col items-center group">
                   <div className="w-24 h-24 rounded-xl bg-white/80 backdrop-blur-sm border border-border/50 shadow-sm p-4 flex items-center justify-center mb-3 transition-all duration-200 hover:shadow-md hover:border-primary/30 hover:scale-105">
                     {item.logo ? (
-                      <img 
-                        src={item.logo} 
-                        alt={`${item.name} logo`} 
+                      <img
+                        src={item.logo}
+                        alt={`${item.name} logo`}
                         className="h-12 w-auto object-contain max-w-full max-h-full"
                         onError={(e) => {
                           const target = e.target as HTMLImageElement;
@@ -475,7 +475,7 @@ const Security = () => {
                 </div>
               ))}
             </div>
-            
+
             <div className="mt-8">
               <p className="text-muted-foreground mb-6">
                 Interested in our security certifications or have specific compliance requirements?
