@@ -125,7 +125,7 @@ const Index = () => {
               </Button>
             </Link>
             <Button asChild size="lg" className="px-8 py-4 text-lg">
-              <a href="mailto:info@compliledger.com?subject=Pilot%20Program%20Request&body=Hello%20CompliLedger%20Team,%0A%0AI%20would%20like%20to%20request%20access%20to%20the%20CompliLedger%20Pilot%20Program.%0A%0APlease%20share%20the%20next%20steps,%20timeline,%20and%20any%20prerequisites%20for%20participation.%20I%20am%20happy%20to%20provide%20additional%20details%20about%20our%20team%20and%20use%20case.%0A%0AThank%20you,">
+              <a href="mailto:Maranda@compliledger.com?subject=Pilot%20Program%20Request&body=Hello%20CompliLedger%20Team,%0A%0AI%20would%20like%20to%20request%20access%20to%20the%20CompliLedger%20Pilot%20Program.%0A%0APlease%20share%20the%20next%20steps,%20timeline,%20and%20any%20prerequisites%20for%20participation.%20I%20am%20happy%20to%20provide%20additional%20details%20about%20our%20team%20and%20use%20case.%0A%0AThank%20you,">
                 Join Pilot Program
               </a>
             </Button>
