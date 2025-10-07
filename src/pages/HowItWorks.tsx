@@ -6,7 +6,7 @@ import Section from '@/components/Section';
 import SectionHeader from '@/components/SectionHeader';
 import GeometricPattern from '@/components/GeometricPattern';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { 
+import {
   ArrowRight,
   CheckCircle,
   Briefcase,
@@ -139,16 +139,16 @@ const HowItWorks = () => {
             description="End-to-end compliance automation tailored to your industry — with privacy-preserving attestations and immutable audit trails"
           />
           <div className="max-w-7xl mx-auto">
-            <Tabs 
+            <Tabs
               defaultValue={`v0`}
               className="w-full space-y-4"
             >
               <div className="w-full overflow-x-auto pb-2">
                 <TabsList className="w-full flex flex-nowrap gap-1 p-1 bg-secondary/10 rounded-lg border border-border">
                   {verticals.map((v, idx) => (
-                    <TabsTrigger 
-                      key={`t${idx}`} 
-                      value={`v${idx}`} 
+                    <TabsTrigger
+                      key={`t${idx}`}
+                      value={`v${idx}`}
                       className="px-4 py-2 text-sm font-medium whitespace-nowrap data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
                     >
                       <v.icon className="h-4 w-4 mr-2 inline-block" />
@@ -227,16 +227,21 @@ const HowItWorks = () => {
               Every Industry. Every Framework. One Proven Workflow.
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Whether you're a bank, a DeFi protocol, an exchange, or a government contractor, 
+              Whether you're a bank, a DeFi protocol, an exchange, or a government contractor,
               CompliLedger replaces static audits with continuous, provable compliance.
             </p>
             <div className="flex flex-wrap justify-center gap-4 pt-2">
               <Link to="/demo">
                 <Button size="lg" className="btn-glow px-8">
-                  Book a Demo
+                  Schedule a call
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
+              <Button variant="outline" size="lg" className="px-8" asChild>
+                <a href="https://docs.google.com/document/d/1mPCmvQioDrfeFYTgTwlpI49EDOKIP5gJ" target="_blank" rel="noopener noreferrer">
+                  View Whitepaper
+                </a>
+              </Button>
               <Link to="/solutions">
                 <Button variant="outline" size="lg" className="px-8">
                   Explore Solutions

@@ -281,9 +281,14 @@ const Partners = () => {
                   </Button>
                   <Link to="/demo">
                     <Button size="lg" variant="outline" className="btn-glow px-8">
-                      Schedule Discussion
+                      Schedule a call
                     </Button>
                   </Link>
+                  <Button size="lg" variant="outline" className="px-8" asChild>
+                    <a href="https://docs.google.com/document/d/1mPCmvQioDrfeFYTgTwlpI49EDOKIP5gJ" target="_blank" rel="noopener noreferrer">
+                      View Whitepaper
+                    </a>
+                  </Button>
                 </div>
               </div>
             </Card>

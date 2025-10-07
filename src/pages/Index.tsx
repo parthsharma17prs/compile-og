@@ -615,10 +615,15 @@ const Index = () => {
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             <Link to="/demo">
               <Button size="lg" className="px-8 py-4 text-lg">
-                Schedule a Demo
+                Schedule a call
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
+            <Button variant="outline" size="lg" className="px-8 py-4 text-lg" asChild>
+              <a href="https://docs.google.com/document/d/1mPCmvQioDrfeFYTgTwlpI49EDOKIP5gJ" target="_blank" rel="noopener noreferrer">
+                View Whitepaper
+              </a>
+            </Button>
             <Link to="/how-it-works">
               <Button variant="outline" size="lg" className="px-8 py-4 text-lg">
                 Explore the Technology

@@ -15,31 +15,31 @@ const Contact = () => {
         <div className="container mx-auto px-6 text-center relative z-10">
           <div className="max-w-5xl mx-auto space-y-8">
             <h1 className="text-5xl md:text-7xl font-space-grotesk font-bold glow-text">
-              Ready to prove compliance? 
+              Ready to prove compliance?
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed mb-8">
               Whether you're a startup preparing for SOC 2, an exchange under AML/BSA review, or a government contractor chasing FedRAMP, CompliLedger can help.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Button 
-                size="lg" 
+              <Button
+                size="lg"
                 className="bg-primary hover:bg-primary/90 text-background font-medium px-8 py-6 text-lg transition-all duration-300 transform hover:scale-105"
               >
                 Book a Demo
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-              <Button 
-                variant="outline" 
-                size="lg" 
+              <Button
+                variant="outline"
+                size="lg"
                 className="border-2 border-foreground/20 hover:border-primary/50 text-foreground font-medium px-8 py-6 text-lg transition-all duration-300 transform hover:scale-105"
               >
                 Contact Sales
                 <Mail className="ml-2 h-5 w-5" />
               </Button>
             </div>
-            
-            
+
+
           </div>
         </div>
       </Section>
@@ -52,7 +52,7 @@ const Contact = () => {
           <div className="absolute -right-20 -top-20 w-64 h-64 bg-primary/5 rounded-full mix-blend-multiply filter blur-3xl opacity-70"></div>
           <div className="absolute -left-20 -bottom-20 w-64 h-64 bg-primary/10 rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
         </div>
-        
+
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
@@ -63,7 +63,7 @@ const Contact = () => {
                 Fill out the form below and our team will get back to you within 24 hours.
               </p>
             </div>
-            
+
             <div className="bg-background/80 backdrop-blur-sm rounded-2xl border border-border/30 shadow-xl overflow-hidden">
               <div className="p-1 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5">
                 <div className="bg-background/95 p-6 md:p-8 rounded-xl">
@@ -82,7 +82,7 @@ const Contact = () => {
                           />
                         </div>
                       </div>
-                      
+
                       <div className="space-y-1">
                         <label htmlFor="email" className="block text-sm font-medium text-muted-foreground">Work Email *</label>
                         <div className="relative">
@@ -139,8 +139,8 @@ const Contact = () => {
                       <p className="block text-sm font-medium text-muted-foreground">Area of Interest *</p>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                         {[
-                          'MiCA', 'ISO 27001', 'FedRAMP', 'PCI', 'NYDFS', 'SOX', 
-                          'CMMC', 'HITRUST', 'HIPAA', 'AML/BSA / Exchange Licensing', 
+                          'MiCA', 'ISO 27001', 'FedRAMP', 'PCI', 'NYDFS', 'SOX',
+                          'CMMC', 'HITRUST', 'HIPAA', 'AML/BSA / Exchange Licensing',
                           'Web3 & DeFi', 'Other'
                         ].map((interest) => (
                           <label key={interest} className="flex items-center space-x-2 p-2 rounded-lg hover:bg-muted/30 transition-colors cursor-pointer">
@@ -173,8 +173,8 @@ const Contact = () => {
                     </div>
 
                     <div className="pt-2">
-                      <Button 
-                        type="submit" 
+                      <Button
+                        type="submit"
                         className="w-full py-4 text-base font-medium bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg hover:shadow-primary/20 group"
                       >
                         <span className="relative z-10">Submit Request</span>
@@ -199,34 +199,34 @@ const Contact = () => {
             <h3 className="text-xl font-semibold mb-6 text-center">Who Are You?</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {[
-                { 
-                  title: 'Enterprise or SaaS Team', 
+                {
+                  title: 'Enterprise or SaaS Team',
                   description: 'See SOX & ISO solutions',
                   link: '/solutions#enterprise'
                 },
-                { 
-                  title: 'Exchange or Fintech', 
+                {
+                  title: 'Exchange or Fintech',
                   description: 'Explore AML/BSA compliance',
                   link: '/solutions#fintech'
                 },
-                { 
-                  title: 'Government Contractor', 
+                {
+                  title: 'Government Contractor',
                   description: 'Learn about FedRAMP/RMF automation',
                   link: '/solutions#government'
                 },
-                { 
-                  title: 'Healthcare Provider', 
+                {
+                  title: 'Healthcare Provider',
                   description: 'HIPAA-ready workflows',
                   link: '/solutions#healthcare'
                 },
-                { 
-                  title: 'Auditor or Regulator', 
+                {
+                  title: 'Auditor or Regulator',
                   description: 'Explore AuditSync™ portal',
                   link: '/auditsync'
                 }
               ].map((item, index) => (
-                <Link 
-                  key={index} 
+                <Link
+                  key={index}
                   to={item.link}
                   className="p-4 border border-border/40 rounded-lg hover:bg-muted/30 transition-colors group"
                 >
@@ -265,8 +265,8 @@ const Contact = () => {
                     ].map((item, index) => (
                       <li key={index} className="group">
                         <p className="text-sm text-muted-foreground">{item.label}</p>
-                        <a 
-                          href={`mailto:${item.email}`} 
+                        <a
+                          href={`mailto:${item.email}`}
                           className="font-medium text-foreground hover:text-primary transition-colors flex items-center"
                         >
                           {item.email}
@@ -320,7 +320,7 @@ const Contact = () => {
               </div>
             </div>
 
-            
+
           </div>
         </div>
       </Section>
@@ -336,22 +336,27 @@ const Contact = () => {
                 </div>
               ))}
             </div>
-            
+
             <h2 className="text-4xl md:text-5xl font-space-grotesk font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80">
               Compliance You Can Prove.
             </h2>
-            
+
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Book a demo today and see how CompliLedger transforms audits into continuous, provable trust.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row justify-center gap-4 mt-8">
               <Link to="/demo" className="w-full sm:w-auto">
                 <Button size="lg" className="w-full sm:w-auto btn-glow transition-transform motion-safe:hover:-translate-y-0.5">
-                  Book a Demo
+                  Schedule a call
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
+              <Button size="lg" variant="outline" className="w-full sm:w-auto border-2 border-foreground/20 hover:bg-foreground/5 transition-colors" asChild>
+                <a href="https://docs.google.com/document/d/1mPCmvQioDrfeFYTgTwlpI49EDOKIP5gJ" target="_blank" rel="noopener noreferrer">
+                  View Whitepaper
+                </a>
+              </Button>
               <Link to="/contact" className="w-full sm:w-auto">
                 <Button size="lg" variant="outline" className="w-full sm:w-auto border-2 border-foreground/20 hover:bg-foreground/5 transition-colors">
                   Talk to Sales

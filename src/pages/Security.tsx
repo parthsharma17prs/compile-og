@@ -515,10 +515,15 @@ const Security = () => {
             <div className="flex flex-wrap justify-center gap-4 pt-2">
               <Link to="/demo">
                 <Button size="lg" className="btn-glow px-8">
-                  Book a Demo
+                  Schedule a call
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
+              <Button variant="outline" size="lg" className="px-8" asChild>
+                <a href="https://docs.google.com/document/d/1mPCmvQioDrfeFYTgTwlpI49EDOKIP5gJ" target="_blank" rel="noopener noreferrer">
+                  View Whitepaper
+                </a>
+              </Button>
               <Link to="/how-it-works">
                 <Button variant="outline" size="lg" className="px-8">
 Explore How It Works

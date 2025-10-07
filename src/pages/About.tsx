@@ -313,12 +313,19 @@ const About = () => {
           <div className="max-w-3xl mx-auto space-y-8">
             <h2 className="text-3xl md:text-4xl font-space-grotesk font-bold">Let’s Prove Compliance Together.</h2>
             <p className="text-xl text-muted-foreground">Whether you’re an enterprise, auditor, exchange, or regulator — CompliLedger is designed for you. Together, we can make compliance continuous, collaborative, and provable.</p>
-            <Link to="/demo" className="inline-block mt-8">
-              <Button size="lg" className="btn-glow transition-transform motion-safe:hover:-translate-y-0.5">
-                Book a Demo
-                <ArrowRight className="ml-2 h-5 w-5" />
+            <div className="flex flex-col sm:flex-row gap-4 justify-center sm:justify-center mt-8">
+              <Link to="/demo">
+                <Button size="lg" className="btn-glow transition-transform motion-safe:hover:-translate-y-0.5">
+                  Schedule a call
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+              <Button size="lg" variant="outline" asChild>
+                <a href="https://docs.google.com/document/d/1mPCmvQioDrfeFYTgTwlpI49EDOKIP5gJ" target="_blank" rel="noopener noreferrer">
+                  View Whitepaper
+                </a>
               </Button>
-            </Link>
+            </div>
           </div>
         </div>
       </Section>
