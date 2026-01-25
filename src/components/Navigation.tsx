@@ -87,7 +87,9 @@ export function Navigation({ items = defaultItems, className }: NavigationProps)
       >
         <div className="flex items-center justify-between px-4 py-3">
           <Link to="/" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
-            <img src="/Logo.png" alt="Logo" className="h-7 w-auto" />
+            <div className="h-9 w-9 rounded-full bg-primary/20 flex items-center justify-center p-1.5">
+              <img src="/Logo.png" alt="CompliLedger Logo" className="h-full w-full object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]" />
+            </div>
             <span className="text-sm font-semibold">CompliLedger</span>
           </Link>
           <button
@@ -182,8 +184,10 @@ export function Navigation({ items = defaultItems, className }: NavigationProps)
             >
               {item.url === "/" ? (
                 <>
-                  <span className="flex items-center pl-2 pr-3">
-                    <img src="/Logo.png" alt="Logo" className="h-6 w-auto" />
+                  <span className="flex items-center justify-center pl-2 pr-3">
+                    <div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center p-1.5">
+                      <img src="/Logo.png" alt="CompliLedger Logo" className="h-full w-full object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]" />
+                    </div>
                   </span>
                   <span className="sr-only">{item.name}</span>
                   <span className="md:hidden">
