@@ -1,640 +1,458 @@
+import { type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
+import { ArrowRightIcon, PlusIcon, ShieldCheck, EyeOff, Network, Sparkles, Box, Lock, Search, Settings } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { motion, useReducedMotion } from 'motion/react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Layout from '@/components/Layout';
 import Section from '@/components/Section';
 import SectionHeader from '@/components/SectionHeader';
-import {
-  Shield,
-  Lock,
-  Eye,
-  Zap,
-  CheckCircle,
-  ArrowRight,
-  Building2,
-  Users,
-  FileCheck,
-  Clock,
-  BarChart3,
-  Globe
-} from 'lucide-react';
+import { GLSLHills } from '@/components/glsl-hills';
+import { FeatureCard, type FeatureType } from '@/components/FeatureCard';
+import { GlowingEffect } from '@/components/ui/glowing-effect';
+import { CategoryList, type Category } from '@/components/ui/category-list';
+import { LayoutGrid, Bot, Code, Palette, ArrowRight } from 'lucide-react';
 
-const Index = () => {
-  const capabilities = [
-    {
-      icon: Shield,
-      title: "Zero-Knowledge Proofs",
-      description: "Prove compliance without revealing sensitive data using advanced cryptographic protocols."
-    },
-    {
-      icon: Lock,
-      title: "Data Privacy First",
-      description: "Your sensitive business data never leaves your infrastructure while maintaining auditability."
-    },
-    {
-      icon: Eye,
-      title: "Transparent Auditing",
-      description: "Enable regulatory oversight with verifiable compliance proofs and audit trails."
-    },
-    {
-      icon: Zap,
-      title: "Real-time Monitoring",
-      description: "Continuous compliance monitoring with instant alerts and automated reporting."
-    }
-  ];
+const whatIsFeatures: FeatureType[] = [
+  {
+    title: 'Continuous compliance',
+    icon: ShieldCheck,
+    description:
+      'Prove you are compliant without mirroring systems, copying logs, or centralizing raw evidence.',
+  },
+  {
+    title: 'Proof instead of privileged access',
+    icon: Network,
+    description:
+      'Share cryptographic proofs instead of screenshots, exports, or direct access to sensitive environments.',
+  },
+  {
+    title: ' Automation instead of spreadsheets',
+    icon: Sparkles,
+    description:
+      'AI agents keep controls mapped, tested, and up to date as your systems change.',
+  },
+  {
+    title: ' Privacy instead of exposure',
+    icon: EyeOff,
+    description:
+      'Verification events are anchored across Algorand, Aleo, and Zcash for independent verifiability.',
+  },
+];
 
-  const differentiators = [
-    {
-      icon: CheckCircle,
-      title: "Mathematically Provable",
-      description: "Compliance backed by cryptographic proof, not just documentation"
-    },
-    {
-      icon: Shield,
-      title: "Privacy-Preserving",
-      description: "Maintain confidentiality while demonstrating regulatory adherence"
-    },
-    {
-      icon: Clock,
-      title: "Automated Compliance",
-      description: "Reduce manual audit preparation from months to minutes"
-    },
-    {
-      icon: BarChart3,
-      title: "Cost Efficient",
-      description: "Dramatically reduce compliance costs and operational overhead"
-    }
-  ];
+type ViewAnimationProps = {
+  delay?: number;
+  className?: string;
+  children: ReactNode;
+};
 
-  const useCases = [
-    {
-      icon: Building2,
-      title: "Financial Services",
-      description: "Banks, investment firms, and fintech companies requiring SOX, Basel III, and other financial regulations",
-      industries: ["Banking", "Insurance", "Investment Management", "Fintech"]
-    },
-    {
-      icon: Users,
-      title: "Healthcare Organizations",
-      description: "Hospitals, clinics, and health tech companies managing HIPAA and patient data privacy",
-      industries: ["Hospitals", "Health Tech", "Pharmaceuticals", "Medical Devices"]
-    },
-    {
-      icon: FileCheck,
-      title: "Enterprise Compliance",
-      description: "Large corporations managing GDPR, SOC 2, and industry-specific regulatory requirements",
-      industries: ["Technology", "Manufacturing", "Retail", "Energy"]
-    },
-    {
-      icon: Globe,
-      title: "Government & Public Sector",
-      description: "Government agencies and public organizations ensuring transparency and accountability",
-      industries: ["Federal Agencies", "State Government", "Public Utilities", "Education"]
-    }
-  ];
+function AnimatedContainer({ className, delay = 0.1, children }: ViewAnimationProps) {
+  const shouldReduceMotion = useReducedMotion();
+
+  if (shouldReduceMotion) {
+    return <div className={className}>{children}</div>;
+  }
 
   return (
+    <motion.div
+      initial={{ filter: 'blur(4px)', translateY: -8, opacity: 0 }}
+      whileInView={{ filter: 'blur(0px)', translateY: 0, opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ delay, duration: 0.8 }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+const Index = () => {
+  return (
     <Layout>
-      {/* Hero Section */}
-      <Section variant="glow" spacing="xl" className="min-h-screen flex items-center justify-center text-center">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="mb-8">
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 text-gradient leading-tight glow-text">
-            CompliLedger:  Compliance You Can Prove. Blockchain You Can Trust.
-            </h1>
-            <div className="max-w-4xl mx-auto space-y-2 md:space-y-3 mb-12">
-              <p className="text-xl md:text-2xl font-semibold text-foreground/90 leading-relaxed">
-                The First Blockchain-Native Compliance Automation Platform
-              </p>
-              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                Built on Algorand; XRPL & XDC next. We turn SBOMs, code, configs, and smart contracts into audit-ready evidence, ZK proofs, and immutable on-chain attestations for Web3, finance, healthcare, and government.
-              </p>
+      {/* HERO with GLSL Hills background and rounded corners */}
+      <Section spacing="xl" className="flex items-start justify-center min-h-screen pt-4 md:pt-8">
+        <div className="relative w-full max-w-[110rem]">
+          <div className="relative h-[680px] md:h-[800px] overflow-hidden border bg-background/60 shadow-2xl rounded-xl md:rounded-[2rem]">
+            <div className="absolute inset-0">
+              <GLSLHills width="100%" height="100%" />
+            </div>
+
+            <div className="relative z-10 px-6 py-12 md:px-10 md:py-16">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                {/* Left: Heading / copy */}
+                <div className="text-left">
+                  <h1
+                    className="text-4xl md:text-6xl font-bold mb-4"
+                    style={{ WebkitTextStroke: '1px rgba(255,255,255,0.95)', WebkitTextFillColor: 'transparent', color: 'transparent' }}
+                  >
+                    Proof Based{' '}
+                    <span style={{ WebkitTextFillColor: 'rgba(255,255,255,0.95)', WebkitTextStroke: '0px', color: 'rgba(255,255,255,0.95)' }}>
+                      Compliance
+                    </span>{' '}
+                    Infrastructure
+                  </h1>
+                  <p
+                    className="absolute left-1/2 -translate-x-1/2 z-20 text-lg md:text-xl max-w-3xl text-center px-6 "
+                    style={{ bottom: '-24rem' }}
+                  >
+                     Continuous, privacy-preserving<span className="text-red-500 font-semibold bg-red-500/10 rounded-sm px-2">compliance proof</span> for companies, auditors, and regulators.
+
+                  </p>
+
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
-            <Link to="/schedule-call">
-              <Button size="lg" className="px-8 py-4 text-lg">
-                Schedule a call
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
-            <Link to="/how-it-works">
-              <Button variant="outline" size="lg" className="px-8 py-4 text-lg">
-                See How It Works
-              </Button>
-            </Link>
-            <Button asChild size="lg" className="px-8 py-4 text-lg">
-              <a href="mailto:Maranda@compliledger.com?subject=Pilot%20Program%20Request&body=Hello%20CompliLedger%20Team,%0A%0AI%20would%20like%20to%20request%20access%20to%20the%20CompliLedger%20Pilot%20Program.%0A%0APlease%20share%20the%20next%20steps,%20timeline,%20and%20any%20prerequisites%20for%20participation.%20I%20am%20happy%20to%20provide%20additional%20details%20about%20our%20team%20and%20use%20case.%0A%0AThank%20you,">
-                Join Pilot Program
-              </a>
-            </Button>
-          </div>
-          <div className="mt-16">
-            <p className="text-sm text-muted-foreground mb-6">SUPPORTED COMPLIANCE FRAMEWORKS</p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 justify-items-center">
-              <div className="flex flex-col items-center">
-                <div className="h-20 w-20 mb-2 bg-white rounded-lg p-2 flex items-center justify-center shadow-sm">
-                  <img
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_ordgGltxJ9IOadHsMpdh-MGRJcorfG84Bg&s"
-                    alt="SOC 2"
-                    className="h-12 w-auto object-contain"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.onerror = null;
-                      target.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_ordgGltxJ9IOadHsMpdh-MGRJcorfG84Bg&s';
-                    }}
-                  />
-                </div>
-                <span className="text-sm font-medium">SOC 2</span>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="h-20 w-20 mb-2 bg-white rounded-lg p-2 flex items-center justify-center shadow-sm">
-                  <img
-                    src="https://www.ardentprivacy.ai/assets/img/gdpr_act.png"
-                    alt="GDPR"
-                    className="h-12 w-auto object-contain"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.onerror = null;
-                      target.src = 'https://www.ardentprivacy.ai/assets/img/gdpr_act.png';
-                    }}
-                  />
-                </div>
-                <span className="text-sm font-medium">GDPR</span>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="h-20 w-20 mb-2 bg-white rounded-lg p-2 flex items-center justify-center shadow-sm">
-                  <img
-                    src="https://www.hipaajournal.com/wp-content/uploads/2021/12/HIPAA-civil-monetary-penalties-2021.jpg"
-                    alt="HIPAA"
-                    className="h-12 w-auto object-contain"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.onerror = null;
-                      target.src = 'https://www.hipaajournal.com/wp-content/uploads/2021/12/HIPAA-civil-monetary-penalties-2021.jpg';
-                    }}
-                  />
-                </div>
-                <span className="text-sm font-medium">HIPAA</span>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="h-20 w-20 mb-2 bg-white rounded-lg p-2 flex items-center justify-center shadow-sm">
-                  <img
-                    src="https://hyperproof.io/wp-content/uploads/2023/06/framework-informational-page_hero-badges-sox.png"
-                    alt="SOX"
-                    className="h-12 w-auto object-contain"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.onerror = null;
-                      target.src = 'https://hyperproof.io/wp-content/uploads/2023/06/framework-informational-page_hero-badges-sox.png';
-                    }}
-                  />
-                </div>
-                <span className="text-sm font-medium">SOX</span>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="h-20 w-20 mb-2 bg-white rounded-lg p-2 flex items-center justify-center shadow-sm">
-                  <img
-                    src="https://www.qassurance.com/wp-content/uploads/QAssurance-logos.png"
-                    alt="ISO 27001"
-                    className="h-12 w-auto object-contain"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.onerror = null;
-                      target.src = 'https://www.qassurance.com/wp-content/uploads/QAssurance-logos.png';
-                    }}
-                  />
-                </div>
-                <span className="text-sm font-medium">ISO 27001</span>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="h-20 w-20 mb-2 bg-white rounded-lg p-2 flex items-center justify-center shadow-sm">
-                  <img
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcST0IX-vabefXDYofRMrkzWgXMaDiLB0RQXpQ&s"
-                    alt="NIST"
-                    className="h-12 w-auto object-contain"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.onerror = null;
-                      target.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcST0IX-vabefXDYofRMrkzWgXMaDiLB0RQXpQ&s';
-                    }}
-                  />
-                </div>
-                <span className="text-sm font-medium">NIST</span>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="h-20 w-20 mb-2 bg-white rounded-lg p-2 flex items-center justify-center shadow-sm">
-                  <img
-                    src="https://www.holmsecurity.com/hs-fs/hubfs/Website%20material/Images/PCI%20DSS_logo.png?width=740&name=PCI%20DSS_logo.png"
-                    alt="PCI DSS"
-                    className="h-12 w-auto object-contain"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.onerror = null;
-                      target.src = 'https://www.holmsecurity.com/hs-fs/hubfs/Website%20material/Images/PCI%20DSS_logo.png?width=740&name=PCI%20DSS_logo.png';
-                    }}
-                  />
-                </div>
-                <span className="text-sm font-medium">PCI DSS</span>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="h-20 w-20 mb-2 bg-white rounded-lg p-2 flex items-center justify-center shadow-sm">
-                  <img
-                    src="https://www.ardentprivacy.ai/assets/img/CCPA_logo.jpg"
-                    alt="CCPA"
-                    className="h-12 w-auto object-contain"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.onerror = null;
-                      target.src = 'https://www.ardentprivacy.ai/assets/img/CCPA_logo.jpg';
-                    }}
-                  />
-                </div>
-                <span className="text-sm font-medium">CCPA</span>
-              </div>
-            </div>
-          </div>
+          <h2
+            aria-hidden="true"
+            className="absolute left-1/2 bottom-[-3rem] md:bottom-[-4rem] -translate-x-1/2 text-[6rem] md:text-[10rem] leading-none font-extrabold uppercase text-muted-foreground/10 pointer-events-none select-none z-0"
+          >
+            CompliLedger
+          </h2>
         </div>
       </Section>
 
-      {/* Slim Banner: Blockchain-Native by Design */}
-      <Section variant="default" className="py-6 border-t border-border/50">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="rounded-xl border border-border/60 bg-background/60 backdrop-blur-sm p-4 md:p-6">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-              <div className="max-w-2xl">
-                <h3 className="text-sm font-semibold tracking-wide">Blockchain-Native by Design</h3>
-                <p className="text-sm text-muted-foreground">Evidence commitments anchored on Algorand today. XRPL and XDC integrations on our roadmap.</p>
-              </div>
-              <ul className="flex flex-wrap items-center gap-3" aria-label="Supported and planned networks">
-                <li className="px-3 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400">
-                  Algorand <span className="ml-2 text-xs font-medium rounded-full bg-emerald-500/20 text-emerald-300 px-2 py-0.5">Live</span>
-                </li>
-                <li className="px-3 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400">
-                  XRPL <span className="ml-2 text-xs font-medium rounded-full bg-amber-500/20 text-amber-300 px-2 py-0.5">Roadmap</span>
-                </li>
-                <li className="px-3 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400">
-                  XDC <span className="ml-2 text-xs font-medium rounded-full bg-amber-500/20 text-amber-300 px-2 py-0.5">Roadmap</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </Section>
-
-      {/* Value Proposition Section */}
+      {/* SECTION 1 — WHAT COMPLILEDGER IS */}
       <Section variant="default">
         <div className="max-w-6xl mx-auto px-4">
-          <SectionHeader
-            title="Streamline Compliance with Privacy-Preserving Technology"
-            description="CompliLedger transforms how organizations achieve and maintain compliance"
-            className="text-center mb-12"
-          />
+          <div className="mt-4 grid gap-10 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1.1fr)] items-start">
+            <AnimatedContainer className="space-y-4 text-left max-w-xl">
+              <h2 className="text-3xl font-bold tracking-wide md:text-4xl lg:text-5xl">
+                Compliance without surveillance
+              </h2>
+              <p className="text-muted-foreground mt-1 text-sm tracking-wide md:text-base">
+                Most compliance tools collect data, centralize evidence, and increase risk. CompliLedger works differently. We verify compliance state cryptographically instead of copying sensitive systems, logs, or documents.
+              </p>
+            </AnimatedContainer>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="bg-muted/50 p-6 rounded-lg">
-              <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                  <path d="m9 12 2 2 4-4"/>
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold mb-2">Evidence → Attestation</h3>
-              <p className="text-muted-foreground">Convert live technical evidence into verifiable, privacy-preserving proofs.</p>
-            </div>
-
-            <div className="bg-muted/50 p-6 rounded-lg">
-              <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
-                  <circle cx="12" cy="12" r="10"/>
-                  <path d="M12 6v6l4 2"/>
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold mb-2">Continuous, not quarterly</h3>
-              <p className="text-muted-foreground">Detect drift, auto-remediate, and stay audit-ready at all times.</p>
-            </div>
-
-            <div className="bg-muted/50 p-6 rounded-lg">
-              <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                  <path d="m9 12 2 2 4-4"/>
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold mb-2">Auditor & Legal Friendly</h3>
-              <p className="text-muted-foreground">AuditSync™ portal enables scoped, immutable evidence sharing for auditors, regulators, and legal teams.</p>
-            </div>
-
-            <div className="bg-muted/50 p-6 rounded-lg">
-              <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
-                  <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
-                  <polyline points="14 2 14 8 20 8"/>
-                  <path d="M16 13H8"/>
-                  <path d="M16 17H8"/>
-                  <path d="M10 9H8"/>
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold mb-2">SBOM-first by design</h3>
-              <p className="text-muted-foreground">Integrate SBOMs, repos, and cloud configs into compliance workflows.</p>
-            </div>
+            <AnimatedContainer
+              delay={0.4}
+              className="grid grid-cols-1 sm:grid-cols-2 divide-x divide-y divide-dashed border border-dashed"
+            >
+              {whatIsFeatures.map((feature) => (
+                <FeatureCard key={feature.title} feature={feature} hideDescription />
+              ))}
+            </AnimatedContainer>
           </div>
         </div>
       </Section>
 
-      {/* How It Works Section */}
-      <Section variant="blend">
+      {/* SECTION 2 — WHO IT'S FOR */}
+      <Section >
         <div className="max-w-6xl mx-auto px-4">
-          <SectionHeader
-            title="How CompliLedger Works"
-            description="A streamlined approach to compliance management"
-            className="text-center mb-12"
-          />
-
-          <div className="relative">
-            {/* Connecting line */}
-
-
-            {/* Steps */}
-            <div className="space-y-8 md:grid md:grid-cols-5 md:gap-8 md:space-y-0">
-              {/* Step 1 */}
-              <div className="relative z-10 flex items-start gap-4 md:flex-col md:items-center md:text-center">
-                <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-primary text-sm font-medium text-primary-foreground">1</div>
-                <div>
-                  <h3 className="text-lg font-semibold">Connect</h3>
-                  <p className="text-muted-foreground text-sm">Repos, SBOMs, cloud accounts, and smart contracts</p>
-                </div>
-              </div>
-
-              {/* Step 2 */}
-              <div className="relative z-10 flex items-start gap-4 md:flex-col md:items-center md:text-center">
-                <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-primary text-sm font-medium text-primary-foreground">2</div>
-                <div>
-                  <h3 className="text-lg font-semibold">Map & Ingest</h3>
-                  <p className="text-muted-foreground text-sm">To SOX, ISO, FedRAMP, MiCA, HIPAA, PCI, AML/BSA</p>
-                </div>
-              </div>
-
-              {/* Step 3 */}
-              <div className="relative z-10 flex items-start gap-4 md:flex-col md:items-center md:text-center">
-                <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-primary text-sm font-medium text-primary-foreground">3</div>
-                <div>
-                  <h3 className="text-lg font-semibold">Continuous Testing</h3>
-                  <p className="text-muted-foreground text-sm">For drift, vulnerabilities, and policy violations</p>
-                </div>
-              </div>
-
-              {/* Step 4 */}
-              <div className="relative z-10 flex items-start gap-4 md:flex-col md:items-center md:text-center">
-                <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-primary text-sm font-medium text-primary-foreground">4</div>
-                <div>
-                  <h3 className="text-lg font-semibold">Generate Evidence</h3>
-                  <p className="text-muted-foreground text-sm">OSCAL, SSP, policies, SOPs automatically</p>
-                </div>
-              </div>
-
-              {/* Step 5 */}
-              <div className="relative z-10 flex items-start gap-4 md:flex-col md:items-center md:text-center">
-                <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-primary text-sm font-medium text-primary-foreground">5</div>
-                <div>
-                  <h3 className="text-lg font-semibold">Attest & Share</h3>
-                  <p className="text-muted-foreground text-sm">Via ZKPs, VCs, and AuditSync™ portal</p>
-                </div>
-              </div>
-            </div>
+          <div className="relative mb-16 text-center">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+              Built for every{' '}
+              <span
+                style={{
+                  WebkitTextStroke: '1px rgba(255,255,255,0.95)',
+                  WebkitTextFillColor: 'transparent',
+                  color: 'transparent',
+                }}
+              >
+                compliance
+              </span>{' '}
+              stakeholder
+            </h2>
           </div>
-
-          <div className="mt-12 text-center">
-            <Link to="/how-it-works">
-              <Button variant="default" className="group">
-                Learn More About How It Works
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1">
-                  <path d="M5 12h14"/>
-                  <path d="m12 5 7 7-7 7"/>
-                </svg>
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </Section>
-
-      {/* Problem & Mission Section */}
-      <Section variant="default">
-        <div className="max-w-6xl mx-auto px-4">
-          <SectionHeader
-            subtitle="The Compliance Challenge"
-            title="Privacy vs. Transparency"
-            description="Organizations face an impossible choice: protect sensitive data or prove regulatory compliance. Traditional approaches force companies to expose confidential information to demonstrate adherence."
-          />
-
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h3 className="text-2xl font-bold mb-6">Traditional Compliance Problems</h3>
-              <div className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-destructive rounded-full mt-2 flex-shrink-0"></div>
-                  <p className="text-muted-foreground">Data exposure during audits creates security vulnerabilities</p>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-destructive rounded-full mt-2 flex-shrink-0"></div>
-                  <p className="text-muted-foreground">Manual compliance processes are time-consuming and error-prone</p>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-destructive rounded-full mt-2 flex-shrink-0"></div>
-                  <p className="text-muted-foreground">Regulatory requirements constantly evolve, creating operational complexity</p>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-destructive rounded-full mt-2 flex-shrink-0"></div>
-                  <p className="text-muted-foreground">High costs for compliance infrastructure and specialized personnel</p>
-                </div>
-              </div>
-              <div className="mt-8">
-                <Button asChild variant="default" className="group">
-                  <Link to="/security">
-                    View Security & Privacy
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1">
-                      <path d="M5 12h14"/>
-                      <path d="m12 5 7 7-7 7"/>
-                    </svg>
-                  </Link>
-                </Button>
-              </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6">
+            <div className="p-6 border rounded-lg">
+              <h4 className="font-semibold mb-2">Companies & Customers</h4>
+              <p className="text-sm text-muted-foreground mb-2">Automate audits, reduce risk, and stay compliant without exposing internal systems.</p>
+              <div className="flex gap-2"><a href="mailto:maranda@compliledger.com"><Button variant="outline">Book Demo</Button></a></div>
             </div>
 
-            <div>
-              <h3 className="text-2xl font-bold mb-6">CompliLedger Solution</h3>
-              <div className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
-                  <p className="text-muted-foreground">Zero-knowledge proofs maintain complete data privacy</p>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
-                  <p className="text-muted-foreground">Automated compliance monitoring and reporting</p>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
-                  <p className="text-muted-foreground">Cryptographically verifiable compliance proofs</p>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
-                  <p className="text-muted-foreground">Significant cost reduction through automation</p>
-                </div>
-              </div>
+            <div className="p-6 border rounded-lg">
+              <h4 className="font-semibold mb-2">Auditors & Compliance Professionals</h4>
+              <p className="text-sm text-muted-foreground mb-4">Verify evidence, assess controls, and validate posture using cryptographic proof.</p>
+              <div><Link to="/contact"><Button>Request Info</Button></Link></div>
+            </div>
+
+            <div className="p-6 border rounded-lg">
+              <h4 className="font-semibold mb-2">Regulators & Oversight Bodies</h4>
+              <p className="text-sm text-muted-foreground mb-4">Receive verifiable compliance attestations without direct system access.</p>
+              <div><Link to="/demo"><Button>Book Introduction Meeting</Button></Link></div>
+            </div>
+
+            <div className="p-6 border rounded-lg">
+              <h4 className="font-semibold mb-2">Developers & Builders</h4>
+              <p className="text-sm text-muted-foreground mb-2">Embed compliance, privacy, and proof directly into applications using SDKs and agents.</p>
+              <div><a href="mailto:maranda@compliledger.com"><Button>Book Demo</Button></a></div>
             </div>
           </div>
         </div>
       </Section>
 
-      {/* Key Capabilities Section */}
+      {/* SECTION 3 — HOW IT WORKS (Glowing card grid demo) */}
       <Section>
         <div className="max-w-6xl mx-auto px-4">
-          <SectionHeader
-            subtitle="Core Technology"
-            title="Advanced Cryptographic Compliance"
-            description="Leverage cutting-edge zero-knowledge proof technology to demonstrate compliance while maintaining absolute data confidentiality."
-          />
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {capabilities.map((capability, index) => {
-              const Icon = capability.icon;
-              return (
-                <Card key={index} className="text-center h-full hover-scale">
-                  <CardHeader>
-                    <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
-                      <Icon className="w-8 h-8 text-primary" />
-                    </div>
-                    <CardTitle className="text-xl">{capability.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-base leading-relaxed">
-                      {capability.description}
-                    </CardDescription>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-        </div>
-      </Section>
-
-
-      {/* Target Users & Use Cases Section */}
-<Section variant="glow">
-        <div className="max-w-6xl mx-auto px-4">
-          <SectionHeader
-            subtitle="Industry Applications"
-            title="Built for Regulated Industries"
-            description="CompliLedger serves organizations across highly regulated sectors that require stringent compliance while handling sensitive data."
-          />
-
-          <div className="grid lg:grid-cols-2 gap-8">
-            {useCases.map((useCase, index) => {
-              const Icon = useCase.icon;
-              return (
-                <Card key={index} className="p-8 hover-scale">
-                  <div className="flex items-start gap-4 mb-6">
-                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <Icon className="w-6 h-6 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold mb-2">{useCase.title}</h3>
-                      <p className="text-muted-foreground leading-relaxed">{useCase.description}</p>
-                    </div>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {useCase.industries.map((industry, idx) => (
-                      <span key={idx} className="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full">
-                        {industry}
-                      </span>
-                    ))}
-                  </div>
-                </Card>
-              );
-            })}
-          </div>
-
-          <div className="mt-12 text-center max-w-3xl mx-auto">
-            <p className="text-lg text-muted-foreground mb-6">
-              Choose a solution that fits your team. Transparent, flexible, and audit‑ready from day one.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/solutions">
-              <Button size="lg" className="px-8" title="View Pricing">
-                Industry Solutions
-              </Button>
-              </Link>
-
+          <SectionHeader title="How CompliLedger works" />
+          <div className="mt-4">
+            <ul className="grid grid-cols-1 grid-rows-none gap-4 md:grid-cols-12 md:grid-rows-3 lg:gap-4 xl:max-h-[34rem] xl:grid-rows-2">
+              <GridItem
+                area="md:[grid-area:1/1/2/7] xl:[grid-area:1/1/2/5]"
+                icon={<Box className="h-4 w-4" />}
+                title="Ingest securely"
+                description="Systems, policies, SBOMs, and signals — minimally and privately"
+              />
+              <GridItem
+                area="md:[grid-area:1/7/2/13] xl:[grid-area:2/1/3/5]"
+                icon={<Settings className="h-4 w-4" />}
+                title="Analyze automatically"
+                description="AI agents classify, map, and test compliance requirements"
+              />
+              <GridItem
+                area="md:[grid-area:2/1/3/7] xl:[grid-area:1/5/3/8]"
+                icon={<ShieldCheck className="h-4 w-4" />}
+                title="Prove cryptographically"
+                description="Zero-knowledge proofs validate controls without revealing data"
+              />
+              <GridItem
+                area="md:[grid-area:2/7/3/13] xl:[grid-area:1/8/2/13]"
+                icon={<Network className="h-4 w-4" />}
+                title="Anchor immutably"
+                description="Verification events anchored across Algorand, Aleo, and Zcash"
+              />
+              <GridItem
+                area="md:[grid-area:3/1/4/13] xl:[grid-area:2/8/3/13]"
+                icon={<EyeOff className="h-4 w-4" />}
+                title="Monitor continuously"
+                description="Compliance stays current as systems change"
+              />
+            </ul>
+            <div className="mt-6 flex justify-center">
+              <Link to="/how-it-works"><Button>Explore How It Works</Button></Link>
             </div>
           </div>
         </div>
       </Section>
 
+      {/* SECTION 4 — PRIVACY IS THE DIFFERENTIATOR */}
+      <Section variant="default">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="grid gap-8 md:grid-cols-2 items-start">
+            <div className="flex flex-col items-center text-center">
+              <SectionHeader title="Privacy is not a feature. It’s architecture." />
+              <div className="mt-6">
+                <Link to="/security"><Button>View Privacy Architecture</Button></Link>
+              </div>
+            </div>
+            <div>
+              <p className="text-muted-foreground mb-4">CompliLedger is designed so:</p>
 
+              <div className="grid grid-cols-1 gap-4">
+                <div
+                  className="relative overflow-hidden rounded-lg border border-border bg-cover bg-center md:h-40 w-full max-w-xl group"
+                  style={{ backgroundImage: "url('/images/privacy-bg.jpg')" }}
+                >
+                  <div className="absolute inset-0 bg-black/40" aria-hidden />
+                  <div className="relative z-10 p-4 md:p-4">
+                    <ul className="list-disc list-inside space-y-2 text-white">
+                      <li>No raw evidence is centralized</li>
+                      <li>No customer data is sold or reused</li>
+                      <li>No systems are mirrored</li>
+                      <li>No surveillance is introduced</li>
+                    </ul>
+                  </div>
 
-      {/* Pricing Preview Section
-      <Section variant="default" className="text-center">
-        <div className="max-w-4xl mx-auto px-4">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">Compliance That Scales With You.</h2>
-          <p className="text-muted-foreground mb-8">From startups to exchanges and defense contractors, CompliLedger adapts to your frameworks, scale, and assurance needs.</p>
-          <ul className="grid sm:grid-cols-3 gap-4 text-left max-w-3xl mx-auto" role="list" aria-label="Pricing highlights">
-            <li className="bg-muted/40 rounded-lg p-4">
-              <span className="block font-semibold mb-1">Transparent tiers</span>
-              <span className="text-sm text-muted-foreground">For startups, exchanges, and defense contractors.</span>
-            </li>
-            <li className="bg-muted/40 rounded-lg p-4">
-              <span className="block font-semibold mb-1">Pay as you scale</span>
-              <span className="text-sm text-muted-foreground">Seats, usage, and add‑ons match your growth.</span>
-            </li>
-            <li className="bg-muted/40 rounded-lg p-4">
-              <span className="block font-semibold mb-1">Audit‑ready always</span>
-              <span className="text-sm text-muted-foreground">Continuous evidence and attestations.</span>
-            </li>
-          </ul>
-          <div className="mt-8">
-            <Link to="/pricing" aria-label="View CompliLedger pricing plans">
-              <Button size="lg" className="px-8" title="View Pricing">
-                View Pricing
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </Section> */}
+                  {/* Right-side button: hidden by default, appears when the card is hovered */}
+                  <div className="absolute right-4 top-1/2 -translate-y-1/2 z-30 opacity-0 pointer-events-none transition-all duration-200 group-hover:opacity-100 group-hover:pointer-events-auto">
+                    <div className="flex items-center justify-start space-x-3">
+                      <img src="https://cdn3d.iconscout.com/3d/premium/thumb/tick-3d-icon-png-download-10066771.png" alt="Privacy" className="h-32 w-32 rounded-md object-cover" />
+                    </div>
+                  </div>
+                </div>
 
+                <div
+                  className="relative overflow-hidden rounded-lg border border-border bg-cover bg-center md:h-28 w-full max-w-xl group"
+                  style={{ backgroundImage: "url('/images/privacy-bg.jpg')" }}
+                >
+                  <div className="absolute inset-0 bg-black/40" aria-hidden />
+                  <div className="relative z-10 p-4 md:p-3">
+                    <ul className="list-disc list-inside space-y-1 text-white">
+                      <li>Proof replaces disclosure</li>
+                      <li>Identity replaces accounts</li>
+                      <li>Cryptography replaces proof</li>
+                    </ul>
+                  </div>
 
-      {/* Call to Action Section */}
-      <Section variant="blend" className="text-center">
-        <div className="max-w-4xl mx-auto px-4">
-          <SectionHeader
-            subtitle="Ready to Transform Compliance?"
-            title="Experience Privacy-Preserving Compliance"
-            description="Join forward-thinking organizations that have eliminated the trade-off between data privacy and regulatory compliance."
-          />
-
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <Link to="/demo">
-              <Button size="lg" className="px-8 py-4 text-lg">
-                Schedule a call
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
-            <Button variant="outline" size="lg" className="px-8 py-4 text-lg" asChild>
-              <a href="https://docs.google.com/document/d/1mPCmvQioDrfeFYTgTwlpI49EDOKIP5gJ" target="_blank" rel="noopener noreferrer">
-                View Whitepaper
-              </a>
-            </Button>
-            <Link to="/how-it-works">
-              <Button variant="outline" size="lg" className="px-8 py-4 text-lg">
-                Explore the Technology
-              </Button>
-            </Link>
+                  {/* Visible image on the right side, matching hover state of the larger card */}
+                  <div className="absolute right-4 top-1/2 -translate-y-1/2 z-30 opacity-0 pointer-events-none transition-all duration-200 group-hover:opacity-100 group-hover:pointer-events-auto  ">
+                    <div className="flex items-center justify-start">
+                      <img src="https://cdn3d.iconscout.com/3d/premium/thumb/cross-3d-icon-png-download-5220674.png" alt="Privacy" className="h-20 w-20 rounded-md object-cover" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </Section>
+
+      {/* SECTION 5 — MULTI-CHAIN proof MODEL (cards) */}
+      <Section>
+        <div className="max-w-6xl mx-auto px-4">
+          <SectionHeader title="Built across multiple privacy-focused blockchains" />
+          <p className="text-muted-foreground">CompliLedger uses three specialized networks, each for a distinct proof function:</p>
+
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+            {[
+              {
+                title: 'Algorand',
+                icon: Network,
+                description: 'Immutable audit anchoring  fast, low-cost finality for proofs.',
+              },
+              {
+                title: 'Aleo',
+                icon: Code,
+                description: 'Private zero-knowledge computation for confidential verification.',
+              },
+              {
+                title: 'Zcash',
+                icon: Lock,
+                description: 'Confidential verification and attestations using shielded transactions.',
+              },
+            ].map((f) => (
+              <FeatureCard
+                key={f.title}
+                feature={{ title: f.title, icon: f.icon as any, description: f.description }}
+              />
+            ))}
+          </div>
+
+          <div className="mt-3"><Link to="/platform"><Button>Explore Platform Architecture</Button></Link></div>
+        </div>
+      </Section>
+
+      {/* SECTION 6 — PRODUCTS ENTRY POINT */}
+      <Section>
+        <div className="max-w-6xl mx-auto px-4">
+            <SectionHeader title="One platform. Multiple ways to start." />
+            <div className="mt-4">
+              <CategoryList
+                title="Explore Our"
+                subtitle="Core Features"
+                headerIcon={<LayoutGrid className="w-8 h-8" />}
+                categories={[
+                  {
+                    id: 1,
+                    title: 'CompliLedger Platform',
+                    subtitle: 'Full Compliance OS',
+                    onClick: () => undefined,
+                  },
+                  {
+                    id: 2,
+                    title: 'SDKs',
+                    subtitle: 'CompALGO, Comp-Leo, CompZ',
+                    onClick: () => undefined,
+                  },
+                  {
+                    id: 3,
+                    title: 'AI Agent Marketplace',
+                    subtitle: 'Use Agents Individually',
+                    onClick: () => undefined,
+                  },
+                  {
+                    id: 4,
+                    title: 'Master Agent',
+                    subtitle: 'Single Compliance Interface',
+                    onClick: () => undefined,
+                  },
+                ] as Category[]}
+              />
+            </div>
+        </div>
+      </Section>
+
+      {/* SECTION 7 — FINAL CTA */}
+      <Section className="text-center">
+        <div className="relative mx-auto flex w-full max-w-3xl flex-col justify-between gap-y-6 border-y bg-[radial-gradient(35%_80%_at_25%_0%,--theme(--color-foreground/.08),transparent)] px-4 py-8">
+          <PlusIcon
+            className="absolute top-[-12.5px] left-[-11.5px] z-1 size-6"
+            strokeWidth={1}
+          />
+          <PlusIcon
+            className="absolute top-[-12.5px] right-[-11.5px] z-1 size-6"
+            strokeWidth={1}
+          />
+          <PlusIcon
+            className="absolute bottom-[-12.5px] left-[-11.5px] z-1 size-6"
+            strokeWidth={1}
+          />
+          <PlusIcon
+            className="absolute right-[-11.5px] bottom-[-12.5px] z-1 size-6"
+            strokeWidth={1}
+          />
+
+          <div className="-inset-y-6 pointer-events-none absolute left-0 w-px border-l" />
+          <div className="-inset-y-6 pointer-events-none absolute right-0 w-px border-r" />
+
+          <div className="-z-10 absolute top-0 left-1/2 h-full border-l border-dashed" />
+
+
+          <div className="space-y-1">
+            <h2 className="text-center font-bold text-2xl">Start private. Scale compliant.</h2>
+
+          </div>
+
+          <div className="flex items-center justify-center gap-2">
+            <Link to="/contact"><Button variant="outline">Contact Sales</Button></Link>
+            <Link to="/demo"><Button>
+              Get Started <ArrowRightIcon className="size-4 ml-1" />
+            </Button></Link>
+          </div>
+        </div>
+      </Section>
+
 
     </Layout>
   );
 };
 
 export default Index;
+
+interface GridItemProps {
+  area: string;
+  icon: React.ReactNode;
+  title: string;
+  description: React.ReactNode;
+}
+
+const GridItem = ({ area, icon, title, description }: GridItemProps) => {
+  return (
+    <li className={cn("min-h-[14rem] list-none", area)}>
+      <div className="relative h-full rounded-[1.25rem] border-[0.75px] border-border p-2 md:rounded-[1.5rem] md:p-3">
+        {/* Glowing effect positioned behind the inner card */}
+        <div className="absolute inset-0 pointer-events-none">
+          {/* Lazy-load client component */}
+          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+          {/* @ts-ignore */}
+          <GlowingEffect
+            spread={40}
+            glow={true}
+            disabled={false}
+            proximity={64}
+            inactiveZone={0.01}
+            borderWidth={3}
+          />
+        </div>
+        <div className="relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl border-[0.75px] bg-background p-6 shadow-sm dark:shadow-[0px_0px_27px_0px_rgba(45,45,45,0.3)] md:p-6">
+          <div className="relative flex flex-1 flex-col justify-between gap-3">
+            <div className="w-fit rounded-lg border-[0.75px] border-border bg-muted p-2">
+              {icon}
+            </div>
+            <div className="space-y-3">
+              <h3 className="pt-0.5 text-xl leading-[1.375rem] font-semibold font-sans tracking-[-0.04em] md:text-2xl md:leading-[1.875rem] text-balance text-foreground">
+                {title}
+              </h3>
+              <h2 className="[_&amp;_b]:md:font-semibold [&amp;_strong]:md:font-semibold font-sans text-sm leading-[1.125rem] md:text-base md:leading-[1.375rem] text-muted-foreground">
+                {description}
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  );
+};

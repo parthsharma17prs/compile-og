@@ -1,253 +1,363 @@
 import { Link } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Layout from '@/components/Layout';
 import Section from '@/components/Section';
-import SectionHeader from '@/components/SectionHeader';
-import GeometricPattern from '@/components/GeometricPattern';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import {
-  ArrowRight,
-  CheckCircle,
-  Briefcase,
-  GitBranch,
-  Landmark,
-  HeartPulse,
-  Cpu,
-  Building2
-} from 'lucide-react';
+import { ArrowRightIcon, PlusIcon, Globe, Cpu, ShieldCheck } from 'lucide-react';
+import { FeatureCard } from '@/components/FeatureCard';
+import { TextRevealByWord } from '@/components/ui/text-reveal-by-word';
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion';
 
 const HowItWorks = () => {
-  const verticals = [
-    {
-      icon: Briefcase,
-      title: 'Financial Services & Tokenization (TradFi/RWA)',
-      problem:
-        'Multiple frameworks (DORA, PCI DSS, Basel III, SOX, AML/BSA) require constant evidence collection.',
-      workflow: [
-        'Connect banking systems, payment platforms, KYC/KYB tools.',
-        'Ingest & Normalize AML transaction logs, PCI evidence, and RWA tokenization workflows.',
-        'Map to Frameworks like DORA, PCI, Basel III, BSA.',
-        'Continuously Test policies for data residency, encryption, and fraud monitoring.',
-        'Generate Evidence for audits and regulators.',
-        'Attest & Share proofs with auditors via AuditSync™, reducing exam time.'
-      ],
-      outcome: 'Faster regulatory exams, lower compliance cost, defensible evidence.'
-    },
-    {
-      icon: GitBranch,
-      title: 'Web3 & DeFi',
-      problem:
-        'Regulators demand transparency, but protocols must protect proprietary code and governance processes.',
-      workflow: [
-        'Connect smart contracts, DAOs, oracles, and wallets.',
-        'Ingest & Normalize smart contract SBOMs, governance changes, and node configs.',
-        'Map to Frameworks such as MiCA, FATF Travel Rule, SEC/CFTC guidance, OFAC sanctions, GDPR.',
-        'Continuously Test for code drift, dependency vulnerabilities, and governance control compliance.',
-        'Generate Evidence (without exposing code) via ZKPs.',
-        'Attest & Share ZK proofs with regulators, partners, and investors.'
-      ],
-      outcome: 'Institutional trust, exchange listings, and regulator confidence.'
-    },
-    {
-      icon: Building2,
-      title: 'Exchanges (AML/BSA Compliance & Licensing)',
-      problem:
-        'Exchanges face the highest AML/BSA oversight (Travel Rule, FATF, BitLicense).',
-      workflow: [
-        'Connect exchange KYC/KYB systems, sanction screening, and transaction monitoring tools.',
-        'Ingest & Normalize user onboarding logs, case management data, and SAR reports.',
-        'Map to Frameworks (BSA, FATF, AMLD6, NYDFS BitLicense, MiCA).',
-        'Continuously Test AML transaction monitoring and Travel Rule compliance.',
-        'Generate Evidence for regulatory exams and licensing renewals.',
-        'Attest & Share immutable SAR trails and AML proofs via AuditSync™.'
-      ],
-      outcome: 'Faster licensing approvals, reduced enforcement risk, exam-ready at all times.'
-    },
-    {
-      icon: Landmark,
-      title: 'Government & Defense (FedRAMP/RMF/OSCAL)',
-      problem: 'RMF/FedRAMP cycles are slow, static, and paper-heavy.',
-      workflow: [
-        'Connect cloud environments, CI/CD pipelines, and security tools.',
-        'Ingest & Normalize configs, SBOMs, vulnerability reports, and incident logs.',
-        'Map to Frameworks (NIST SP 800-53, FedRAMP, DoD RMF IL4–IL6).',
-        'Continuously Test controls for drift, patch compliance, and red-team results.',
-        'Generate Evidence in OSCAL-native formats (SSPs, POA&Ms).',
-        'Attest & Share continuous ATO evidence via AuditSync™.'
-      ],
-      outcome: 'Accelerated ATOs, living SSPs, compliance-as-code.'
-    },
-    {
-      icon: HeartPulse,
-      title: 'Healthcare (HIPAA)',
-      problem:
-        'PHI protection requires constant proof of safeguards without exposing sensitive data.',
-      workflow: [
-        'Connect EHRs, identity systems, encryption tools, and incident response logs.',
-        'Ingest & Normalize access logs, encryption configs, and audit trails.',
-        'Map to Frameworks (HIPAA Security Rule, HITECH, GDPR Health Data, HITRUST).',
-        'Continuously Test for access control violations and encryption enforcement.',
-        'Generate Evidence automatically for HIPAA auditors.',
-        'Attest & Share proofs of encryption and access controls with partners via ZKPs.'
-      ],
-      outcome: 'Stronger patient trust, faster due diligence, reduced audit overhead.'
-    },
-    {
-      icon: Cpu,
-      title: 'AI & Enterprise SaaS (FedRAMP, ISO 27001 / PCI / DORA)',
-      problem:
-        'SaaS and AI companies scale fast — but FedRAMP, ISO, and PCI compliance are resource-heavy.',
-      workflow: [
-        'Connect repos, CI/CD, SBOMs, identity providers, and incident tools.',
-        'Ingest & Normalize SBOMs, configs, vulnerability scans, and policies.',
-        'Map to Frameworks (ISO 27001, PCI DSS, DORA, NIST AI RMF).',
-        'Continuously Test configs, dependencies, AI/ML risk controls.',
-        'Generate Evidence for FedRAMP audits, ISO certs, PCI DSS reports.',
-        'Attest & Share compliance outcomes with customers and auditors.'
-      ],
-      outcome: 'Faster audits, continuous readiness, trust signals for enterprise buyers.'
-    }
+  const howRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const el = howRef.current;
+    if (!el) return;
+    let ticking = false;
+    const speed = 0.12; // parallax strength
+
+    const update = () => {
+      const rect = el.getBoundingClientRect();
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+      const centerY = rect.top + rect.height / 2;
+      const delta = (centerY - viewportHeight / 2) * speed;
+      el.style.transform = `translateY(${delta}px)`;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          update();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    // set initial position
+    update();
+
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  const shiftRows = [
+    ['Copy evidence', 'Fingerprint evidence'],
+    ['Manual reviews', 'Automated verification'],
+    ['Broad access', 'Least privilege'],
+    ['proof auditors', 'Prove cryptographically'],
+    ['Periodic audits', 'Continuous compliance']
   ];
 
-  const flowSteps = ['Connect', 'Ingest', 'Map', 'Test', 'Generate', 'Attest'];
+  const intakeWhat = [
+    'policies & procedures',
+    'system metadata',
+    'control signals',
+    'SBOMs',
+    'configuration fingerprints',
+    'audit inputs'
+  ];
+
+  const intakeNot = ['raw logs', 'production databases', 'credentials', 'full system mirrors'];
+
+  const agents = [
+    'Policy interpretation',
+    'Control mapping',
+    'Framework alignment',
+    'Risk scoring',
+    'Drift detection',
+    'Vulnerability compliance checks',
+    'Evidence classification'
+  ];
+
+  const zkBenefits = [
+    'evaluate controls',
+    'test requirements',
+    'validate configurations'
+  ];
+
+  const identityBindings = [
+    'Decentralized Identifiers (DIDs)',
+    'Verifiable Credentials (VCs)',
+    'Cryptographic signatures'
+  ];
+
+  const blockchains = [
+    { name: 'Algorand', role: 'Immutable timestamps and audit integrity anchors' },
+    { name: 'Aleo', role: 'Zero-knowledge computation & proof logic' },
+    { name: 'Zcash', role: 'Confidential attestations and shielded verification' }
+  ];
+
+  const blockchainIcons = [Globe, Cpu, ShieldCheck];
+
+  const users = [
+    { title: 'Enterprise Teams', detail: 'Monitor posture, manage risk, and automate audits.' },
+    { title: 'Auditors', detail: 'Verify integrity, timing, and completeness of compliance proof.' },
+    { title: 'Regulators', detail: 'Validate compliance without direct system access.' },
+    { title: 'Developers', detail: 'Embed compliance logic via SDKs and agents.' }
+  ];
+
+  const principles = [
+    'Privacy reduces risk',
+    'Proof scales better than proof',
+    'Automation beats manual reviews',
+    'Cryptography prevents disputes',
+    'Continuous monitoring prevents surprises'
+  ];
 
   return (
     <Layout>
-      {/* Hero Section */}
-      <Section variant="glow" spacing="xl">
-        <GeometricPattern />
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <div className="max-w-4xl mx-auto space-y-8">
-            <h1 className="text-4xl md:text-6xl font-space-grotesk font-bold glow-text">
-              How CompliLedger Transforms{' '}
-              <span className="text-gradient">Compliance</span>
-            </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              From fragmented manual processes to automated, verifiable workflows powered by Zero-Knowledge Proofs and AI
-            </p>
-          </div>
-        </div>
-      </Section>
+      {/* Hero */}
+      <Section variant="default" spacing="xl" className="py-0 min-h-screen min-h-svh flex items-center">
 
-      {/* Industry Workflows (Tabs) */}
+          <div className="absolute right-6 bottom-24  max-w-[55vw] text-md md:text-xl lg:text-3xl xl:text-3xl font-extrabold uppercase text-foreground/90 px-2 py-1 text-right pointer-events-none">
+            CompliLedger proves <span className='bg-red-500 px-2 rounded-sm'>compliance</span> without exposing data
+          </div>
+
+          <div aria-hidden ref={howRef} style={{willChange: 'transform'}} className="absolute right-6 bottom-6  pointer-events-none select-none text-[4rem] sm:text-[12rem] md:text-[18rem] lg:text-[24rem] xl:text-[40rem] font-extrabold uppercase leading-none opacity-10 tracking-tight">
+            HOW
+          </div>
+
+        
+    
+
+       </Section>             
+      {/* Text reveal section (scroll-animated by word) */}
       <Section variant="default" spacing="xl">
         <div className="container mx-auto px-6">
-          <SectionHeader
-            title="Industry Workflows"
-            subtitle="Purpose-Built for Your Domain"
-            description="End-to-end compliance automation tailored to your industry — with privacy-preserving attestations and immutable audit trails"
-          />
-          <div className="max-w-7xl mx-auto">
-            <Tabs
-              defaultValue={`v0`}
-              className="w-full space-y-4"
-            >
-              <div className="w-full overflow-x-auto pb-2">
-                <TabsList className="w-full flex flex-nowrap gap-1 p-1 bg-secondary/10 rounded-lg border border-border">
-                  {verticals.map((v, idx) => (
-                    <TabsTrigger
-                      key={`t${idx}`}
-                      value={`v${idx}`}
-                      className="px-4 py-2 text-sm font-medium whitespace-nowrap data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
-                    >
-                      <v.icon className="h-4 w-4 mr-2 inline-block" />
-                      {v.title.split(' (')[0]}
-                    </TabsTrigger>
-                  ))}
-                </TabsList>
+
+ 
+          <div className="max-w-5xl mx-auto">
+            <TextRevealByWord text="A privacy-first workflow that replaces manual audits, data sprawl, and blind proof with cryptographic verification and continuous assurance." className="" />
+
+              <div className="flex items-center justify-center gap-2 mt-4">
+              <a href="mailto:maranda@compliledger.com"><Button variant="outline">Book a Demo</Button></a>
+              <a href="mailto:maranda@compliledger.com"><Button>
+                Book Demo <ArrowRightIcon className="size-4 ml-1" />
+              </Button></a>
+            </div>
+          </div>
+        </div>
+      </Section>
+     
+
+      {/* Section 1: Core Idea */}
+      <Section variant="default" spacing="xl">
+        <div className="container mx-auto px-6">
+          <div className="max-w-5xl mx-auto">
+            <h2 className="text-3xl md:text-4xl  font-bold mb-6">From data collection to proof-based verification</h2>
+            <p className="text-lg text-foreground/70 mb-4">Traditional compliance works by collecting data: logs, screenshots, documents, access credentials. This increases risk. CompliLedger works by verifying state. We prove that controls are operating and requirements are met — without pulling sensitive data into centralized systems.</p>
+
+            <div className="grid md:grid-cols-2 gap-6 mt-8">
+              <div className="p-0">
+                <FeatureCard
+                  feature={{
+                    title: 'Shift in model',
+                    icon: Globe,
+                    description: (
+                      <div className="overflow-auto">
+                        <table className="w-full text-sm">
+                          <tbody>
+                            {shiftRows.map((row, i) => (
+                              <tr key={i} className="border-b last:border-b-0">
+                                <td className="py-2 pr-4 text-foreground/60">{row[0]}</td>
+                                <td className="py-2 font-medium">{row[1]}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    )
+                  }}
+                  className="rounded-2xl bg-background/80"
+                  hideDescription={false}
+                />
               </div>
 
-              {verticals.map((v, idx) => (
-                <TabsContent key={`c${idx}`} value={`v${idx}`} className="pt-2">
-                  <Card className="card-glow">
-                    <CardHeader className="pb-2">
-                      <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                          <v.icon className="h-6 w-6 text-primary" />
-                        </div>
-                        <CardTitle className="text-xl font-semibold">{v.title}</CardTitle>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="space-y-6">
-                      <div>
-                        <p className="text-sm uppercase tracking-wide text-primary font-medium mb-2">Problem</p>
-                        <p className="text-muted-foreground leading-relaxed">{v.problem}</p>
-                      </div>
-
-                      {/* Workflow Graphic */}
-                      <div>
-                        <p className="text-sm uppercase tracking-wide text-primary font-medium mb-3">Workflow Overview</p>
-                        <div className="flex flex-wrap items-center gap-2">
-                          {flowSteps.map((s, i) => (
-                            <span key={s} className="inline-flex items-center gap-2">
-                              <span className="px-3 py-1 rounded-full bg-secondary/30 text-sm font-medium">{s}</span>
-                              {i < flowSteps.length - 1 && (
-                                <ArrowRight className="h-4 w-4 text-primary" />
-                              )}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Detailed Steps (6-step rhythm) */}
-                      <div>
-                        <p className="text-sm uppercase tracking-wide text-primary font-medium mb-2">Detailed Steps</p>
-                        <ol className="space-y-2 list-decimal list-inside">
-                          {v.workflow.map((item, i) => (
-                            <li key={i} className="leading-relaxed">
-                              <span className="inline-flex items-start">
-                                <CheckCircle className="h-4 w-4 text-primary mr-2 mt-0.5 flex-shrink-0" />
-                                <span>{item}</span>
-                              </span>
-                            </li>
-                          ))}
-                        </ol>
-                      </div>
-
-                      <div>
-                        <p className="text-sm uppercase tracking-wide text-primary font-medium mb-2">Outcome</p>
-                        <p className="font-medium">{v.outcome}</p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-              ))}
-            </Tabs>
+              <div className="p-0">
+                <FeatureCard
+                  feature={{
+                    title: 'Why this matters',
+                    icon: ShieldCheck,
+                    description: 'Proving state, not collecting it, reduces attack surface, preserves privacy, and makes compliance defensible and scalable.'
+                  }}
+                  className="rounded-2xl bg-background/80"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </Section>
 
-      {/* Call to Action */}
-      <Section variant="glow" spacing="lg">
-        <GeometricPattern className="opacity-50" />
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <div className="max-w-4xl mx-auto space-y-6">
-            <h2 className="text-3xl md:text-5xl font-space-grotesk font-bold leading-tight">
-              Every Industry. Every Framework. One Proven Workflow.
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Whether you're a bank, a DeFi protocol, an exchange, or a government contractor,
-              CompliLedger replaces static audits with continuous, provable compliance.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4 pt-2">
-              <Link to="/demo">
-                <Button size="lg" className="btn-glow px-8">
-                  Schedule a call
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
-              <Button variant="outline" size="lg" className="px-8" asChild>
-                <a href="https://docs.google.com/document/d/1mPCmvQioDrfeFYTgTwlpI49EDOKIP5gJ" target="_blank" rel="noopener noreferrer">
-                  View Whitepaper
-                </a>
-              </Button>
-              <Link to="/solutions">
-                <Button variant="outline" size="lg" className="px-8">
-                  Explore Solutions
-                </Button>
-              </Link>
-            </div>
+      {/* Sections 2–10 wrapped in an accordion */}
+      <Section variant="default" spacing="xl">
+        <div className="container mx-auto px-6">
+          <div className="max-w-5xl mx-auto">
+            <Accordion type="single" collapsible defaultValue="item-1">
+              <AccordionItem value="item-1">
+                <AccordionTrigger>Secure, minimal intake</AccordionTrigger>
+                <AccordionContent>
+                  <div className="grid md:grid-cols-2 gap-8 items-start">
+                    <div>
+                      <p className="text-foreground/70 mb-4">CompliLedger ingests only what is necessary.</p>
+                      <ul className="space-y-2 mb-4">
+                        {intakeWhat.map((it, i) => (
+                          <li key={i} className="flex gap-3 items-start"><span className="text-primary">•</span><span>{it}</span></li>
+                        ))}
+                      </ul>
+                      <h4 className="font-semibold mb-2">What does not enter</h4>
+                      <ul className="space-y-2 mb-4">
+                        {intakeNot.map((it, i) => (
+                          <li key={i} className="flex gap-3 items-start"><span className="text-danger">❌</span><span>{it}</span></li>
+                        ))}
+                      </ul>
+                      <p className="font-semibold">Less data = smaller attack surface = lower risk.</p>
+                    </div>
+
+                    
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-2">
+                <AccordionTrigger>AI agents analyze compliance continuously</AccordionTrigger>
+                <AccordionContent>
+                  <p className="text-foreground/70 mb-3">Once ingested, CompliLedger activates specialized AI agents that operate inside strict privacy and isolation boundaries.</p>
+                  <ul className="space-y-2">
+                    {agents.map((a, i) => (
+                      <li key={i} className="flex gap-3 items-start"><span className="text-primary">•</span><span>{a}</span></li>
+                    ))}
+                  </ul>
+                  <p className="text-foreground/70 mt-4">Each agent performs a single function, producing verifiable outputs — not opaque decisions.</p>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-3">
+                <AccordionTrigger>Compliance evaluated without visibility</AccordionTrigger>
+                <AccordionContent>
+                  <p className="text-foreground/70 mb-4">Compliance logic is executed using zero-knowledge techniques, primarily through private computation on Aleo. This allows CompliLedger to:</p>
+                  <ul className="space-y-2 mb-4">
+                    {zkBenefits.map((b, i) => (
+                      <li key={i} className="flex gap-3 items-start"><span className="text-primary">•</span><span>{b}</span></li>
+                    ))}
+                  </ul>
+                  <p className="font-semibold">Result: Compliance is assessed — but sensitive systems remain private.</p>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-4">
+                <AccordionTrigger>Proof bound to cryptographic identity</AccordionTrigger>
+                <AccordionContent>
+                  <p className="text-foreground/70 mb-4">Every compliance action is tied to identity using:</p>
+                  <ul className="space-y-2 mb-4">
+                    {identityBindings.map((i, idx) => (
+                      <li key={idx} className="flex gap-3 items-start"><span className="text-primary">•</span><span>{i}</span></li>
+                    ))}
+                  </ul>
+                  <p className="font-semibold">This ensures: authenticity, non-repudiation, traceability, revocation. Proof is attributable — without central authority.</p>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-5">
+                <AccordionTrigger>Verification anchored across blockchains</AccordionTrigger>
+                <AccordionContent>
+                  <p className="text-foreground/70 mb-4">Compliance verification events are anchored across three networks:</p>
+                  <div className="grid md:grid-cols-3 gap-4 mb-4">
+                    {blockchains.map((b, i) => (
+                      <FeatureCard
+                        key={b.name}
+                        feature={{ title: b.name, icon: blockchainIcons[i] ?? Globe, description: b.role }}
+                      />
+                    ))}
+                  </div>
+                  <p className="font-semibold">Important: Only cryptographic proofs and references are anchored — never customer data.</p>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-6">
+                <AccordionTrigger>Compliance stays current</AccordionTrigger>
+                <AccordionContent>
+                  <p className="text-foreground/70 mb-4">As systems change, CompliLedger continuously detects drift, reassesses controls, updates risk posture, and refreshes proofs. Compliance is no longer a snapshot — it becomes a living state.</p>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-7">
+                <AccordionTrigger>Audit- and regulator-ready outputs</AccordionTrigger>
+                <AccordionContent>
+                  <ul className="space-y-2 mb-4">
+                    <li>SSPs, SAPs, SARs, POA&Ms, PIAs</li>
+                    <li>Cryptographic proof bundles</li>
+                    <li>Regulator-verifiable attestations</li>
+                    <li>Time-bound compliance certificates</li>
+                  </ul>
+                  <p className="text-foreground/70">Auditors verify proofs — not screenshots. Regulators validate attestations — not raw data.</p>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-8">
+                <AccordionTrigger>One system. Multiple perspectives.</AccordionTrigger>
+                <AccordionContent>
+                  <div className="space-y-4">
+                    {users.map((u, i) => (
+                      <div key={i} className="p-4 bg-background/80 rounded-lg border border-foreground/10">
+                        <h4 className="font-semibold">{u.title}</h4>
+                        <p className="text-foreground/70">{u.detail}</p>
+                      </div>
+                    ))}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-9">
+                <AccordionTrigger>Why CompliLedger’s approach works</AccordionTrigger>
+                <AccordionContent>
+                  <ul className="space-y-2 mb-6">
+                    {principles.map((p, i) => (
+                      <li key={i} className="flex gap-3 items-start"><span className="text-primary">✅</span><span>{p}</span></li>
+                    ))}
+                  </ul>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+        </div>
+      </Section>
+
+      {/* Final CTA */}
+      <Section variant="default" spacing="xl">
+        <div className="relative mx-auto flex w-full max-w-3xl flex-col justify-between gap-y-6 border-y bg-[radial-gradient(35%_80%_at_25%_0%,--theme(--color-foreground/.08),transparent)] px-4 py-8">
+          <PlusIcon
+            className="absolute top-[-12.5px] left-[-11.5px] z-1 size-6"
+            strokeWidth={1}
+          />
+          <PlusIcon
+            className="absolute top-[-12.5px] right-[-11.5px] z-1 size-6"
+            strokeWidth={1}
+          />
+          <PlusIcon
+            className="absolute bottom-[-12.5px] left-[-11.5px] z-1 size-6"
+            strokeWidth={1}
+          />
+          <PlusIcon
+            className="absolute right-[-11.5px] bottom-[-12.5px] z-1 size-6"
+            strokeWidth={1}
+          />
+
+          <div className="-inset-y-6 pointer-events-none absolute left-0 w-px border-l" />
+          <div className="-inset-y-6 pointer-events-none absolute right-0 w-px border-r" />
+
+          <div className="-z-10 absolute top-0 left-1/2 h-full border-l border-dashed" />
+
+          <div className="space-y-1">
+            <h2 className="text-center font-bold text-2xl">Compliance should be Provable not invasive</h2>
+           
+          </div>
+
+            <div className="flex items-center justify-center gap-2">
+            <a href="mailto:maranda@compliledger.com"><Button variant="outline">Book a Demo</Button></a>
+            <a href="mailto:maranda@compliledger.com"><Button>
+              Book Demo <ArrowRightIcon className="size-4 ml-1" />
+            </Button></a>
           </div>
         </div>
       </Section>

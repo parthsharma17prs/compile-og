@@ -6,18 +6,24 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from "@/components/ScrollToTop";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { lazy, Suspense } from "react";
+import Analytics from "@/components/Analytics";
 import Index from "./pages/Index";
 import HowItWorks from "./pages/HowItWorks";
 import About from "./pages/About";
 import Blog from "./pages/Blog";
 import Partners from "./pages/Partners";
 import Pricing from "./pages/Pricing";
+import Products from "./pages/Products";
 import Solutions from "./pages/Solutions";
 import NotFound from "./pages/NotFound";
 import Founder from "./pages/Founder";
 import Security from "./pages/Security";
 import Documentation from "./pages/Documentation";
 import Platform from "./pages/Platform";
+import Marketplace from "./pages/Marketplace";
+import Contact from "./pages/Contact";
+import Problem from "./pages/Problem";
+
 
 const Demo = lazy(() => import("./pages/Demo"));
 
@@ -34,6 +40,7 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
+        <Analytics />
         <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <ScrollToTop />
           <Routes>
@@ -42,6 +49,7 @@ const App = () => (
             <Route path="/about" element={<About />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/partners" element={<Partners />} />
+            <Route path="/products" element={<Products />} />
             <Route
               path="/demo"
               element={
@@ -59,11 +67,18 @@ const App = () => (
               }
             />
             <Route path="/pricing" element={<Pricing />} />
+            <Route path="/problem" element={<Problem />} />
             <Route path="/solutions" element={<Solutions />} />
+            <Route path="/marketplace" element={<Marketplace />} />
             <Route path="/platform" element={<Platform />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="/founder" element={<Founder />} />
             <Route path="/security" element={<Security />} />
             <Route path="/documentation" element={<Documentation />} />
+            {/* Documentation sub-routes - redirect to main documentation page */}
+            <Route path="/docs/*" element={<Documentation />} />
+            <Route path="/briefs/*" element={<Documentation />} />
+            <Route path="/blog/*" element={<Blog />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

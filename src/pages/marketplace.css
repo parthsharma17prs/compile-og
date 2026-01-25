@@ -1,0 +1,140 @@
+/* Black & white, high-contrast, animated theme for Marketplace */
+
+.mp-root {
+	background: #000;
+	color: #f9f9f9;
+}
+
+.mp-root section {
+	border-color: rgba(255, 255, 255, 0.06);
+}
+
+.mp-noise::before {
+	content: "";
+	pointer-events: none;
+	position: fixed;
+	inset: 0;
+	opacity: 0.08;
+	mix-blend-mode: soft-light;
+	background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='noStitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+	z-index: -1;
+}
+
+/* Simple motion primitives */
+@keyframes mp-fade-up {
+	from { opacity: 0; transform: translateY(12px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes mp-fade-in {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+
+.mp-reveal {
+	opacity: 0;
+	animation: mp-fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.mp-reveal-slow {
+	opacity: 0;
+	animation: mp-fade-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.mp-reveal-soft {
+	opacity: 0;
+	animation: mp-fade-in 0.9s ease-out forwards;
+}
+
+/* Card hover micro-interactions */
+.mp-card {
+	position: relative;
+	overflow: hidden;
+	border-radius: 1rem;
+	border-width: 1px;
+	border-color: rgba(255, 255, 255, 0.11);
+	background: radial-gradient(circle at top left, #111 0, #020202 55%, #000 100%);
+	transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+		box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+		border-color 0.35s ease-out;
+}
+
+.mp-card::before {
+	content: "";
+	position: absolute;
+	inset: -1px;
+	opacity: 0;
+	background: conic-gradient(from 180deg, #fff, #777, #fff);
+	mix-blend-mode: screen;
+	transition: opacity 0.6s ease-out;
+}
+
+.mp-card:hover {
+	transform: translateY(-4px) scale(1.01);
+	box-shadow: 0 18px 60px rgba(0, 0, 0, 0.75);
+	border-color: rgba(255, 255, 255, 0.42);
+}
+
+.mp-card:hover::before {
+	opacity: 0.18;
+}
+
+.mp-card-grid {
+	display: grid;
+	gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+	.mp-card-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+.mp-tag {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	padding: 0.15rem 0.6rem;
+	border-radius: 999px;
+	border: 1px solid rgba(255, 255, 255, 0.35);
+	font-size: 0.7rem;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+}
+
+.mp-tag-dot {
+	width: 0.35rem;
+	height: 0.35rem;
+	border-radius: 999px;
+	background: #fff;
+}
+
+.mp-heading-outline {
+	color: transparent;
+	-webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+}
+
+.mp-ghost-word {
+	pointer-events: none;
+	user-select: none;
+	font-weight: 800;
+	text-transform: uppercase;
+	letter-spacing: -0.08em;
+	opacity: 0.06;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+	.mp-reveal,
+	.mp-reveal-slow,
+	.mp-reveal-soft {
+		animation: none;
+		opacity: 1;
+	}
+
+	.mp-card,
+	.mp-card::before {
+		transition: none;
+	}
+}
+

@@ -1,142 +1,138 @@
-import { Link } from 'react-router-dom';
-import { useState, FormEvent } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Mail } from 'lucide-react';
+import React, { useState } from 'react';
+import { Link } from "react-router-dom";
+import { Github, Linkedin, Youtube, Globe, MessageCircle } from "lucide-react";
 
-const Footer = () => {
-  const [subscriberEmail, setSubscriberEmail] = useState('');
-  const handleSubscribeSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const form = e.currentTarget;
-    const input = form.querySelector('input[name="email"]') as HTMLInputElement | null;
-    if (!input) return;
-    if (!input.checkValidity()) {
-      input.reportValidity();
-      return;
-    }
-    const subject = encodeURIComponent('Subscription request – CompliLedger updates');
-    const bodyText = `Hello CompliLedger Team,\n\nI would like to subscribe to CompliLedger news and product updates.\n\nSubscriber details:\n- Email: ${subscriberEmail || '(not provided)'}\n\nIf any additional information is required, please let me know.\n\nThank you.\n\nBest regards,`;
-    const body = encodeURIComponent(bodyText);
-    window.location.href = `mailto:info@compliledger.com?subject=${subject}&body=${body}`;
-  };
+
+const Footer: React.FC = () => {
   return (
-    <footer className="border-t border-border/50 bg-card/50 backdrop-blur-sm">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Brand */}
-          <div className="space-y-4">
-            <div className="flex items-center space-x-3">
-              <div className="w-6 h-6">
-                <img
-                  src="/Logo.png"
-                  alt="CompliLedger Logo"
-                  className="w-full h-full object-contain"
-                />
-              </div>
-              <span className="text-lg font-space-grotesk font-bold">
-                CompliLedger
-              </span>
-            </div>
-            <p className="text-muted-foreground text-sm">
-              Provable compliance through Zero-Knowledge Proofs and blockchain technology.
-            </p>
+    <footer className="bg-black text-white w-full pt-24 pb-20 font-sans" style={{ position: 'relative', overflow: 'hidden', minHeight: '520px' }}>
+      <div className="w-full px-4 sm:px-12 lg:px-24 flex flex-col lg:flex-row justify-between items-start gap-20">
+        {/* Left: Logo + Stay Updated */}
+        <div className="flex-1 min-w-[320px] flex flex-col items-start">
+          {/* Logo */}
+          <div className="mb-10">
+            {/* Replace with your SVG or logo image if available */}
+            <img src="/Logo.png" alt="Logo" className="h-12 mb-6" />
           </div>
+          <h2 className="text-6xl md:text-7xl font-serif font-normal mb-10">Stay updated.</h2>
+          {/* Email subscribe form (replaces JOIN DISCORD) */}
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+            }}
+            className="w-full mb-6"
+          >
+            <SubscribeInput />
+          </form>
+          {/* Social icons - moved up to avoid overlap with background text */}
+          <div className="flex items-center gap-8 mt-2 mb-0" style={{ marginBottom: '2.5rem' }}>
 
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="opacity-80 hover:opacity-100"><Linkedin size={30} /></a>
+
+          </div>
+        </div>
+
+        {/* Right: Menu Columns */}
+        <div className="flex-1 w-full flex flex-col sm:flex-row justify-end gap-12">
           {/* Product */}
-          <div className="space-y-4">
-            <h3 className="font-semibold">Product</h3>
-            <div className="space-y-2 text-sm">
-              <Link to="/how-it-works" className="block text-muted-foreground hover:text-foreground transition-colors">
-                How It Works
-              </Link>
-              <Link to="/platform" className="block text-muted-foreground hover:text-foreground transition-colors">
-                Platform
-              </Link>
-              <Link to="/solutions" className="block text-muted-foreground hover:text-foreground transition-colors">
-                Solutions
-              </Link>
-              <Link to="/security" className="block text-muted-foreground hover:text-foreground transition-colors">
-                Security
-              </Link>
-              <Link to="/demo" className="block text-muted-foreground hover:text-foreground transition-colors">
-                Book Demo
-              </Link>
-            </div>
+          <div>
+            <h4 className="text-xs text-gray-400 font-mono mb-4 tracking-widest">PRODUCT</h4>
+              <ul className="space-y-2 font-mono text-lg">
+              <li><a href="/how-it-works" className="hover:underline">HOW IT WORKS</a></li>
+              <li><a href="/demo" className="hover:underline">BOOK A DEMO</a></li>
+              <li><a href="/partners" className="hover:underline">PARTNERS</a></li>
+
+            </ul>
           </div>
 
           {/* Company */}
-          <div className="space-y-4">
-            <h3 className="font-semibold">Company</h3>
-            <div className="space-y-2 text-sm">
-              <Link to="/about" className="block text-muted-foreground hover:text-foreground transition-colors">
-                About Us
-              </Link>
-              <Link to="/founder" className="block text-muted-foreground hover:text-foreground transition-colors">
-                Our Founder
-              </Link>
-              <Link to="/blog" className="block text-muted-foreground hover:text-foreground transition-colors">
-                Blog
-              </Link>
-              <Link to="/partners" className="block text-muted-foreground hover:text-foreground transition-colors">
-                Partners
-              </Link>
-              <a href="mailto:info@compliledger.com" className="block text-muted-foreground hover:text-foreground transition-colors">
-                Contact Us
-              </a>
-            </div>
-          </div>
+          <div>
+            <h4 className="text-xs text-gray-400 font-mono mb-4 tracking-widest">COMPANY</h4>
+            <ul className="space-y-2 font-mono text-lg">
+              <li><a href="/about" className="hover:underline">ABOUT</a></li>
+              <li><a href="/blog" className="hover:underline">BLOG</a></li>
+              <li><a href="/contact" className="hover:underline">CONTACT</a></li>
 
-          {/* Newsletter */}
-          <div className="space-y-4">
-            <h3 className="font-semibold">Stay Updated</h3>
-            <p className="text-muted-foreground text-sm">
-              Get compliance insights and product updates.
-            </p>
-            <form className="flex space-x-2" onSubmit={handleSubscribeSubmit} noValidate>
-              <label htmlFor="newsletter-email" className="sr-only">Email address</label>
-              <Input
-                id="newsletter-email"
-                name="email"
-                placeholder="Enter email"
-                className="flex-1"
-                value={subscriberEmail}
-                onChange={(e) => setSubscriberEmail(e.target.value)}
-                type="email"
-                autoComplete="email"
-                inputMode="email"
-                required
-              />
-              <Button
-                size="sm"
-                className="btn-glow"
-                type="submit"
-                aria-label="Email info@compliledger.com to subscribe"
-                disabled={!subscriberEmail}
-                title={!subscriberEmail ? 'Please enter your email' : undefined}
-              >
-                <Mail size={16} />
-              </Button>
-            </form>
+            </ul>
           </div>
         </div>
-
-        <div className="border-t border-border/50 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-muted-foreground text-sm">
-            © {new Date().getFullYear()} CompliLedger. All rights reserved.
-          </p>
-          {/* <div className="flex space-x-4 mt-4 md:mt-0">
-            <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-              <Twitter size={16} />
-            </a>
-            <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-              <Linkedin size={16} />
-            </a>
-          </div> */}
-        </div>
+      </div>
+      {/* Copyright */}
+      <div className="w-full flex justify-end items-center mt-8 pr-8">
+        <span className="text-xs font-mono text-white/90">© CompliLedger 2026</span>
+      </div>
+      {/* Large background text centered at bottom with fading effect */}
+      <div className="pointer-events-none select-none absolute left-1/2 bottom-0 -translate-x-1/2 w-full flex justify-center items-end overflow-hidden" aria-hidden="true" style={{ zIndex: 0 }}>
+        <span
+          className="font-mono font-bold tracking-tighter leading-none"
+          style={{
+            fontSize: 'clamp(7rem, 18vw, 15rem)',
+            color: 'transparent',
+            WebkitTextStroke: '2.5px rgba(255,255,255,0.13)',
+            filter: 'blur(0.5px) drop-shadow(0 8px 32px #0008)',
+            textAlign: 'center',
+            width: '100%',
+            display: 'block',
+            lineHeight: 1.05,
+            WebkitTextFillColor: 'transparent',
+            opacity: 0.9,
+            marginBottom: '0.5rem',
+          }}
+        >
+          CompliLedger
+        </span>
       </div>
     </footer>
   );
 };
 
 export default Footer;
+
+// Small inline subscribe input component
+const SubscribeInput: React.FC = () => {
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle'|'sent'|'error'>('idle');
+
+  const validateEmail = (value: string) => {
+    return /\S+@\S+\.\S+/.test(value);
+  };
+
+  const handleSend = () => {
+    if (!validateEmail(email)) {
+      setStatus('error');
+      return;
+    }
+
+    // Try a mailto fallback to send email to your subscriptions address
+    const to = '';
+    const subject = encodeURIComponent('Subscribe Request');
+    const body = encodeURIComponent(`Please add ${email} to the newsletter list.`);
+    window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+    setStatus('sent');
+  };
+
+  return (
+    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full">
+      <input
+        type="email"
+        aria-label="Email address"
+        placeholder="YOUR EMAIL"
+        value={email}
+        onChange={(e) => { setEmail(e.target.value); setStatus('idle'); }}
+        className="px-4 py-3 bg-black font-mono border border-gray-700  text-white placeholder-gray-400 w-full sm:w-auto"
+        style={{ minWidth: 220 }}
+      />
+      <button
+        type="button"
+        onClick={handleSend}
+        className="px-6 py-3 bg-white text-black font-mono text-base tracking-wide uppercase border border-black hover:bg-neutral-200 transition"
+      >
+        Subscribe
+      </button>
+      <div className="mt-2 sm:mt-0 text-sm min-w-[160px]">
+        {status === 'error' && <span className="text-red-400">Please enter a valid email.</span>}
+        {status === 'sent' && <span className="text-green-400">Opened mail client to send subscription.</span>}
+      </div>
+    </div>
+  );
+};

@@ -1,11 +1,37 @@
 import { Link } from 'react-router-dom';
-import { Mail, ArrowRight, MapPin, Globe, Clock, Phone } from 'lucide-react';
+import { Mail, ArrowRight, MapPin, Globe, Clock, Phone, Calendar } from 'lucide-react';
+import { useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import Section from '@/components/Section';
 import Layout from '@/components/Layout';
 import GeometricPattern from '@/components/GeometricPattern';
 
 const Contact = () => {
+  const calComUrl = import.meta.env.VITE_CALCOM_URL || 'https://cal.com';
+  const calEmbedRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Load Cal.com embed script
+    const script = document.createElement('script');
+    script.src = 'https://app.cal.com/embed/embed.js';
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  const openCalModal = () => {
+    if (typeof (window as any).Cal !== 'undefined') {
+      (window as any).Cal('openModal', {
+        calLink: calComUrl.replace('https://cal.com/', ''),
+      });
+    } else {
+      // Fallback: open in new tab
+      window.open(calComUrl, '_blank');
+    }
+  };
 
   return (
     <Layout>
@@ -22,13 +48,15 @@ const Contact = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Button
-                size="lg"
-                className="bg-primary hover:bg-primary/90 text-background font-medium px-8 py-6 text-lg transition-all duration-300 transform hover:scale-105"
-              >
-                Book a Demo
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
+              <a href="mailto:maranda@compliledger.com">
+                <Button
+                  size="lg"
+                  className="bg-primary hover:bg-primary/90 text-background font-medium px-8 py-6 text-lg transition-all duration-300 transform hover:scale-105"
+                >
+                  Book a Demo
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </a>
               <Button
                 variant="outline"
                 size="lg"
@@ -67,124 +95,47 @@ const Contact = () => {
             <div className="bg-background/80 backdrop-blur-sm rounded-2xl border border-border/30 shadow-xl overflow-hidden">
               <div className="p-1 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5">
                 <div className="bg-background/95 p-6 md:p-8 rounded-xl">
-                  <form className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-1">
-                        <label htmlFor="name" className="block text-sm font-medium text-muted-foreground">Name *</label>
-                        <div className="relative">
-                          <input
-                            id="name"
-                            name="name"
-                            type="text"
-                            required
-                            className="w-full px-4 py-3 bg-background/50 border border-border/50 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all duration-200 hover:border-primary/30"
-                            placeholder="John Doe"
-                          />
-                        </div>
+                  {/* Cal.com Embed Container */}
+                  <div className="space-y-6">
+                    <div className="text-center space-y-4">
+                      <div className="w-16 h-16 mx-auto bg-primary/10 rounded-full flex items-center justify-center">
+                        <Calendar className="w-8 h-8 text-primary" />
                       </div>
-
-                      <div className="space-y-1">
-                        <label htmlFor="email" className="block text-sm font-medium text-muted-foreground">Work Email *</label>
-                        <div className="relative">
-                          <input
-                            id="email"
-                            name="email"
-                            type="email"
-                            required
-                            className="w-full px-4 py-3 bg-background/50 border border-border/50 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all duration-200 hover:border-primary/30"
-                            placeholder="john@company.com"
-                          />
-                        </div>
-                      </div>
+                      <h3 className="text-xl font-semibold">Schedule a Meeting</h3>
+                      <p className="text-muted-foreground text-sm max-w-md mx-auto">
+                        Book a time that works for you. Our team will discuss your compliance needs and show you how CompliLedger can help.
+                      </p>
                     </div>
 
-                    <div className="space-y-1">
-                      <label htmlFor="company" className="block text-sm font-medium text-muted-foreground">Company / Organization *</label>
-                      <input
-                        id="company"
-                        name="company"
-                        type="text"
-                        required
-                        className="w-full px-4 py-3 bg-background/50 border border-border/50 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all duration-200 hover:border-primary/30"
-                        placeholder="Your company name"
+                    {/* Cal.com Inline Embed */}
+                    <div
+                      ref={calEmbedRef}
+                      className="min-h-[500px] rounded-lg overflow-hidden border border-border/30"
+                    >
+                      <iframe
+                        src={`${calComUrl}?embed=true&theme=dark`}
+                        width="100%"
+                        height="500"
+                        frameBorder="0"
+                        className="w-full"
+                        title="Schedule a meeting with CompliLedger"
                       />
                     </div>
 
-                    <div className="space-y-1">
-                      <label htmlFor="role" className="block text-sm font-medium text-muted-foreground">Role *</label>
-                      <div className="relative">
-                        <select
-                          id="role"
-                          name="role"
-                          required
-                          className="w-full px-4 py-3 appearance-none bg-background/50 border border-border/50 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all duration-200 hover:border-primary/30 pr-10"
-                        >
-                          <option value="">Select your role</option>
-                          <option value="Compliance Officer">Compliance Officer</option>
-                          <option value="Security Leader">Security Leader</option>
-                          <option value="Auditor">Auditor</option>
-                          <option value="Regulator">Regulator</option>
-                          <option value="Investor">Investor</option>
-                          <option value="Other">Other</option>
-                        </select>
-                        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                          <svg className="h-5 w-5 text-muted-foreground" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                            <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <p className="block text-sm font-medium text-muted-foreground">Area of Interest *</p>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        {[
-                          'MiCA', 'ISO 27001', 'FedRAMP', 'PCI', 'NYDFS', 'SOX',
-                          'CMMC', 'HITRUST', 'HIPAA', 'AML/BSA / Exchange Licensing',
-                          'Web3 & DeFi', 'Other'
-                        ].map((interest) => (
-                          <label key={interest} className="flex items-center space-x-2 p-2 rounded-lg hover:bg-muted/30 transition-colors cursor-pointer">
-                            <div className="flex items-center justify-center w-5 h-5 border border-border rounded-md group-hover:border-primary/50 transition-colors">
-                              <input
-                                type="checkbox"
-                                name="interests"
-                                value={interest}
-                                className="opacity-0 absolute h-5 w-5 peer"
-                              />
-                              <svg className="w-3.5 h-3.5 text-primary opacity-0 peer-checked:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                              </svg>
-                            </div>
-                            <span className="text-sm text-foreground/90">{interest}</span>
-                          </label>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="space-y-1">
-                      <label htmlFor="message" className="block text-sm font-medium text-muted-foreground">Message (Optional)</label>
-                      <textarea
-                        id="message"
-                        name="message"
-                        rows={4}
-                        className="w-full px-4 py-3 bg-background/50 border border-border/50 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all duration-200 hover:border-primary/30 resize-none"
-                        placeholder="Tell us more about your compliance needs..."
-                      ></textarea>
-                    </div>
-
-                    <div className="pt-2">
+                    {/* Alternative: Modal Button */}
+                    <div className="text-center pt-4 border-t border-border/30">
+                      <p className="text-sm text-muted-foreground mb-3">Or open scheduler in a popup</p>
                       <Button
-                        type="submit"
-                        className="w-full py-4 text-base font-medium bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg hover:shadow-primary/20 group"
+                        onClick={openCalModal}
+                        variant="outline"
+                        className="group"
                       >
-                        <span className="relative z-10">Submit Request</span>
-                        <span className="absolute inset-0 bg-gradient-to-r from-primary/80 to-primary/60 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                        <Calendar className="w-4 h-4 mr-2" />
+                        Open Scheduler
+                        <ArrowRight className="ml-2 h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
                       </Button>
-                    <p className="text-xs text-muted-foreground mt-2 text-center">
-                      We'll get back to you within 24 hours
-                      </p>
                     </div>
-                  </form>
+                  </div>
                 </div>
               </div>
             </div>
@@ -222,7 +173,7 @@ const Contact = () => {
                 {
                   title: 'Auditor or Regulator',
                   description: 'Explore AuditSync™ portal',
-                  link: '/auditsync'
+                  link: '/platform'
                 }
               ].map((item, index) => (
                 <Link
@@ -342,7 +293,7 @@ const Contact = () => {
             </h2>
 
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Book a demo today and see how CompliLedger transforms audits into continuous, provable trust.
+              Book a demo today and see how CompliLedger transforms audits into continuous, provable proof.
             </p>
 
             <div className="flex flex-col sm:flex-row justify-center gap-4 mt-8">
