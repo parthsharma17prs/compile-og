@@ -1,10 +1,11 @@
-import { BookOpen, FileText, FileCheck, FileCode, GitBranch, Key, Lock, Shield, Zap, ArrowRight, Download, ExternalLink, Code } from 'lucide-react';
-import { useState } from 'react';
+import { BookOpen, FileText, FileCheck, FileCode, GitBranch, Key, Lock, Shield, Zap, ArrowRight, Download, ExternalLink, Code, PlusIcon, ArrowRightIcon } from 'lucide-react';
+import { type ReactNode, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '@/components/Layout';
 import Section from '@/components/Section';
-import GeometricPattern from '@/components/GeometricPattern';
 import { Button } from '@/components/ui/button';
+import { motion, useReducedMotion } from 'motion/react';
+import { TextRevealByWord } from '@/components/ui/text-reveal-by-word';
 
 type Resource = {
   title: string;
@@ -15,11 +16,36 @@ type Resource = {
   cta?: string;
 };
 
+type ViewAnimationProps = {
+  delay?: number;
+  className?: string;
+  children: ReactNode;
+};
+
+function AnimatedContainer({ className, delay = 0.1, children }: ViewAnimationProps) {
+  const shouldReduceMotion = useReducedMotion();
+
+  if (shouldReduceMotion) {
+    return <div className={className}>{children}</div>;
+  }
+
+  return (
+    <motion.div
+      initial={{ filter: 'blur(4px)', translateY: -8, opacity: 0 }}
+      whileInView={{ filter: 'blur(0px)', translateY: 0, opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ delay, duration: 0.8 }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 const Documentation = () => {
   const [activeTab, setActiveTab] = useState<'docs' | 'briefs' | 'blog'>('docs');
 
   const resources: Resource[] = [
-    // Documentation
     {
       title: 'Getting Started Guide',
       description: 'How to connect repos, SBOMs, and compliance tools',
@@ -48,8 +74,6 @@ const Documentation = () => {
       link: '/docs/oscalsupport',
       category: 'docs',
     },
-    
-    // Briefs
     {
       title: 'Financial Services & Tokenization',
       description: 'DORA, PCI DSS, AML/BSA, Basel III compliance automation',
@@ -74,8 +98,6 @@ const Documentation = () => {
       category: 'briefs',
       cta: 'Download Brief',
     },
-    
-    // Blog Posts
     {
       title: 'Why Continuous Compliance is the New Normal',
       description: 'How automated compliance is transforming enterprise security',
@@ -94,229 +116,112 @@ const Documentation = () => {
     },
   ];
 
-  const featuredResource = {
-    title: 'CompliLedger Whitepaper',
-    description: 'Programmable, Provable Compliance in a Decentralized World — Our vision for compliance automation across Web3, finance, and regulated industries.',
-    cta: 'Download Whitepaper',
-    image: '/images/whitepaper-cover.png',
-  };
-
   const filteredResources = resources.filter(resource => resource.category === activeTab);
 
   return (
     <Layout>
-      {/* Hero Section */}
-      <Section variant="default" className="pt-24 pb-16 md:pt-32 md:pb-24  ">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center text-glow">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6  glow-text">
-              Compliance Knowledge, <span className="text-primary">Simplified</span>.
-            </h1>
-            <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-              Guides, briefs, and insights to help you stay ahead of evolving frameworks and compliance expectations.
-            </p>
+      {/* PAGE HERO */}
+      <Section spacing="xl" className="flex items-start justify-center min-h-[60vh] pt-4 md:pt-8 w-full max-w-7xl mx-auto">
+        <div className="relative w-full">
+          <div className="relative h-[400px] md:h-[500px] overflow-hidden border bg-background/60 shadow-2xl rounded-xl md:rounded-[2rem] flex items-center justify-center">
+            <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 via-background to-background" />
+
+            <div className="relative z-10 px-6 py-12 md:px-10 md:py-16 text-center text-foreground">
+              <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold uppercase tracking-tight leading-none text-center">
+                Knowledge <br className="hidden md:block" />
+                <span className="bg-red-500 px-4 rounded-md text-white my-2 inline-block">Infrastructure</span>
+              </h1>
+              <p className="text-lg md:text-xl text-muted-foreground mt-6 max-w-2xl mx-auto font-medium text-center">
+                Guides, briefs, and insights to help you build verifiable trust.
+              </p>
+            </div>
+          </div>
+
+          <div aria-hidden style={{ willChange: 'transform' }} className="absolute left-1/2 bottom-[-2rem] md:bottom-[-3rem] -translate-x-1/2 pointer-events-none select-none text-[4rem] sm:text-[8rem] md:text-[12rem] lg:text-[14rem] font-extrabold uppercase leading-none opacity-10 tracking-tight z-0">
+            Docs
           </div>
         </div>
       </Section>
 
-      {/* Tabs Navigation */}
-      <div className="border-b border-border">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-wrap -mb-px">
-            <button
-              onClick={() => setActiveTab('docs')}
-              className={`mr-8 py-4 px-1 border-b-2 font-medium text-sm ${
-                activeTab === 'docs'
-                  ? 'border-primary text-primary'
-                  : 'border-transparent text-muted-foreground hover:text-foreground hover:border-gray-300'
-              }`}
-            >
-              Documentation
-            </button>
-            <button
-              onClick={() => setActiveTab('briefs')}
-              className={`mr-8 py-4 px-1 border-b-2 font-medium text-sm ${
-                activeTab === 'briefs'
-                  ? 'border-primary text-primary'
-                  : 'border-transparent text-muted-foreground hover:text-foreground hover:border-gray-300'
-              }`}
-            >
-              Briefs & Reports
-            </button>
-            <button
-              onClick={() => setActiveTab('blog')}
-              className={`py-4 px-1 border-b-2 font-medium text-sm ${
-                activeTab === 'blog'
-                  ? 'border-primary text-primary'
-                  : 'border-transparent text-muted-foreground hover:text-foreground hover:border-gray-300'
-              }`}
-            >
-              Blog & Insights
-            </button>
+      {/* REVEAL SECTION */}
+      <Section variant="default" spacing="xl">
+        <div className="container mx-auto px-6 text-center">
+          <div className="max-w-5xl mx-auto">
+            <TextRevealByWord
+              text="Explore documentation, industry briefs, and technical insights. Everything you need to turn policies into proof."
+              className="text-foreground font-space-grotesk"
+            />
           </div>
         </div>
-      </div>
+      </Section>
 
-      {/* Tab Content */}
-      <Section variant="default" className="py-16">
-        <div className="container mx-auto px-4">
-          {activeTab === 'docs' && (
-            <>
-              <div className="max-w-3xl mb-12">
-                <h2 className="text-3xl font-bold mb-4">Technical Documentation & Product Guides</h2>
-                <p className="text-muted-foreground">
-                  Everything you need to get started with CompliLedger, integrate with your stack, and configure compliance workflows.
-                </p>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {filteredResources.map((resource, index) => (
-                  <Link
-                    key={index}
-                    to={resource.link}
-                    className="group relative bg-card border border-border rounded-xl p-6 hover:border-primary/50 transition-all hover:shadow-md"
-                  >
-                    <div className="flex items-start gap-4">
-                      <div className="p-2 bg-primary/10 text-primary rounded-lg">
-                        {resource.icon}
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-semibold mb-1 group-hover:text-primary transition-colors">
-                          {resource.title}
-                        </h3>
-                        <p className="text-sm text-muted-foreground">
-                          {resource.description}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="absolute right-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <ArrowRight className="w-5 h-5 text-primary" />
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </>
-          )}
+      {/* RESOURCE TABS */}
+      <Section spacing="xl">
+        <div className="max-w-6xl mx-auto px-4">
+          {/* TAB NAV */}
+          <div className="flex flex-wrap items-center justify-center gap-4 mb-20 bg-background/40 backdrop-blur-md p-2 rounded-[2rem] border w-fit mx-auto">
+            {(['docs', 'briefs', 'blog'] as const).map(tab => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`px-8 py-3 rounded-2xl font-black uppercase text-[10px] tracking-widest transition-all duration-300 ${activeTab === tab ? 'bg-red-500 text-white shadow-xl shadow-red-500/20' : 'hover:bg-foreground/5'}`}
+              >
+                {tab === 'docs' ? 'Documentation' : tab === 'briefs' ? 'Briefs' : 'Insights'}
+              </button>
+            ))}
+          </div>
 
-          {activeTab === 'briefs' && (
-            <>
-              <div className="max-w-3xl mb-12">
-                <h2 className="text-3xl font-bold mb-4">Solution Briefs & Industry Reports</h2>
-                <p className="text-muted-foreground">
-                  Short, executive-ready briefs on how CompliLedger addresses compliance challenges across industries.
-                </p>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredResources.map((resource, index) => (
-                  <div key={index} className="border border-border rounded-xl overflow-hidden group hover:shadow-md transition-shadow">
-                    <div className="p-6">
-                      <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-4">
-                        {resource.icon}
+          {/* GRID */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 min-h-[400px]">
+            {filteredResources.map((res, i) => (
+              <AnimatedContainer key={i} delay={i * 0.05}>
+                <Link to={res.link} className="block group h-full">
+                  <div className="h-full rounded-[2.5rem] border bg-background/40 p-10 backdrop-blur-md hover:border-red-500/30 transition-all duration-500 hover:shadow-2xl hover:shadow-red-500/5 flex flex-col justify-between">
+                    <div className="space-y-6">
+                      <div className="w-12 h-12 rounded-2xl bg-red-500/10 flex items-center justify-center text-red-500 group-hover:bg-red-500 group-hover:text-white transition-all">
+                        {res.icon}
                       </div>
-                      <h3 className="text-lg font-semibold mb-2">{resource.title}</h3>
-                      <p className="text-sm text-muted-foreground mb-4">{resource.description}</p>
+                      <h3 className="text-2xl font-black uppercase tracking-tighter leading-none group-hover:text-red-500 transition-colors">{res.title}</h3>
+                      <p className="text-muted-foreground font-medium text-sm leading-relaxed">
+                        {res.description}
+                      </p>
                     </div>
-                    <div className="px-6 py-4 bg-muted/50 border-t border-border">
-                      <a 
-                        href={resource.link} 
-                        className="text-sm font-medium text-primary inline-flex items-center hover:underline"
-                      >
-                        {resource.cta}
-                        <Download className="ml-2 w-4 h-4" />
-                      </a>
+                    <div className="pt-10 flex items-center justify-between text-xs font-black uppercase tracking-widest text-muted-foreground group-hover:text-red-500 transition-colors">
+                      <span>{res.cta || "View Guide"}</span>
+                      <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                     </div>
                   </div>
-                ))}
-              </div>
-            </>
-          )}
-
-          {activeTab === 'blog' && (
-            <>
-              <div className="max-w-3xl mb-12">
-                <h2 className="text-3xl font-bold mb-4">Compliance Insights & Thought Leadership</h2>
-                <p className="text-muted-foreground">
-                  Stay informed on evolving regulations, frameworks, and compliance technology trends with our expert blog.
-                </p>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {filteredResources.map((post, index) => (
-                  <article key={index} className="group">
-                    <div className="aspect-video bg-muted rounded-lg mb-4 overflow-hidden">
-                      <div className="w-full h-full flex items-center justify-center bg-primary/5">
-                        <BookOpen className="w-10 h-10 text-primary/30" />
-                      </div>
-                    </div>
-                    <div className="mb-2">
-                      <span className="inline-block px-3 py-1 text-xs font-medium bg-primary/10 text-primary rounded-full">
-                        {post.category === 'blog' && 'Blog Post'}
-                      </span>
-                    </div>
-                    <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
-                      {post.title}
-                    </h3>
-                    <p className="text-muted-foreground mb-4">{post.description}</p>
-                    <a 
-                      href={post.link} 
-                      className="inline-flex items-center text-sm font-medium text-primary hover:underline"
-                    >
-                      Read more
-                      <ArrowRight className="ml-1 w-4 h-4" />
-                    </a>
-                  </article>
-                ))}
-              </div>
-            </>
-          )}
-        </div>
-      </Section>
-
-      {/* Featured Resource */}
-      <Section variant="default" className="py-16 bg-muted/30">
-        <div className="container mx-auto px-4">
-          <div className="bg-card border border-border rounded-2xl overflow-hidden">
-            <div className="p-8 md:p-12">
-              <div className="max-w-2xl">
-                <h2 className="text-2xl md:text-3xl font-bold mb-4">Featured Resource</h2>
-                <h3 className="text-xl font-semibold text-primary mb-4">{featuredResource.title}</h3>
-                <p className="text-muted-foreground mb-6">{featuredResource.description}</p>
-                <button 
-                  className="group relative inline-flex items-center px-8 py-3.5 bg-white text-black font-semibold text-lg rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-white/10 hover:scale-[1.02] active:scale-95 border-2 border-white/20 hover:border-white/40"
-                >
-                  <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                  <span className="relative z-10 flex items-center">
-                    <Download className="mr-3 w-5 h-5 transition-transform group-hover:scale-110" />
-                    <span className="font-medium">{featuredResource.cta}</span>
-                  </span>
-                </button>
-              </div>
-            </div>
+                </Link>
+              </AnimatedContainer>
+            ))}
           </div>
         </div>
       </Section>
-      {/* Call to Action */}
-      <Section variant="glow" spacing="lg">
-        <GeometricPattern className="opacity-50" />
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <div className="max-w-4xl mx-auto space-y-6">
-            <h2 className="text-3xl md:text-5xl font-space-grotesk font-bold leading-tight">
-              From Docs to Proof — Everything You Need.
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Explore our documentation, solution briefs, and insights to see how CompliLedger is redefining compliance for every industry.
+
+      {/* FINAL CTA */}
+      <Section className="text-center pb-24 pt-24 text-foreground">
+        <div className="relative mx-auto flex w-full max-w-4xl flex-col justify-between gap-y-12 border-y bg-[radial-gradient(35%_80%_at_25%_0%,--theme(--color-foreground/.08),transparent)] px-6 py-16 rounded-3xl">
+          <PlusIcon className="absolute top-[-12.5px] left-[-11.5px] z-1 size-6" strokeWidth={1} />
+          <PlusIcon className="absolute top-[-12.5px] right-[-11.5px] z-1 size-6" strokeWidth={1} />
+          <PlusIcon className="absolute bottom-[-12.5px] left-[-11.5px] z-1 size-6" strokeWidth={1} />
+          <PlusIcon className="absolute right-[-11.5px] bottom-[-12.5px] z-1 size-6" strokeWidth={1} />
+
+          <div className="space-y-4">
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight">From Docs to Proof.</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-medium">
+              Build the foundation of your verifiable compliance program today.
             </p>
-            <div className="flex flex-wrap justify-center gap-4 pt-2">
-              <Link to="/demo">
-                <Button size="lg" className="btn-glow px-8">
-                  Book a Demo
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
-              <Link to="/solutions">
-                <Button variant="outline" size="lg" className="px-8">
-Explore Platform
-                </Button>
-              </Link>
-            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <Link to="/contact">
+              <Button size="lg" variant="outline" className="px-10 border-2">Contact Sales</Button>
+            </Link>
+            <Link to="/demo">
+              <Button size="lg" className="px-10 bg-red-500 hover:bg-red-600 text-white shadow-xl">
+                Book a Demo <ArrowRightIcon className="size-4 ml-1" />
+              </Button>
+            </Link>
           </div>
         </div>
       </Section>

@@ -2,15 +2,39 @@ import { Button } from '@/components/ui/button';
 import Layout from '@/components/Layout';
 import Section from '@/components/Section';
 import SectionHeader from '@/components/SectionHeader';
-import GeometricPattern from '@/components/GeometricPattern';
+import { motion, useReducedMotion } from 'motion/react';
 import { Link } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react';
-import { ArrowRight, Plus, Server, Code, Users, Cpu, ShoppingCart, ShieldCheck, Compass } from 'lucide-react';
-import { FeatureCard } from '@/components/FeatureCard';
+import { type ReactNode, useState } from 'react';
+import { ArrowRight, PlusIcon, Server, Code, Users, Cpu, ShieldCheck, Compass, CheckCircle } from 'lucide-react';
 import { TextRevealByWord } from '@/components/ui/text-reveal-by-word';
 
+type ViewAnimationProps = {
+  delay?: number;
+  className?: string;
+  children: ReactNode;
+};
+
+function AnimatedContainer({ className, delay = 0.1, children }: ViewAnimationProps) {
+  const shouldReduceMotion = useReducedMotion();
+
+  if (shouldReduceMotion) {
+    return <div className={className}>{children}</div>;
+  }
+
+  return (
+    <motion.div
+      initial={{ filter: 'blur(4px)', translateY: -8, opacity: 0 }}
+      whileInView={{ filter: 'blur(0px)', translateY: 0, opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ delay, duration: 0.8 }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 const Products = () => {
-  const prodRef = useRef<HTMLDivElement | null>(null);
   const [selected, setSelected] = useState<string>('platform');
 
   const productData = [
@@ -19,259 +43,180 @@ const Products = () => {
       title: 'CompliLedger Platform',
       subtitle: 'The Compliance Operating System (CompliOS)',
       icon: Server,
-      content: (
-        <div>
-          <h4 className="font-semibold">What it is</h4>
-          <p className="mt-2">The CompliLedger Platform is the system of record, verification engine, and control plane for compliance. Everything else connects to this platform.</p>
-
-          <h4 className="font-semibold mt-4">What it includes</h4>
-          <ul className="list-inside list-disc space-y-1 text-foreground/80 mt-2">
-            <li>Continuous compliance monitoring</li>
-            <li>Automated audit documentation (SSP, SAP, SAR, POA&amp;M, PIA)</li>
-            <li>Control validation &amp; framework alignment</li>
-            <li>Risk scoring &amp; drift detection</li>
-            <li>Privacy-first evidence handling</li>
-            <li>Zero-knowledge proof generation</li>
-            <li>DID &amp; Verifiable Credential issuance</li>
-            <li>Blockchain-anchored verification</li>
-            <li>Audit- and regulator-ready outputs</li>
-          </ul>
-
-          <h4 className="font-semibold mt-4">Powered by</h4>
-          <p className="text-foreground/80">Algorand • Aleo • Zcash</p>
-
-          <div className="flex gap-3 mt-6">
-            <a href="mailto:maranda@compliledger.com"><Button> Book Platform Demo</Button></a>
-            <Link to="/pricing"><Button variant="default"> Buy Platform</Button></Link>
-          </div>
-        </div>
-      )
+      tags: ["DORA", "SOC 2", "ISO"],
+      benefits: [
+        "Continuous compliance monitoring",
+        "Automated audit documentation",
+        "Risk scoring & drift detection",
+        "Zero-knowledge proof generation",
+        "Blockchain-anchored verification"
+      ],
+      link: "/demo",
+      linkText: "Book Platform Demo"
     },
     {
       id: 'sdks',
-      title: 'CompliLedger SDK Suite',
-      subtitle: 'Embed compliance into your systems',
+      title: 'Developer SDKs',
+      subtitle: 'Embed compliance into your core',
       icon: Code,
-      content: (
-        <div>
-          <h4 className="font-semibold">Available SDKs</h4>
-          <div className="space-y-2 mt-2 text-foreground/80">
-            <div> CompALGO — Algorand Compliance SDK — Immutable audit trails and timestamped verification.</div>
-            <div> CompZ — Zcash Privacy &amp; Proof SDK — Confidential compliance proofs and shielded attestations.</div>
-            <div> Comp-Leo — Aleo ZK Intelligence SDK — Private compliance computation using zero-knowledge programs.</div>
-          </div>
-          <h4 className="font-semibold mt-4">What developers get</h4>
-          <ul className="list-inside list-disc space-y-1 text-foreground/80 mt-2">
-            <li>APIs &amp; SDK packages</li>
-            <li>CLI tools</li>
-            <li>Test environments</li>
-            <li>Sample integrations</li>
-          </ul>
-          <div className="flex gap-3 mt-4">
-            <Link to="/documentation"><Button>Try an SDK</Button></Link>
-            <a href="https://www.compliledger.com/docs"><Button variant="outline"> View Developer Docs</Button></a>
-          </div>
-        </div>
-      )
+      tags: ["SDK", "API", "ZK"],
+      benefits: [
+        "CompALGO — Algorand SDK",
+        "CompZ — Zcash Privacy SDK",
+        "Comp-Leo — Aleo ZK SDK",
+        "Developer-first CLI tools"
+      ],
+      link: "/documentation",
+      linkText: "View Documentation"
     },
     {
       id: 'market',
-      title: 'CompliMarket',
-      subtitle: 'Compliance intelligence, one agent at a time',
+      title: 'Agent Marketplace',
+      subtitle: 'Modular compliance intelligence',
       icon: Users,
-      content: (
-        <div>
-          <p>A marketplace where users can subscribe to specialized AI compliance agents — without deploying the full platform.</p>
-          <h4 className="font-semibold mt-4">Available agents</h4>
-          <ul className="list-inside list-disc text-foreground/80 space-y-1 mt-2">
-            <li>GitHub Sentinel</li>
-            <li>Policy Interpreter</li>
-            <li>AI Risk Scoring</li>
-            <li>AutoDoc Agent</li>
-            <li>Vulnerability Compliance Agent</li>
-            <li>Drift Detection Agent</li>
-          </ul>
-          <div className="mt-4">
-            <a href="https://www.complimarket.compliledger.com" target="_blank" rel="noreferrer"><Button> Browse Agents</Button></a>
-            <Button variant="default" className="ml-2">Subscribe Now</Button>
-          </div>
-        </div>
-      )
-    },
-    {
-      id: 'master',
-      title: 'Master Agent',
-      subtitle: 'One interface for the entire compliance system',
-      icon: Cpu,
-      content: (
-        <div>
-          <p>The Master Agent is the command interface for CompliLedger. It allows users to query compliance posture, generate evidence, orchestrate agents, and navigate frameworks using natural language.</p>
-          <h4 className="font-semibold mt-4">Features</h4>
-          <ul className="list-inside list-disc text-foreground/80 mt-2">
-            <li>Compliance Q&amp;A</li>
-            <li>Evidence generation</li>
-            <li>Risk explanations</li>
-            <li>Agent orchestration</li>
-          </ul>
-          <div className="mt-4"><Button> Launch Master Agent</Button></div>
-        </div>
-      )
-    },
-    {
-      id: 'start',
-      title: 'Start where you are',
-      subtitle: 'Start. Scale. Repeat.',
-      icon: Compass,
-      content: (
-        <div>
-          <p className="font-medium">Paths:</p>
-          <ul className="list-inside list-disc text-foreground/80 mt-2">
-            <li>Startups &amp; Teams → Try Platform → Add agents → Scale frameworks</li>
-            <li>Developers → Use SDK → Generate proof → Upgrade to platform</li>
-            <li>Auditors &amp; Professionals → Use agents → Bundle tools → Platform access</li>
-          </ul>
-        </div>
-      )
-    },
-    {
-      id: 'privacy',
-      title: 'Privacy is enforced everywhere',
-      subtitle: 'Regardless of how you use CompliLedger',
-      icon: ShieldCheck,
-      content: (
-        <div>
-          <ul className="list-inside list-disc text-foreground/80 mt-2">
-            <li>No data resale</li>
-            <li>No telemetry monetization</li>
-            <li>No AI training on customer data</li>
-            <li>No on-chain data exposure</li>
-            <li>No cross-tenant access</li>
-          </ul>
-        </div>
-      )
+      tags: ["AI", "AGENTS", "MODULAR"],
+      benefits: [
+        "GitHub Sentinel Agent",
+        "Policy Interpreter AI",
+        "AutoDoc Compliance Agent",
+        "Security Drift Detector"
+      ],
+      link: "/marketplace",
+      linkText: "Browse Marketplace"
     }
   ];
 
-  function ProductNav() {
-    return (
-      <div className="space-y-3">
-        {productData.map((p) => {
-          const Icon = p.icon as any;
-          return (
-            <button
-              key={p.id}
-              onClick={() => setSelected(p.id)}
-              className={`w-full text-left p-3 rounded-lg hover:bg-background/70 transition flex items-center gap-3 border ${selected === p.id ? 'ring-2 ring-primary/40 border-transparent' : 'border border-foreground/10'}`}>
-              <Icon className="size-6 text-foreground/80" aria-hidden />
-              <div>
-                <div className="font-semibold">{p.title}</div>
-                <div className="text-xs text-foreground/70">{p.subtitle}</div>
-              </div>
-            </button>
-          );
-        })}
-      </div>
-    );
-  }
-
-  function ProductDetail() {
-    const item = productData.find((x) => x.id === selected) ?? productData[0];
-    return (
-      <div>
-        <SectionHeader title={item.title} description={item.subtitle} />
-        <div className="mt-4 p-6 bg-background/60 rounded-2xl border border-foreground/10">
-          {item.content}
-        </div>
-      </div>
-    );
-  }
   return (
     <Layout>
       {/* PAGE HERO */}
-     <Section variant="default" spacing="xl" className="py-0 min-h-screen min-h-svh flex items-center">
+      <Section spacing="xl" className="flex items-start justify-center min-h-[60vh] pt-4 md:pt-8 w-full max-w-7xl mx-auto">
+        <div className="relative w-full">
+          <div className="relative h-[400px] md:h-[500px] overflow-hidden border bg-background/60 shadow-2xl rounded-xl md:rounded-[2rem] flex items-center justify-center">
+            <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 via-background to-background" />
 
-          <div className="absolute right-6 bottom-24  max-w-[55vw] text-md md:text-xl lg:text-3xl xl:text-3xl font-extrabold uppercase text-foreground/90 px-2 py-1 text-right pointer-events-none">
-              designed for <span className='bg-red-500 px-2 rounded-sm'>privacy-first</span> compliance
+            <div className="relative z-10 px-6 py-12 md:px-10 md:py-16 text-center">
+              <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold uppercase text-foreground/90 tracking-tight leading-none">
+                Designed for <br className="hidden md:block" />
+                <span className="bg-red-500 px-4 rounded-md text-white my-2 inline-block">Privacy-First</span><br className="hidden md:block" /> Compliance
+              </h1>
+              <p className="text-lg md:text-xl text-muted-foreground mt-6 max-w-2xl mx-auto font-medium">
+                The core compliance operating system for the verifiable era.
+              </p>
             </div>
-
-          <div aria-hidden  style={{willChange: 'transform'}} className="absolute right-6 bottom-6  pointer-events-none select-none text-[2rem] sm:text-[8rem] md:text-[12rem] lg:text-[16rem] xl:text-[20rem] font-extrabold uppercase leading-none opacity-10 tracking-tight">
-           products
           </div>
 
-
-
-
-      </Section>
-{/* Text reveal section (scroll-animated by word) */}
-      <Section variant="default" spacing="xl">
-        <div className="container mx-auto px-6">
-          <div className="max-w-5xl mx-auto">
-            <TextRevealByWord text=" CompliLedger is the core compliance operating system. SDKs, AI agents, and interfaces extend it without compromising privacy." className="" />
-
-            <div className="flex items-center justify-center gap-2 mt-4">
-              <a href="mailto:maranda@compliledger.com"><Button variant="outline">Book a Demo</Button></a>
-              <Button>
-               coming soon <ArrowRight className="size-4 ml-1" />
-              </Button>
-            </div>
+          <div aria-hidden style={{ willChange: 'transform' }} className="absolute left-1/2 bottom-[-2rem] md:bottom-[-3rem] -translate-x-1/2 pointer-events-none select-none text-[4rem] sm:text-[8rem] md:text-[12rem] lg:text-[14rem] font-extrabold uppercase leading-none opacity-10 tracking-tight z-0">
+            Products
           </div>
         </div>
       </Section>
-      {/* Interactive Products Explorer (sections 1–6) */}
-      <Section variant="default" spacing="lg">
-        <div className="container mx-auto px-6">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-3 gap-8 items-start">
-              {/* Left nav */}
-              <div className="md:col-span-1">
-                <h3 className="text-sm font-semibold mb-4">Explore Products</h3>
-                <ProductNav />
-              </div>
 
-              {/* Right detail */}
-              <div className="md:col-span-2">
-                <ProductDetail />
-              </div>
+      {/* REVEAL SECTION */}
+      <Section variant="default" spacing="xl">
+        <div className="container mx-auto px-6">
+          <div className="max-w-5xl mx-auto">
+            <TextRevealByWord
+              text="CompliLedger is the core infrastructure. SDKs, AI agents, and specialized interfaces extend it without compromising privacy."
+              className="text-foreground font-space-grotesk"
+            />
+          </div>
+        </div>
+      </Section>
+
+      {/* PRODUCT EXPLORER */}
+      <Section spacing="xl">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="grid md:grid-cols-12 gap-12 items-start">
+            {/* LEFT NAV */}
+            <div className="md:col-span-4 space-y-4">
+              <div className="text-sm font-bold tracking-widest uppercase text-red-500 mb-6">Select Product</div>
+              {productData.map((p) => (
+                <button
+                  key={p.id}
+                  onClick={() => setSelected(p.id)}
+                  className={`w-full text-left p-6 rounded-3xl transition-all duration-300 border ${selected === p.id
+                    ? 'bg-background border-red-500/50 shadow-xl shadow-red-500/5 translate-x-2'
+                    : 'border-transparent hover:bg-background/40 hover:translate-x-1'}`}
+                >
+                  <div className="flex items-center gap-4">
+                    <span className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-colors ${selected === p.id ? 'bg-red-500 text-white' : 'bg-red-500/10 text-red-500'}`}>
+                      <p.icon size={24} />
+                    </span>
+                    <div>
+                      <div className="font-bold text-lg">{p.title}</div>
+                      <div className="text-xs text-muted-foreground font-medium uppercase tracking-tight">{p.subtitle}</div>
+                    </div>
+                  </div>
+                </button>
+              ))}
+            </div>
+
+            {/* RIGHT CONTENT */}
+            <div className="md:col-span-8">
+              <AnimatedContainer key={selected}>
+                <div className="relative overflow-hidden rounded-[3rem] border bg-background/40 p-12 backdrop-blur-md min-h-[500px] flex flex-col justify-between">
+                  <div className="space-y-8">
+                    <div className="flex flex-wrap gap-2">
+                      {productData.find(p => p.id === selected)?.tags.map(tag => (
+                        <span key={tag} className="text-[10px] font-black tracking-widest uppercase bg-foreground/5 py-1 px-3 rounded-full">{tag}</span>
+                      ))}
+                    </div>
+                    <h2 className="text-4xl md:text-5xl font-black tracking-tighter uppercase leading-none">
+                      {productData.find(p => p.id === selected)?.title}
+                    </h2>
+                    <p className="text-xl text-muted-foreground font-medium leading-relaxed max-w-2xl">
+                      {productData.find(p => p.id === selected)?.subtitle}
+                    </p>
+
+                    <div className="grid sm:grid-cols-2 gap-4 pt-4">
+                      {productData.find(p => p.id === selected)?.benefits.map((b, i) => (
+                        <div key={i} className="flex items-start gap-3">
+                          <CheckCircle size={20} className="text-red-500 mt-1 shrink-0" />
+                          <span className="font-bold text-foreground/80">{b}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="mt-12 pt-12 border-t border-dashed">
+                    <Link to={productData.find(p => p.id === selected)?.link || "#"}>
+                      <Button className="h-16 px-12 rounded-2xl text-lg font-bold bg-red-500 hover:bg-red-600 text-white shadow-xl shadow-red-500/20">
+                        {productData.find(p => p.id === selected)?.linkText}
+                        <ArrowRight className="ml-3 size-5" />
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              </AnimatedContainer>
             </div>
           </div>
         </div>
       </Section>
 
       {/* FINAL CTA */}
-      <Section  spacing="xl">
-        <div className="relative mx-auto flex w-full max-w-3xl flex-col justify-between gap-y-6 border-y bg-[radial-gradient(35%_80%_at_25%_0%,--theme(--color-foreground/.08),transparent)] px-4 py-8">
-          <Plus
-            className="absolute top-[-12.5px] left-[-11.5px] z-1 size-6"
-            strokeWidth={1}
-          />
-          <Plus
-            className="absolute top-[-12.5px] right-[-11.5px] z-1 size-6"
-            strokeWidth={1}
-          />
-          <Plus
-            className="absolute bottom-[-12.5px] left-[-11.5px] z-1 size-6"
-            strokeWidth={1}
-          />
-          <Plus
-            className="absolute right-[-11.5px] bottom-[-12.5px] z-1 size-6"
-            strokeWidth={1}
-          />
+      <Section className="text-center pb-24 pt-24">
+        <div className="relative mx-auto flex w-full max-w-4xl flex-col justify-between gap-y-12 border-y bg-[radial-gradient(35%_80%_at_25%_0%,--theme(--color-foreground/.08),transparent)] px-6 py-16 rounded-3xl">
+          <PlusIcon className="absolute top-[-12.5px] left-[-11.5px] z-1 size-6" strokeWidth={1} />
+          <PlusIcon className="absolute top-[-12.5px] right-[-11.5px] z-1 size-6" strokeWidth={1} />
+          <PlusIcon className="absolute bottom-[-12.5px] left-[-11.5px] z-1 size-6" strokeWidth={1} />
+          <PlusIcon className="absolute right-[-11.5px] bottom-[-12.5px] z-1 size-6" strokeWidth={1} />
 
-          <div className="-inset-y-6 pointer-events-none absolute left-0 w-px border-l" />
-          <div className="-inset-y-6 pointer-events-none absolute right-0 w-px border-r" />
-
-          <div className="-z-10 absolute top-0 left-1/2 h-full border-l border-dashed" />
-
-          <div className="space-y-1">
-            <h2 className="text-center font-bold text-2xl">Compliance is Infrastructure. Choose how to Deploy it</h2>
-
+          <div className="space-y-4">
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight">Compliance is Infrastructure.</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-medium">
+              Choose how to deploy it — from single agents to a full compliance OS.
+            </p>
           </div>
 
-          <div className="flex items-center justify-center gap-2">
-            <Button variant="outline">coming soon</Button>
-            <Button>
-              Request info <ArrowRight className="size-4 ml-1" />
-            </Button>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <Link to="/contact">
+              <Button size="lg" variant="outline" className="px-10 border-2">Request Info</Button>
+            </Link>
+            <Link to="/demo">
+              <Button size="lg" className="px-10 bg-red-500 hover:bg-red-600 text-white shadow-lg">
+                Book a Demo <ArrowRight className="size-4 ml-1" />
+              </Button>
+            </Link>
           </div>
         </div>
       </Section>

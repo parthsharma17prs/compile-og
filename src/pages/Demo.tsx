@@ -2,147 +2,128 @@ import { Button } from '@/components/ui/button';
 import Layout from '@/components/Layout';
 import Section from '@/components/Section';
 import SectionHeader from '@/components/SectionHeader';
-import GeometricPattern from '@/components/GeometricPattern';
+import { type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
+import { motion, useReducedMotion } from 'motion/react';
+import { TextRevealByWord } from '@/components/ui/text-reveal-by-word';
+import { ArrowRightIcon, PlusIcon, Monitor, Shield, Zap, Users } from 'lucide-react';
+
+type ViewAnimationProps = {
+  delay?: number;
+  className?: string;
+  children: ReactNode;
+};
+
+function AnimatedContainer({ className, delay = 0.1, children }: ViewAnimationProps) {
+  const shouldReduceMotion = useReducedMotion();
+
+  if (shouldReduceMotion) {
+    return <div className={className}>{children}</div>;
+  }
+
+  return (
+    <motion.div
+      initial={{ filter: 'blur(4px)', translateY: -8, opacity: 0 }}
+      whileInView={{ filter: 'blur(0px)', translateY: 0, opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ delay, duration: 0.8 }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 const Demo = () => {
+  const steps = [
+    { title: "Isolated Sandbox", icon: Monitor, desc: "Explore the platform in a zero-risk, high-fidelity environment." },
+    { title: "No Data Scraped", icon: Shield, desc: "We never required production credentials or customer PII for demos." },
+    { title: "Technical Walkthrough", icon: Zap, desc: "Deep dive into ZK circuits and proof aggregation models." },
+    { title: "Expert Q&A", icon: Users, desc: "Direct access to our compliance architecture and privacy teams." }
+  ];
+
   return (
     <Layout>
       {/* PAGE HERO */}
-      <Section variant="glow" spacing="xl">
-        <GeometricPattern />
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <div className="max-w-4xl mx-auto space-y-6">
-            <h1 className="text-4xl md:text-6xl font-space-grotesk font-bold">Get started with CompliLedger</h1>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">Whether you want to explore on your own, evaluate the platform, or have an architectural discussion — CompliLedger gives you multiple safe ways to begin.</p>
-            <p className="text-sm text-muted-foreground">No hard sell. No surveillance. No obligation.</p>
+      <Section spacing="xl" className="flex items-start justify-center min-h-[60vh] pt-4 md:pt-8 w-full max-w-7xl mx-auto">
+        <div className="relative w-full">
+          <div className="relative h-[400px] md:h-[500px] overflow-hidden border bg-background/60 shadow-2xl rounded-xl md:rounded-[2rem] flex items-center justify-center">
+            <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 via-background to-background" />
 
-            <div className="flex flex-wrap justify-center gap-3 mt-6">
-              <a href="mailto:maranda@compliledger.com"><Button size="lg">▶️ Book Demo</Button></a>
-              <Link to="/pricing"><Button size="lg" variant="default">💳 coming soon</Button></Link>
-              <a href="mailto:maranda@compliledger.com"><Button size="lg" variant="outline">📄 Request Info</Button></a>
-              <a href="mailto:maranda@compliledger.com"><Button size="lg" variant="outline">🧭 Book a Demo</Button></a>
-              <a href="mailto:partners@compliledger.com"><Button size="lg" variant="outline">🤝 Book Introduction Meeting</Button></a>
+            <div className="relative z-10 px-6 py-12 md:px-10 md:py-16 text-center text-foreground">
+              <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold uppercase tracking-tight leading-none text-center">
+                Platform <br className="hidden md:block" />
+                <span className="bg-red-500 px-4 rounded-md text-white my-2 inline-block">Walkthrough</span>
+              </h1>
+              <p className="text-lg md:text-xl text-muted-foreground mt-6 max-w-2xl mx-auto font-medium text-center">
+                See how we transform institutional compliance into a verifiable state.
+              </p>
             </div>
+          </div>
+
+          <div aria-hidden style={{ willChange: 'transform' }} className="absolute left-1/2 bottom-[-2rem] md:bottom-[-3rem] -translate-x-1/2 pointer-events-none select-none text-[4rem] sm:text-[8rem] md:text-[12rem] lg:text-[14rem] font-extrabold uppercase leading-none opacity-10 tracking-tight z-0">
+            Demo
           </div>
         </div>
       </Section>
 
-      {/* SECTION 1 — WHAT HAPPENS NEXT */}
-      <Section variant="default" spacing="lg">
-        <div className="container mx-auto px-6">
-          <SectionHeader title="What to expect after you choose a path" />
-
-          <div className="max-w-4xl mx-auto mt-6 grid md:grid-cols-2 gap-6">
-            <div>
-              <h4 className="font-semibold">BOOK DEMO</h4>
-              <ul className="list-inside list-disc text-foreground/80 mt-2">
-                <li>Immediate access</li>
-                <li>No production data required</li>
-                <li>Safe, isolated environment</li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-semibold">coming soon</h4>
-              <ul className="list-inside list-disc text-foreground/80 mt-2">
-                <li>Platform access enabled</li>
-                <li>Onboarding materials provided</li>
-                <li>Upgrade anytime</li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-semibold">REQUEST INFO</h4>
-              <ul className="list-inside list-disc text-foreground/80 mt-2">
-                <li>Curated materials sent securely</li>
-                <li>No follow-up pressure</li>
-                <li>Optional next steps</li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-semibold">BOOK A DEMO</h4>
-              <ul className="list-inside list-disc text-foreground/80 mt-2">
-                <li>Live walkthrough</li>
-                <li>Q&A with platform expert</li>
-                <li>No sales scripts</li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-semibold">INTRO MEETING</h4>
-              <ul className="list-inside list-disc text-foreground/80 mt-2">
-                <li>Architecture-focused discussion</li>
-                <li>Privacy & proof model overview</li>
-                <li>No product pressure</li>
-              </ul>
-            </div>
+      {/* REVEAL SECTION */}
+      <Section variant="default" spacing="xl">
+        <div className="container mx-auto px-6 text-center">
+          <div className="max-w-5xl mx-auto">
+            <TextRevealByWord
+              text="Experience the first compliance operating system built for proof-based environments. Zero Trust. Total Proof."
+              className="text-foreground font-space-grotesk"
+            />
           </div>
         </div>
       </Section>
 
-      {/* SECTION 2 — PRIVACY & SAFETY PROMISE */}
-      <Section variant="glow" spacing="lg">
-        <div className="container mx-auto px-6">
-          <SectionHeader title="Getting started does not compromise privacy" />
-          <div className="max-w-4xl mx-auto mt-6">
-            <ul className="list-inside list-disc text-foreground/80">
-              <li>No production credentials required</li>
-              <li>No data scraped or reused</li>
-              <li>No tracking beyond session integrity</li>
-              <li>No demo recordings without consent</li>
-              <li>No AI training on your inputs</li>
-            </ul>
-            <p className="mt-4 text-foreground/80">CompliLedger applies the same privacy standards during onboarding as it does in production.</p>
-          </div>
-        </div>
-      </Section>
-
-      {/* SECTION 3 — WHO THIS PAGE IS FOR */}
-      <Section variant="default" spacing="lg">
-        <div className="container mx-auto px-6">
-          <SectionHeader title="Built for every compliance stakeholder" />
-          <div className="max-w-4xl mx-auto mt-6">
-            <ul className="list-inside list-disc text-foreground/80">
-              <li>Companies & customers — start fast, scale safely</li>
-              <li>Auditors & assessors — evaluate proof, not raw data</li>
-              <li>Compliance professionals — understand the system deeply</li>
-              <li>Regulators — validate proof without system access</li>
-              <li>Developers — embed compliance immediately</li>
-            </ul>
-          </div>
-        </div>
-      </Section>
-
-      {/* SECTION 4 — NOT SURE WHERE TO START? */}
-      <Section variant="glow" spacing="lg">
-        <div className="container mx-auto px-6">
-          <SectionHeader title="If you’re unsure, start here" />
-          <div className="max-w-4xl mx-auto mt-6">
-            <ul className="list-inside list-disc text-foreground/80">
-              <li>Want hands-on? → <a href="mailto:maranda@compliledger.com">Book Demo</a></li>
-              <li>Want to deploy quickly? → <Link to="/pricing">coming soon</Link></li>
-              <li>Want documentation? → <Link to="/contact">Request Info</Link></li>
-              <li>Want a walkthrough? → <a href="mailto:maranda@compliledger.com">Book a Demo</a></li>
-              <li>Want a conversation? → <a href="mailto:partners@compliledger.com">Book Introduction Meeting</a></li>
-            </ul>
+      {/* STEPS GRID */}
+      <Section spacing="xl">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {steps.map((step, i) => (
+              <AnimatedContainer key={i} delay={i * 0.1}>
+                <div className="h-full rounded-[3rem] border bg-background/40 p-10 backdrop-blur-md group hover:border-red-500/30 transition-all duration-500 text-center">
+                  <div className="w-14 h-14 rounded-2xl bg-red-500/10 flex items-center justify-center mx-auto mb-6">
+                    <step.icon className="text-red-500" size={28} />
+                  </div>
+                  <h3 className="text-xl font-black uppercase tracking-tighter mb-4">{step.title}</h3>
+                  <p className="text-muted-foreground font-medium text-sm leading-relaxed">
+                    {step.desc}
+                  </p>
+                </div>
+              </AnimatedContainer>
+            ))}
           </div>
         </div>
       </Section>
 
       {/* FINAL CTA */}
-      <Section variant="glow" spacing="xl">
-        <div className="container mx-auto px-6 text-center relative z-10">
-          <div className="max-w-4xl mx-auto space-y-4">
-            <h2 className="text-2xl font-semibold">Compliance should feel safe — even at the first step</h2>
-            <div className="flex flex-wrap justify-center gap-3 mt-4">
-              <a href="mailto:maranda@compliledger.com"><Button size="lg">▶️ Book Demo</Button></a>
-              <Link to="/pricing"><Button size="lg" variant="default">💳 coming soon</Button></Link>
-              <a href="mailto:maranda@compliledger.com"><Button size="lg" variant="outline">📄 Request Info</Button></a>
-              <a href="mailto:maranda@compliledger.com"><Button size="lg" variant="outline">🧭 Book a Demo</Button></a>
-              <a href="mailto:partners@compliledger.com"><Button size="lg" variant="outline">🤝 Book Introduction Meeting</Button></a>
-            </div>
+      <Section className="text-center pb-24 pt-24 text-foreground">
+        <div className="relative mx-auto flex w-full max-w-4xl flex-col justify-between gap-y-12 border-y bg-[radial-gradient(35%_80%_at_25%_0%,--theme(--color-foreground/.08),transparent)] px-6 py-16 rounded-3xl">
+          <PlusIcon className="absolute top-[-12.5px] left-[-11.5px] z-1 size-6" strokeWidth={1} />
+          <PlusIcon className="absolute top-[-12.5px] right-[-11.5px] z-1 size-6" strokeWidth={1} />
+          <PlusIcon className="absolute bottom-[-12.5px] left-[-11.5px] z-1 size-6" strokeWidth={1} />
+          <PlusIcon className="absolute right-[-11.5px] bottom-[-12.5px] z-1 size-6" strokeWidth={1} />
+
+          <div className="space-y-4">
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight">Compliance Should Feel Safe.</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-medium">
+              Book your personalized architectural review and start building the verifiable future.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <Link to="/contact">
+              <Button size="lg" variant="outline" className="px-10 border-2">Contact Sales</Button>
+            </Link>
+            <a href="mailto:maranda@compliledger.com">
+              <Button size="lg" className="px-10 bg-red-500 hover:bg-red-600 text-white shadow-xl">
+                Book a Demo <ArrowRightIcon className="size-4 ml-1" />
+              </Button>
+            </a>
           </div>
         </div>
       </Section>

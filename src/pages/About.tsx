@@ -1,236 +1,144 @@
-import { Link } from 'react-router-dom';
-import { useEffect, useRef } from 'react';
-import { Button } from '@/components/ui/button';
+import React, { type ReactNode } from 'react';
 import Layout from '@/components/Layout';
 import Section from '@/components/Section';
-import GeometricPattern from '@/components/GeometricPattern';
-import { ArrowRightIcon, PlusIcon } from 'lucide-react';
+import SectionHeader from '@/components/SectionHeader';
+import { Button } from '@/components/ui/button';
+import { ArrowRightIcon, PlusIcon, CheckCircle, Shield, Target, Lightbulb, Users } from 'lucide-react';
 import { TextRevealByWord } from '@/components/ui/text-reveal-by-word';
+import { motion, useReducedMotion } from 'motion/react';
+import { Link } from 'react-router-dom';
+
+type ViewAnimationProps = {
+  delay?: number;
+  className?: string;
+  children: ReactNode;
+};
+
+function AnimatedContainer({ className, delay = 0.1, children }: ViewAnimationProps) {
+  const shouldReduceMotion = useReducedMotion();
+
+  if (shouldReduceMotion) {
+    return <div className={className}>{children}</div>;
+  }
+
+  return (
+    <motion.div
+      initial={{ filter: 'blur(4px)', translateY: -8, opacity: 0 }}
+      whileInView={{ filter: 'blur(0px)', translateY: 0, opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ delay, duration: 0.8 }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 const About = () => {
-
-  const manifesto = [
-    "Compliance should be provable, not subjective",
-    "Privacy should be preserved, not traded",
-    "proof should be engineered, not assumed",
-    "Evidence should be cryptographic, not anecdotal",
-    "Audits should be continuous, not episodic",
-    "Regulators should verify outcomes — not inspect systems"
+  const values = [
+    { title: "Verifiable", icon: CheckCircle, desc: "Proof over brand promises." },
+    { title: "Privacy-First", icon: Shield, desc: "Data minimization by default." },
+    { title: "Defensible", icon: Target, desc: "Audits that hold up in court." },
+    { title: "Continuous", icon: Lightbulb, desc: "Real-time state, not snapshots." }
   ];
 
-  const problemPoints = [
-    "centralize sensitive data",
-    "grant broad system access",
-    "manually collect evidence",
-    "rely on point-in-time audits",
-    "expose more than regulators actually require"
-  ];
-
-  const solutions = [
-    "cryptographic verification",
-    "zero-knowledge proofs",
-    "decentralized identity",
-    "immutable audit trails",
-    "automated compliance workflows"
-  ];
-
-  const privacyPrinciples = [
-    "Data minimization by default",
-    "Proof instead of disclosure",
-    "Identity without centralized accounts",
-    "Zero-knowledge verification",
-    "No customer data monetization"
-  ];
-
-  const technologies = [
-    { name: "Algorand", purpose: "immutable audit anchoring" },
-    { name: "Aleo", purpose: "private zero-knowledge computation" },
-    { name: "Zcash", purpose: "confidential attestations" }
-  ];
-
-  const audiences = [
-    "Companies operating in regulated environments",
-    "Startups building compliance-ready products",
-    "Auditors and compliance professionals",
-    "Regulators and oversight bodies",
-    "Developers embedding proof into systems"
-  ];
-
-  const proofAttributes = [
-    "verifiable",
-    "attributable",
-    "auditable",
-    "revocable"
-  ];
-
-  const futureDirections = [
-    "automated",
-    "continuous",
-    "privacy-preserving",
-    "cryptographically verifiable"
+  const storyPoints = [
+    "Modern compliance is a tax on innovation.",
+    "Data centralization is a liability, not an asset.",
+    "Traditional audits are periodic and opaque.",
+    "We built CompliLedger to fix the compliance crisis."
   ];
 
   return (
     <Layout>
-     {/* Hero */}
-       <Section variant="default" spacing="xl" className="py-0 min-h-screen min-h-svh flex items-center">
+      {/* PAGE HERO */}
+      <Section spacing="xl" className="flex items-start justify-center min-h-[60vh] pt-4 md:pt-8 w-full max-w-7xl mx-auto">
+        <div className="relative w-full">
+          <div className="relative h-[400px] md:h-[500px] overflow-hidden border bg-background/60 shadow-2xl rounded-xl md:rounded-[2rem] flex items-center justify-center">
+            <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 via-background to-background" />
 
-          <div className="absolute right-6 bottom-24  max-w-[55vw] text-md md:text-xl lg:text-3xl xl:text-3xl font-extrabold uppercase text-foreground/90 px-2 py-1 text-right pointer-events-none">
-             Compliance should not require <span className='bg-red-500 px-2 rounded-sm'>surrendering</span> privacy </div>
-
-          <div aria-hidden style={{willChange: 'transform'}} className="absolute right-6 bottom-6  pointer-events-none select-none text-[2rem] sm:text-[8rem] md:text-[12rem] lg:text-[16rem] xl:text-[20rem] font-extrabold uppercase leading-none opacity-10 tracking-tight">
-            About
+            <div className="relative z-10 px-6 py-12 md:px-10 md:py-16 text-center text-foreground">
+              <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold uppercase tracking-tight leading-none text-center">
+                Compliance Without <br className="hidden md:block" />
+                <span className="bg-red-500 px-4 rounded-md text-white my-2 inline-block">Surrendering</span> Privacy
+              </h1>
+              <p className="text-lg md:text-xl text-muted-foreground mt-6 max-w-2xl mx-auto font-medium">
+                The story of how we're redefining institutional trust.
+              </p>
+            </div>
           </div>
 
-        
-    
-     
-
+          <div aria-hidden style={{ willChange: 'transform' }} className="absolute left-1/2 bottom-[-2rem] md:bottom-[-3rem] -translate-x-1/2 pointer-events-none select-none text-[4rem] sm:text-[8rem] md:text-[12rem] lg:text-[14rem] font-extrabold uppercase leading-none opacity-10 tracking-tight z-0">
+            About
+          </div>
+        </div>
       </Section>
-      {/* Text reveal section (scroll-animated by word) */}
+
+      {/* REVEAL SECTION */}
       <Section variant="default" spacing="xl">
         <div className="container mx-auto px-6">
           <div className="max-w-5xl mx-auto">
-            <TextRevealByWord text="CompliLedger was created to modernize compliance for a world where data sensitivity, regulatory scrutiny, and technological complexity are increasing not decreasing." className="" />
-
-            <div className="flex items-center justify-center gap-2 mt-4">
-              <a href="mailto:maranda@compliledger.com"><Button variant="outline">Book a Demo</Button></a>
-              <Button>
-                Know More <ArrowRightIcon className="size-4 ml-1" />
-              </Button>
-            </div>
+            <TextRevealByWord
+              text="CompliLedger modernize compliance for a world where data sensitivity, regulatory scrutiny, and technological complexity are increasing."
+              className="text-foreground font-space-grotesk"
+            />
           </div>
         </div>
       </Section>
-      {/* Section 1: Why CompliLedger Exists */}
-      <Section  spacing="xl" className="relative ">
-        <div className="absolute inset-0 bg-grid-foreground/5 [mask-image:linear-gradient(0deg,white,transparent)]" />
-        <div className="container mx-auto px-6 relative">
-          <div className="max-w-5xl mx-auto">
-            <div className="flex flex-col md:flex-row gap-12 items-start">
-              <div className="md:w-1/3 space-y-2 sticky top-24">
-                <h2 className="text-3xl md:text-4xl font-space-grotesk font-bold tracking-tight">
-                  The problem we set out to solve
-                </h2>
-              </div>
 
-              <div className="md:w-2/3 space-y-6 text-lg text-foreground/70 leading-relaxed">
-                <div className="bg-background/80 backdrop-blur-sm p-8 rounded-2xl border border-foreground/10 shadow-sm">
-                  <p className="font-semibold text-foreground/90 mb-6">
-                    Modern compliance is broken.
-                  </p>
-                  <p className="mb-6">Organizations are forced to:</p>
-                  <ul className="space-y-3 mb-8">
-                    {problemPoints.map((point, idx) => (
-                      <li key={idx} className="flex items-start gap-3">
-                        <span className="text-primary mt-1">•</span>
-                        <span>{point}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <p className="text-foreground/80 mb-6">
-                    This approach increases risk, slows innovation, and erodes proof.
-                  </p>
-                  <p className="font-semibold text-foreground/90">
-                    CompliLedger was built to change that.
-                  </p>
+      {/* MISSION CARDS */}
+      <Section spacing="xl">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {values.map((v, i) => (
+              <AnimatedContainer key={i} delay={i * 0.1}>
+                <div className="h-full rounded-[2rem] border bg-background/40 p-8 backdrop-blur-md group hover:border-red-500/30 transition-all duration-500 text-center">
+                  <div className="w-12 h-12 rounded-2xl bg-red-500/10 flex items-center justify-center mx-auto mb-6">
+                    <v.icon className="text-red-500" size={24} />
+                  </div>
+                  <h3 className="text-xl font-black uppercase mb-3 tracking-tighter">{v.title}</h3>
+                  <p className="text-muted-foreground font-medium text-sm">{v.desc}</p>
                 </div>
-              </div>
-            </div>
+              </AnimatedContainer>
+            ))}
           </div>
         </div>
       </Section>
 
-      {/* Section 2: Our Belief / Manifesto */}
-      <Section spacing="xl" className="relative overflow-hidden py-24 md:py-32">
-        
-        <div className="absolute inset-0 " />
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <div className="max-w-4xl mx-auto space-y-10">
-            <div className="space-y-6">
-              <h2 className="text-4xl md:text-5xl font-space-grotesk font-bold leading-tight">
-                Our belief
-              </h2>
-            </div>
-
-            <div className="max-w-2xl mx-auto text-left">
-              <p className="text-lg font-semibold text-foreground/90 mb-6">We believe:</p>
-              <ul className="space-y-4">
-                {manifesto.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-lg text-foreground/70">
-                    <span className="text-primary mt-1">•</span>
-                    <span>{item}</span>
-                  </li>
+      {/* STORY SECTION */}
+      <Section variant="default" className="py-24 border-y">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="grid md:grid-cols-2 gap-20 items-center">
+            <div className="space-y-8">
+              <SectionHeader title="Our Story" className="text-left" />
+              <p className="text-xl text-muted-foreground font-medium leading-relaxed">
+                Born from the intersection of cryptography and regulatory law, CompliLedger was founded on a simple insight: institutions shouldn't have to choose between keeping data private and proving they are compliant.
+              </p>
+              <div className="space-y-4">
+                {storyPoints.map((p, i) => (
+                  <div key={i} className="flex items-center gap-4 text-foreground/80 font-bold">
+                    <CheckCircle className="text-red-500" size={20} />
+                    <span>{p}</span>
+                  </div>
                 ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </Section>
-
-      {/* Section 3: What CompliLedger Is */}
-      <Section  spacing="xl">
-        <div className="container mx-auto px-6">
-          <div className="max-w-5xl mx-auto">
-            <div className="flex flex-col md:flex-row gap-12 items-start">
-              <div className="md:w-1/3 space-y-2 sticky top-24">
-                <h2 className="text-3xl md:text-4xl font-space-grotesk font-bold tracking-tight">
-                  What we built
-                </h2>
-              </div>
-
-              <div className="md:w-2/3 space-y-6 text-lg text-foreground/70 leading-relaxed">
-                <div className="bg-background/80 backdrop-blur-sm p-8 rounded-2xl border border-foreground/10 shadow-sm">
-                  <p className="font-semibold text-foreground/90 mb-6">
-                    CompliLedger is a privacy-preserving compliance operating system.
-                  </p>
-                  <p className="mb-6">It replaces invasive audits and data sprawl with:</p>
-                  <ul className="space-y-3 mb-6">
-                    {solutions.map((solution, idx) => (
-                      <li key={idx} className="flex items-start gap-3">
-                        <span className="text-primary mt-1">•</span>
-                        <span>{solution}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <p className="text-foreground/80 font-semibold">
-                    Compliance becomes a verifiable state, not a reporting exercise.
-                  </p>
-                </div>
               </div>
             </div>
-          </div>
-        </div>
-      </Section>
 
-      {/* Section 4: Privacy Is The Architecture */}
-      <Section  spacing="xl">
-        <GeometricPattern className="opacity-30" />
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="max-w-5xl mx-auto">
-            <div className="flex flex-col md:flex-row gap-12 items-start">
-              <div className="md:w-1/3 space-y-2 sticky top-24">
-                <h2 className="text-3xl md:text-4xl font-space-grotesk font-bold tracking-tight">
-                  Privacy is the architecture
-                </h2>
-              </div>
-
-              <div className="md:w-2/3 space-y-6 text-lg text-foreground/70 leading-relaxed">
-                <div className="bg-background/80 backdrop-blur-sm p-8 rounded-2xl border border-foreground/10 shadow-sm">
-                  <p className="font-semibold text-foreground/90 mb-6">
-                    Privacy in CompliLedger is enforced structurally:
-                  </p>
-                  <ul className="space-y-3 mb-6">
-                    {privacyPrinciples.map((principle, idx) => (
-                      <li key={idx} className="flex items-start gap-3">
-                        <span className="text-primary mt-1">•</span>
-                        <span>{principle}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="space-y-3 pt-4 border-t border-foreground/10">
-                    <p className="text-foreground/80 font-semibold">We do not sell data.</p>
-                    <p className="text-foreground/80 font-semibold">We do not train on customer inputs.</p>
-                    <p className="text-foreground/80 font-semibold">We do not rely on surveillance.</p>
+            <div className="relative aspect-square">
+              <div className="absolute inset-0 bg-red-500/5 rounded-[3rem] blur-3xl" />
+              <div className="relative h-full w-full rounded-[3rem] border bg-background/50 backdrop-blur-md overflow-hidden p-12 flex flex-col justify-center gap-8">
+                <div className="text-sm font-bold tracking-widest uppercase text-red-500">The Impact</div>
+                <h3 className="text-4xl font-black uppercase leading-tight tracking-tighter">
+                  Building the Verifiable institutional Operating System.
+                </h3>
+                <p className="text-muted-foreground italic font-medium">
+                  "Compliance should create confidence, not risk."
+                </p>
+                <div className="flex items-center gap-4 pt-6">
+                  <Users className="text-red-500" size={32} />
+                  <div>
+                    <div className="font-black text-xl">10M+</div>
+                    <div className="text-xs uppercase text-muted-foreground font-bold">Verification Events</div>
                   </div>
                 </div>
               </div>
@@ -239,180 +147,30 @@ const About = () => {
         </div>
       </Section>
 
-      {/* Section 5: Technology Approach */}
-      <Section variant="default" spacing="xl">
-        <div className="container mx-auto px-6">
-          <div className="max-w-5xl mx-auto">
-            <div className="flex flex-col md:flex-row gap-12 items-start">
-              <div className="md:w-1/3 space-y-2 sticky top-24">
-                <h2 className="text-3xl md:text-4xl font-space-grotesk font-bold tracking-tight">
-                  Built for the real world
-                </h2>
-              </div>
+      {/* FINAL CTA */}
+      <Section className="text-center pb-24 pt-24">
+        <div className="relative mx-auto flex w-full max-w-4xl flex-col justify-between gap-y-12 border-y bg-[radial-gradient(35%_80%_at_25%_0%,--theme(--color-foreground/.08),transparent)] px-6 py-16 rounded-3xl">
+          <PlusIcon className="absolute top-[-12.5px] left-[-11.5px] z-1 size-6" strokeWidth={1} />
+          <PlusIcon className="absolute top-[-12.5px] right-[-11.5px] z-1 size-6" strokeWidth={1} />
+          <PlusIcon className="absolute bottom-[-12.5px] left-[-11.5px] z-1 size-6" strokeWidth={1} />
+          <PlusIcon className="absolute right-[-11.5px] bottom-[-12.5px] z-1 size-6" strokeWidth={1} />
 
-              <div className="md:w-2/3 space-y-6 text-lg text-foreground/70 leading-relaxed">
-                <div className="bg-background/80 backdrop-blur-sm p-8 rounded-2xl border border-foreground/10 shadow-sm">
-                  <p className="mb-6 text-foreground/80">
-                    CompliLedger uses modern cryptographic infrastructure to meet real regulatory expectations. Our architecture spans:
-                  </p>
-                  <ul className="space-y-3 mb-6">
-                    {technologies.map((tech, idx) => (
-                      <li key={idx} className="flex items-start gap-3">
-                        <span className="text-primary mt-1">•</span>
-                        <span><strong>{tech.name}</strong> for {tech.purpose}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <p className="mb-6 text-foreground/80">Combined with:</p>
-                  <ul className="space-y-3 mb-6">
-                    {["Decentralized Identifiers (DIDs)", "Verifiable Credentials (VCs)", "Zero-knowledge proofs", "Privacy-preserving automation"].map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-3">
-                        <span className="text-primary mt-1">•</span>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <p className="text-foreground/80 font-semibold">
-                    This allows compliance to scale without expanding risk.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Section>
-
-      {/* Section 6: Who We Serve */}
-      <Section  spacing="xl">
-        <GeometricPattern className="opacity-30" />
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-space-grotesk font-bold tracking-tight text-center mb-12">
-              Who CompliLedger is for
-            </h2>
-            
-            <div className="bg-background/80 backdrop-blur-sm p-8 rounded-2xl border border-foreground/10 shadow-sm">
-              <ul className="space-y-3 mb-8">
-                {audiences.map((audience, idx) => (
-                  <li key={idx} className="flex items-start gap-3">
-                    <span className="text-primary mt-1">•</span>
-                    <span className="text-lg text-foreground/70">{audience}</span>
-                  </li>
-                ))}
-              </ul>
-              <p className="text-foreground/80 font-semibold text-lg text-center pt-4 border-t border-foreground/10">
-                CompliLedger is designed to support all compliance stakeholders, without privileging one at the expense of another.
-              </p>
-            </div>
-          </div>
-        </div>
-      </Section>
-
-      {/* Section 7: How We Think About proof */}
-      <Section variant="default" spacing="xl">
-        <div className="container mx-auto px-6">
-          <div className="max-w-5xl mx-auto">
-            <div className="flex flex-col md:flex-row gap-12 items-start">
-              <div className="md:w-1/3 space-y-2 sticky top-24">
-                <h2 className="text-3xl md:text-4xl font-space-grotesk font-bold tracking-tight">
-                  proof must be defensible
-                </h2>
-              </div>
-
-              <div className="md:w-2/3 space-y-6 text-lg text-foreground/70 leading-relaxed">
-                <div className="bg-background/80 backdrop-blur-sm p-8 rounded-2xl border border-foreground/10 shadow-sm">
-                  <p className="font-semibold text-foreground/90 mb-6">
-                    proof is not a brand promise.
-                  </p>
-                  <p className="mb-6">proof is:</p>
-                  <ul className="space-y-3 mb-6">
-                    {proofAttributes.map((attr, idx) => (
-                      <li key={idx} className="flex items-start gap-3">
-                        <span className="text-primary mt-1">•</span>
-                        <span>{attr}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <p className="text-foreground/80 font-semibold">
-                    CompliLedger enables proof that can be proven to auditors, regulators, and courts — without exposing sensitive systems or data.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Section>
-
-      {/* Section 8: Our Direction */}
-      <Section  spacing="xl">
-        <GeometricPattern className="opacity-30" />
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="max-w-5xl mx-auto">
-            <div className="flex flex-col md:flex-row gap-12 items-start">
-              <div className="md:w-1/3 space-y-2 sticky top-24">
-                <h2 className="text-3xl md:text-4xl font-space-grotesk font-bold tracking-tight">
-                  Where we're going
-                </h2>
-              </div>
-
-              <div className="md:w-2/3 space-y-6 text-lg text-foreground/70 leading-relaxed">
-                <div className="bg-background/80 backdrop-blur-sm p-8 rounded-2xl border border-foreground/10 shadow-sm">
-                  <p className="mb-6 text-foreground/80">
-                    As regulation increases and technology evolves, compliance must become:
-                  </p>
-                  <ul className="space-y-3">
-                    {futureDirections.map((direction, idx) => (
-                      <li key={idx} className="flex items-start gap-3">
-                        <span className="text-primary mt-1">•</span>
-                        <span>{direction}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <p className="text-foreground/80 font-semibold mt-6 pt-6 border-t border-foreground/10">
-                    CompliLedger is building the infrastructure to support this future — across industries, jurisdictions, and technologies.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Section>
-
-      {/* Final CTA */}
-      <Section spacing="xl">
-        <div className="relative mx-auto flex w-full max-w-3xl flex-col justify-between gap-y-6 border-y bg-[radial-gradient(35%_80%_at_25%_0%,--theme(--color-foreground/.08),transparent)] px-4 py-8">
-          <PlusIcon
-            className="absolute top-[-12.5px] left-[-11.5px] z-1 size-6"
-            strokeWidth={1}
-          />
-          <PlusIcon
-            className="absolute top-[-12.5px] right-[-11.5px] z-1 size-6"
-            strokeWidth={1}
-          />
-          <PlusIcon
-            className="absolute bottom-[-12.5px] left-[-11.5px] z-1 size-6"
-            strokeWidth={1}
-          />
-          <PlusIcon
-            className="absolute right-[-11.5px] bottom-[-12.5px] z-1 size-6"
-            strokeWidth={1}
-          />
-
-          <div className="-inset-y-6 pointer-events-none absolute left-0 w-px border-l" />
-          <div className="-inset-y-6 pointer-events-none absolute right-0 w-px border-r" />
-
-          <div className="-z-10 absolute top-0 left-1/2 h-full border-l border-dashed" />
-
-          <div className="space-y-1">
-            <h2 className="text-center font-bold text-2xl">Compliance should create Confidence not Risk</h2>
-   
+          <div className="space-y-4">
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight">Ready to Modernize your Compliance?</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-medium">
+              Join the growing list of institutions building the verifiable future.
+            </p>
           </div>
 
-          <div className="flex items-center justify-center gap-2">
-            <a href="mailto:maranda@compliledger.com"><Button variant="outline">Book Demo</Button></a>
-            <a href="mailto:maranda@compliledger.com"><Button>
-             Book a Demo <ArrowRightIcon className="size-4 ml-1" />
-            </Button></a>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <Link to="/contact">
+              <Button size="lg" variant="outline" className="px-10 border-2">Contact Sales</Button>
+            </Link>
+            <Link to="/demo">
+              <Button size="lg" className="px-10 bg-red-500 hover:bg-red-600 text-white shadow-xl">
+                Book a Demo <ArrowRightIcon className="size-4 ml-1" />
+              </Button>
+            </Link>
           </div>
         </div>
       </Section>

@@ -80,25 +80,35 @@ const Index = () => {
             <div className="relative z-10 px-6 py-12 md:px-10 md:py-16">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                 {/* Left: Heading / copy */}
-                <div className="text-left">
+                <div className="text-left max-w-4xl pt-24 md:pt-32">
                   <h1
-                    className="text-4xl md:text-6xl font-bold mb-4"
+                    className="text-5xl md:text-7xl lg:text-8xl font-black mb-12 uppercase leading-none"
                     style={{ WebkitTextStroke: '1px rgba(255,255,255,0.95)', WebkitTextFillColor: 'transparent', color: 'transparent' }}
                   >
-                    Proof Based{' '}
+                    Proof Based <br />
                     <span style={{ WebkitTextFillColor: 'rgba(255,255,255,0.95)', WebkitTextStroke: '0px', color: 'rgba(255,255,255,0.95)' }}>
                       Compliance
-                    </span>{' '}
+                    </span> <br />
                     Infrastructure
                   </h1>
-                  <p
-                    className="absolute left-1/2 -translate-x-1/2 z-20 text-lg md:text-xl max-w-3xl text-center px-6 "
-                    style={{ bottom: '-24rem' }}
-                  >
-                     Continuous, privacy-preserving<span className="text-red-500 font-semibold bg-red-500/10 rounded-sm px-2">compliance proof</span> for companies, auditors, and regulators.
 
-                  </p>
-
+                  <div className="relative z-20 max-w-2xl">
+                    <p className="text-xl md:text-2xl text-foreground font-medium leading-relaxed">
+                      Continuous, privacy-preserving <span className="text-red-500 font-black border-b-2 border-red-500/30">compliance proof</span> for institutions, auditors, and regulators.
+                    </p>
+                    <div className="flex gap-4 mt-10">
+                      <Link to="/demo">
+                        <Button size="lg" className="h-14 px-10 bg-red-500 hover:bg-red-600 text-white rounded-2xl shadow-xl font-bold uppercase tracking-widest text-xs">
+                          Get Started <ArrowRightIcon className="ml-2 h-4 w-4" />
+                        </Button>
+                      </Link>
+                      <Link to="/solutions">
+                        <Button size="lg" variant="outline" className="h-14 px-10 border-2 rounded-2xl font-bold uppercase tracking-widest text-xs">
+                          Our Model
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -328,40 +338,40 @@ const Index = () => {
       {/* SECTION 6 — PRODUCTS ENTRY POINT */}
       <Section>
         <div className="max-w-6xl mx-auto px-4">
-            <SectionHeader title="One platform. Multiple ways to start." />
-            <div className="mt-4">
-              <CategoryList
-                title="Explore Our"
-                subtitle="Core Features"
-                headerIcon={<LayoutGrid className="w-8 h-8" />}
-                categories={[
-                  {
-                    id: 1,
-                    title: 'CompliLedger Platform',
-                    subtitle: 'Full Compliance OS',
-                    onClick: () => undefined,
-                  },
-                  {
-                    id: 2,
-                    title: 'SDKs',
-                    subtitle: 'CompALGO, Comp-Leo, CompZ',
-                    onClick: () => undefined,
-                  },
-                  {
-                    id: 3,
-                    title: 'AI Agent Marketplace',
-                    subtitle: 'Use Agents Individually',
-                    onClick: () => undefined,
-                  },
-                  {
-                    id: 4,
-                    title: 'Master Agent',
-                    subtitle: 'Single Compliance Interface',
-                    onClick: () => undefined,
-                  },
-                ] as Category[]}
-              />
-            </div>
+          <SectionHeader title="One platform. Multiple ways to start." />
+          <div className="mt-4">
+            <CategoryList
+              title="Explore Our"
+              subtitle="Core Features"
+              headerIcon={<LayoutGrid className="w-8 h-8" />}
+              categories={[
+                {
+                  id: 1,
+                  title: 'CompliLedger Platform',
+                  subtitle: 'Full Compliance OS',
+                  onClick: () => undefined,
+                },
+                {
+                  id: 2,
+                  title: 'SDKs',
+                  subtitle: 'CompALGO, Comp-Leo, CompZ',
+                  onClick: () => undefined,
+                },
+                {
+                  id: 3,
+                  title: 'AI Agent Marketplace',
+                  subtitle: 'Use Agents Individually',
+                  onClick: () => undefined,
+                },
+                {
+                  id: 4,
+                  title: 'Master Agent',
+                  subtitle: 'Single Compliance Interface',
+                  onClick: () => undefined,
+                },
+              ] as Category[]}
+            />
+          </div>
         </div>
       </Section>
 

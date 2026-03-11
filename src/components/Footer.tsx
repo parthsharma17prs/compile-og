@@ -33,26 +33,39 @@ const Footer: React.FC = () => {
         </div>
 
         {/* Right: Menu Columns */}
-        <div className="flex-1 w-full flex flex-col sm:flex-row justify-end gap-12">
-          {/* Product */}
+        <div className="flex-1 w-full flex flex-col sm:flex-row justify-end gap-12 lg:gap-20">
+          {/* Solutions & Product */}
           <div>
-            <h4 className="text-xs text-gray-400 font-mono mb-4 tracking-widest">PRODUCT</h4>
-              <ul className="space-y-2 font-mono text-lg">
-              <li><a href="/how-it-works" className="hover:underline">HOW IT WORKS</a></li>
-              <li><a href="/demo" className="hover:underline">BOOK A DEMO</a></li>
-              <li><a href="/partners" className="hover:underline">PARTNERS</a></li>
-
+            <h4 className="text-[10px] text-gray-500 font-black mb-6 tracking-[0.2em] uppercase">Architecture</h4>
+            <ul className="space-y-3 font-bold text-sm uppercase tracking-tighter">
+              <li><Link to="/problem" className="hover:text-red-500 transition-colors">The Problem</Link></li>
+              <li><Link to="/solutions" className="hover:text-red-500 transition-colors">Solutions</Link></li>
+              <li><Link to="/products" className="hover:text-red-500 transition-colors">Products</Link></li>
+              <li><Link to="/platform" className="hover:text-red-500 transition-colors">Platform</Link></li>
+              <li><Link to="/how-it-works" className="hover:text-red-500 transition-colors">Mechanism</Link></li>
             </ul>
           </div>
 
-          {/* Company */}
+          {/* Ecosystem */}
           <div>
-            <h4 className="text-xs text-gray-400 font-mono mb-4 tracking-widest">COMPANY</h4>
-            <ul className="space-y-2 font-mono text-lg">
-              <li><a href="/about" className="hover:underline">ABOUT</a></li>
-              <li><a href="/blog" className="hover:underline">BLOG</a></li>
-              <li><a href="/contact" className="hover:underline">CONTACT</a></li>
+            <h4 className="text-[10px] text-gray-500 font-black mb-6 tracking-[0.2em] uppercase">Ecosystem</h4>
+            <ul className="space-y-3 font-bold text-sm uppercase tracking-tighter">
+              <li><Link to="/marketplace" className="hover:text-red-500 transition-colors">Marketplace</Link></li>
+              <li><Link to="/security" className="hover:text-red-500 transition-colors">Security</Link></li>
+              <li><Link to="/partners" className="hover:text-red-500 transition-colors">Partners</Link></li>
+              <li><Link to="/pricing" className="hover:text-red-500 transition-colors">Pricing</Link></li>
+            </ul>
+          </div>
 
+          {/* Institutional */}
+          <div>
+            <h4 className="text-[10px] text-gray-500 font-black mb-6 tracking-[0.2em] uppercase">Institutional</h4>
+            <ul className="space-y-3 font-bold text-sm uppercase tracking-tighter">
+              <li><Link to="/about" className="hover:text-red-500 transition-colors">About</Link></li>
+              <li><Link to="/founder" className="hover:text-red-500 transition-colors">Mission</Link></li>
+              <li><Link to="/blog" className="hover:text-red-500 transition-colors">Insights</Link></li>
+              <li><Link to="/documentation" className="hover:text-red-500 transition-colors">Documentation</Link></li>
+              <li><Link to="/contact" className="hover:text-red-500 transition-colors">Contact</Link></li>
             </ul>
           </div>
         </div>
@@ -91,7 +104,7 @@ export default Footer;
 // Small inline subscribe input component
 const SubscribeInput: React.FC = () => {
   const [email, setEmail] = useState('');
-  const [status, setStatus] = useState<'idle'|'sent'|'error'>('idle');
+  const [status, setStatus] = useState<'idle' | 'sent' | 'error'>('idle');
 
   const validateEmail = (value: string) => {
     return /\S+@\S+\.\S+/.test(value);

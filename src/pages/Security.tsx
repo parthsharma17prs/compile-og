@@ -2,262 +2,177 @@ import { Button } from "@/components/ui/button";
 import Layout from "@/components/Layout";
 import Section from "@/components/Section";
 import SectionHeader from "@/components/SectionHeader";
-import GeometricPattern from "@/components/GeometricPattern";
+import { type ReactNode } from 'react';
+import { ShieldCheck, Lock, Binary, Cpu, Server, CheckCircle, PlusIcon, ArrowRightIcon } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { motion, useReducedMotion } from 'motion/react';
+import { TextRevealByWord } from '@/components/ui/text-reveal-by-word';
+
+type ViewAnimationProps = {
+  delay?: number;
+  className?: string;
+  children: ReactNode;
+};
+
+function AnimatedContainer({ className, delay = 0.1, children }: ViewAnimationProps) {
+  const shouldReduceMotion = useReducedMotion();
+
+  if (shouldReduceMotion) {
+    return <div className={className}>{children}</div>;
+  }
+
+  return (
+    <motion.div
+      initial={{ filter: 'blur(4px)', translateY: -8, opacity: 0 }}
+      whileInView={{ filter: 'blur(0px)', translateY: 0, opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ delay, duration: 0.8 }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 const Security = () => {
+  const securityColumns = [
+    {
+      title: "Zero-Knowledge",
+      icon: Lock,
+      description: "Verify control operation without revealing raw system logs or customer PII.",
+      list: ["Shielded attestations", "Confidential evaluation", "ZK-proof generation"]
+    },
+    {
+      title: "Hard Boundaries",
+      icon: Server,
+      description: "isolated execution environments ensure absolute tenant separation at the hardware level.",
+      list: ["No shared data paths", "Cryptographic identity", "Role-scoped signatures"]
+    },
+    {
+      title: "Immutable Anchoring",
+      icon: Binary,
+      description: "Every verification event is anchored across Algorand, Aleo, and Zcash.",
+      list: ["Tamper-proof anchoring", "Institutional audit trails", "Blockchain integrity"]
+    }
+  ];
+
   return (
     <Layout>
-     {/* Hero */}
-       <Section variant="default" spacing="xl" className="py-0 min-h-screen min-h-svh flex items-center">
+      {/* PAGE HERO */}
+      <Section spacing="xl" className="flex items-start justify-center min-h-[60vh] pt-4 md:pt-8 w-full max-w-7xl mx-auto">
+        <div className="relative w-full">
+          <div className="relative h-[400px] md:h-[500px] overflow-hidden border bg-background/60 shadow-2xl rounded-xl md:rounded-[2rem] flex items-center justify-center">
+            <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 via-background to-background" />
 
-          <div className="absolute right-6 bottom-24  max-w-[55vw] text-md md:text-xl lg:text-3xl xl:text-3xl font-extrabold uppercase text-foreground/90 px-2 py-1 text-right pointer-events-none">
-              built into the <span className='bg-red-500 px-2 rounded-sm'>architecture</span> </div>
-
-          <div aria-hidden  style={{willChange: 'transform'}} className="absolute right-6 bottom-6  pointer-events-none select-none text-[2rem] sm:text-[8rem] md:text-[12rem] lg:text-[16rem] xl:text-[20rem] font-extrabold uppercase leading-none opacity-10 tracking-tight">
-            security
+            <div className="relative z-10 px-6 py-12 md:px-10 md:py-16 text-center text-foreground">
+              <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold uppercase tracking-tight leading-none text-center">
+                Security <br className="hidden md:block" />
+                <span className="bg-red-500 px-4 rounded-md text-white my-2 inline-block">Architecture</span>
+              </h1>
+              <p className="text-lg md:text-xl text-muted-foreground mt-6 max-w-2xl mx-auto font-medium text-center">
+                Structural privacy for highly regulated institutional environments.
+              </p>
+            </div>
           </div>
 
-        
-    
-
-      </Section>
-      {/* SECTION 1 — proof MODEL */}
-      <Section variant="default" spacing="lg">
-        <div className="container mx-auto px-6">
-          <SectionHeader title="How CompliLedger establishes proof" />
-          <div className="max-w-4xl mx-auto mt-6 space-y-4">
-            <p>
-              Traditional compliance platforms rely on proof-by-access: centralized systems, broad permissions, and copied
-              evidence. CompliLedger uses proof-by-verification.
-            </p>
-            <p>We prove compliance states cryptographically instead of relying on privileged access to sensitive systems.</p>
-
-            <h4 className="font-semibold mt-4">Core principles</h4>
-            <ul className="list-inside list-disc text-foreground/80">
-              <li>Verification replaces inspection</li>
-              <li>Proof replaces access</li>
-              <li>Identity replaces accounts</li>
-              <li>Cryptography replaces proof</li>
-            </ul>
+          <div aria-hidden style={{ willChange: 'transform' }} className="absolute left-1/2 bottom-[-2rem] md:bottom-[-3rem] -translate-x-1/2 pointer-events-none select-none text-[4rem] sm:text-[8rem] md:text-[12rem] lg:text-[14rem] font-extrabold uppercase leading-none opacity-10 tracking-tight z-0">
+            Security
           </div>
         </div>
       </Section>
 
-      {/* SECTION 2 — SECURITY BY DESIGN */}
-      <Section variant="glow" spacing="lg">
-        <div className="container mx-auto px-6">
-          <SectionHeader title="Designed for adversarial environments" />
-          <div className="max-w-4xl mx-auto mt-6 space-y-4">
-            <p>CompliLedger assumes:</p>
-            <ul className="list-inside list-disc text-foreground/80">
-              <li>systems will be attacked</li>
-              <li>credentials will be targeted</li>
-              <li>insiders may exist</li>
-              <li>audit data is sensitive</li>
-              <li>regulators require defensibility</li>
-            </ul>
-            <p>The platform is built to remain proofworthy even when components fail.</p>
+      {/* REVEAL SECTION */}
+      <Section variant="default" spacing="xl">
+        <div className="container mx-auto px-6 text-center">
+          <div className="max-w-5xl mx-auto">
+            <TextRevealByWord
+              text="Our multi-chain zero-knowledge approach ensures compliance can be proven cryptographically instead of relying on privileged access."
+              className="text-foreground font-space-grotesk"
+            />
           </div>
         </div>
       </Section>
 
-      {/* SECTION 3 — DATA PROTECTION & MINIMIZATION */}
-      <Section variant="default" spacing="lg">
-        <div className="container mx-auto px-6">
-          <SectionHeader title="Less data. Less risk." />
-          <div className="max-w-4xl mx-auto mt-6 space-y-4">
-            <h4 className="font-semibold">CompliLedger does not:</h4>
-            <ul className="list-inside list-disc text-foreground/80">
-              <li>mirror production systems</li>
-              <li>scrape logs indiscriminately</li>
-              <li>store raw evidence unnecessarily</li>
-              <li>resell telemetry</li>
-              <li>train AI on customer data</li>
-            </ul>
-
-            <h4 className="font-semibold mt-4">Instead:</h4>
-            <ul className="list-inside list-disc text-foreground/80">
-              <li>Evidence is fingerprinted, not copied</li>
-              <li>Proofs are generated, not extracted</li>
-              <li>Metadata is minimized</li>
-              <li>Retention is controlled</li>
-              <li>Exposure is limited by design</li>
-            </ul>
+      {/* ARCHITECTURE GRID */}
+      <Section spacing="xl">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            {securityColumns.map((col, i) => (
+              <AnimatedContainer key={i} delay={i * 0.1}>
+                <div className="h-full rounded-[3rem] border bg-background/40 p-10 backdrop-blur-md group hover:border-red-500/30 transition-all duration-500">
+                  <div className="w-14 h-14 rounded-2xl bg-red-500/10 flex items-center justify-center mb-8">
+                    <col.icon className="text-red-500" size={28} />
+                  </div>
+                  <h3 className="text-2xl font-black uppercase tracking-tighter mb-4">{col.title}</h3>
+                  <p className="text-muted-foreground font-medium text-sm leading-relaxed mb-8">
+                    {col.description}
+                  </p>
+                  <div className="space-y-3">
+                    {col.list.map((item, idx) => (
+                      <div key={idx} className="flex items-center gap-3">
+                        <CheckCircle size={16} className="text-red-500 shrink-0" />
+                        <span className="font-bold text-xs uppercase tracking-widest">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </AnimatedContainer>
+            ))}
           </div>
         </div>
       </Section>
 
-      {/* SECTION 4 — IDENTITY, AUTHENTICITY & NON-REPUDIATION */}
-      <Section variant="glow" spacing="lg">
-        <div className="container mx-auto px-6">
-          <SectionHeader title="Identity without central authority" />
-          <div className="max-w-4xl mx-auto mt-6 space-y-4">
-            <p>Every compliance action must answer three questions:</p>
-            <ol className="list-inside list-decimal text-foreground/80 space-y-1">
-              <li>Who issued the proof?</li>
-              <li>What was verified?</li>
-              <li>When did it occur?</li>
-            </ol>
-
-            <p>CompliLedger answers these using:</p>
-            <ul className="list-inside list-disc text-foreground/80">
-              <li>Decentralized Identifiers (DIDs)</li>
-              <li>Verifiable Credentials (VCs)</li>
-              <li>Cryptographic signatures</li>
-              <li>Revocation mechanisms</li>
-            </ul>
-            <p>This ensures compliance artifacts are authentic, attributable, and defensible.</p>
-          </div>
-        </div>
-      </Section>
-
-      {/* SECTION 5 — ZERO-KNOWLEDGE VERIFICATION */}
-      <Section variant="default" spacing="lg">
-        <div className="container mx-auto px-6">
-          <SectionHeader title="Proof without disclosure" />
-          <div className="max-w-4xl mx-auto mt-6 space-y-4">
-            <p>CompliLedger uses zero-knowledge techniques to verify:</p>
-            <ul className="list-inside list-disc text-foreground/80">
-              <li>control operation</li>
-              <li>policy enforcement</li>
-              <li>evidence existence</li>
-              <li>audit timing</li>
-            </ul>
-
-            <p>without revealing:</p>
-            <ul className="list-inside list-disc text-foreground/80">
-              <li>internal system architecture</li>
-              <li>source code</li>
-              <li>logs</li>
-              <li>sensitive data</li>
-            </ul>
-            <p>Zero-knowledge ensures compliance can be proven without expanding the attack surface.</p>
-          </div>
-        </div>
-      </Section>
-
-      {/* SECTION 6 — MULTI-CHAIN VERIFICATION & INTEGRITY */}
-      <Section variant="glow" spacing="lg">
-        <div className="container mx-auto px-6">
-          <SectionHeader title="Tamper resistance across independent networks" />
-          <div className="max-w-4xl mx-auto mt-6 space-y-4">
-            <p>CompliLedger anchors verification events across three privacy-focused blockchains:</p>
-
-            <h4 className="font-semibold mt-2">Blockchain roles</h4>
-            <ul className="list-inside list-disc text-foreground/80">
-              <li>Algorand — Immutable timestamps, tamper-resistant anchoring</li>
-              <li>Aleo — Private zero-knowledge computation</li>
-              <li>Zcash — Shielded attestations and confidential verification</li>
-            </ul>
-
-            <p className="mt-2 font-medium">
-              No customer data is ever written on-chain — only cryptographic proofs and references.
-            </p>
-          </div>
-        </div>
-      </Section>
-
-      {/* SECTION 7 — TENANT ISOLATION & ACCESS CONTROL */}
-      <Section variant="default" spacing="lg">
-        <div className="container mx-auto px-6">
-          <SectionHeader title="Hard boundaries — not policy promises" />
-          <div className="max-w-4xl mx-auto mt-6 space-y-4">
-            <p>Each customer operates within:</p>
-            <ul className="list-inside list-disc text-foreground/80">
-              <li>isolated execution environments</li>
-              <li>cryptographic identity boundaries</li>
-              <li>role-scoped permissions</li>
-              <li>signed operations</li>
-            </ul>
-            <p>There are no shared data paths between tenants.</p>
-          </div>
-        </div>
-      </Section>
-
-      {/* SECTION 8 — CONTINUOUS MONITORING & INTEGRITY */}
-      <Section variant="glow" spacing="lg">
-        <div className="container mx-auto px-6">
-          <SectionHeader title="Security is continuous" />
-          <div className="max-w-4xl mx-auto mt-6 space-y-4">
-            <h4 className="font-semibold">Platform controls</h4>
-            <ul className="list-inside list-disc text-foreground/80">
-              <li>Continuous compliance testing</li>
-              <li>Drift detection</li>
-              <li>Evidence integrity checks</li>
-              <li>Anomaly detection</li>
-              <li>Risk scoring</li>
-            </ul>
-            <p>Security posture is monitored as systems change — not after incidents occur.</p>
-          </div>
-        </div>
-      </Section>
-
-      {/* SECTION 9 — REGULATORY & FRAMEWORK ALIGNMENT */}
-      <Section variant="default" spacing="lg">
-        <div className="container mx-auto px-6">
-          <SectionHeader title="Aligned with regulatory expectations" />
-          <div className="max-w-4xl mx-auto mt-6 space-y-4">
-            <h4 className="font-semibold">Supported frameworks</h4>
-            <ul className="list-inside list-disc text-foreground/80 space-y-1">
-              <li>NIST SP 800-53 / FedRAMP</li>
-              <li>ISO 27001</li>
-              <li>SOC 2</li>
-              <li>Genius Act</li>
-              <li>PCI DSS</li>
-              <li>Reg S-ID/Reg S-P</li>
-              <li>HIPAA (Coming Soon)</li>
-              <li>FDA (Coming Soon)</li>
-              <li>DORA (Coming Soon)</li>
-              <li>MiCA (Coming Soon)</li>
-              <li>AML/KYC/BSA</li>
-              <li>Basel III (Coming Soon)</li>
-              <li>CSI (Coming Soon)</li>
-              <li>NYDFS (Coming Soon)</li>
-              <li>CMMC (Coming Soon)</li>
-              <li>GDPR (Coming Soon)</li>
-              <li>SEC cybersecurity disclosure act &amp; privacy rules (Coming Soon)</li>
-            </ul>
-            <p>
-              CompliLedger is designed to support audits, assessments, and regulator review without requiring invasive access.
-            </p>
-          </div>
-        </div>
-      </Section>
-
-      {/* SECTION 10 — GOVERNANCE & RESPONSIBILITY */}
-      <Section variant="glow" spacing="lg">
-        <div className="container mx-auto px-6">
-          <SectionHeader title="Built by compliance and security professionals" />
-          <div className="max-w-4xl mx-auto mt-6 space-y-4">
-            <p>CompliLedger is developed by practitioners with experience in:</p>
-            <ul className="list-inside list-disc text-foreground/80">
-              <li>cybersecurity</li>
-              <li>IT audit</li>
-              <li>regulatory compliance</li>
-              <li>risk management</li>
-              <li>privacy engineering</li>
-            </ul>
-            <p>Security decisions are guided by real audit and regulatory expectations — not theoretical models.</p>
+      {/* DETAILED FEATURES */}
+      <Section variant="default" className="py-24 border-y">
+        <div className="max-w-5xl mx-auto px-4">
+          <SectionHeader title="Adversarial Resilience" className="text-center mb-16" />
+          <div className="grid md:grid-cols-2 gap-12">
+            <div className="space-y-6">
+              <h4 className="text-xl font-black uppercase flex items-center gap-3">
+                <ShieldCheck className="text-red-500" />
+                Less Data, Less Risk
+              </h4>
+              <p className="text-muted-foreground font-medium">
+                CompliLedger does not mirror production systems or scrape logs indiscriminately. Evidence is fingerprinted, not copied. Metadata is minimized by default.
+              </p>
+            </div>
+            <div className="space-y-6">
+              <h4 className="text-xl font-black uppercase flex items-center gap-3">
+                <Cpu className="text-red-500" />
+                Continuous Integrity
+              </h4>
+              <p className="text-muted-foreground font-medium">
+                Security is continuous. We monitor posture as systems change — not after incidents occur. Drift detection and drift correction are automated.
+              </p>
+            </div>
           </div>
         </div>
       </Section>
 
       {/* FINAL CTA */}
-      <Section variant="glow" spacing="xl">
-        <div className="container mx-auto px-6 text-center relative z-10">
-          <div className="max-w-4xl mx-auto space-y-4">
-            <h2 className="text-2xl font-semibold">
-              proof should be provable. Security should be structural.
-            </h2>
-            <div className="flex flex-wrap justify-center gap-3 mt-4">
-              <Button size="lg">🧭 Request Security Brief</Button>
-              <Button size="lg" variant="outline">
-                📄 View Privacy Architecture
+      <Section className="text-center pb-24 pt-24 text-foreground">
+        <div className="relative mx-auto flex w-full max-w-4xl flex-col justify-between gap-y-12 border-y bg-[radial-gradient(35%_80%_at_25%_0%,--theme(--color-foreground/.08),transparent)] px-6 py-16 rounded-3xl">
+          <PlusIcon className="absolute top-[-12.5px] left-[-11.5px] z-1 size-6" strokeWidth={1} />
+          <PlusIcon className="absolute top-[-12.5px] right-[-11.5px] z-1 size-6" strokeWidth={1} />
+          <PlusIcon className="absolute bottom-[-12.5px] left-[-11.5px] z-1 size-6" strokeWidth={1} />
+          <PlusIcon className="absolute right-[-11.5px] bottom-[-12.5px] z-1 size-6" strokeWidth={1} />
+
+          <div className="space-y-4">
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight">Proof Based. Not Trust Based.</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-medium">
+              Structural privacy designed for institutional-grade compliance programs.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <Link to="/contact">
+              <Button size="lg" variant="outline" className="px-10 border-2">Contact Sales</Button>
+            </Link>
+            <Link to="/demo">
+              <Button size="lg" className="px-10 bg-red-500 hover:bg-red-600 text-white shadow-xl">
+                Request Security Brief <ArrowRightIcon className="size-4 ml-1" />
               </Button>
-              <Button size="lg" variant="outline">
-                📞 Talk to Compliance Architecture
-              </Button>
-            </div>
+            </Link>
           </div>
         </div>
       </Section>

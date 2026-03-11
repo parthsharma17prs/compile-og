@@ -1,361 +1,233 @@
+import React, { type ReactNode } from 'react';
 import Layout from '@/components/Layout';
 import Section from '@/components/Section';
 import SectionHeader from '@/components/SectionHeader';
-import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import GeometricPattern from '@/components/GeometricPattern';
 import { Building2, Globe, Blocks, ShieldCheck, Landmark, Lock, Cpu, FileText, ArrowRight, CheckCircle, ArrowRightIcon, PlusIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import {TextRevealByWord} from '@/components/ui/text-reveal-by-word';
+import { TextRevealByWord } from '@/components/ui/text-reveal-by-word';
+import { motion, useReducedMotion } from 'motion/react';
+
+type ViewAnimationProps = {
+  delay?: number;
+  className?: string;
+  children: ReactNode;
+};
+
+function AnimatedContainer({ className, delay = 0.1, children }: ViewAnimationProps) {
+  const shouldReduceMotion = useReducedMotion();
+
+  if (shouldReduceMotion) {
+    return <div className={className}>{children}</div>;
+  }
+
+  return (
+    <motion.div
+      initial={{ filter: 'blur(4px)', translateY: -8, opacity: 0 }}
+      whileInView={{ filter: 'blur(0px)', translateY: 0, opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ delay, duration: 0.8 }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 const Solutions = () => {
+  const solutions = [
+    {
+      id: "financial",
+      icon: Building2,
+      icon2: Globe,
+      title: "Finance & Tokenization",
+      tags: "DORA • PCI DSS • SOX • Basel III",
+      description: "Automate evidence collection and control mapping for financial and tokenized ecosystems with ZK-proofs.",
+      benefits: [
+        "Continuous evidence from KYC/AML systems",
+        "Automated mapping for DORA and PCI DSS",
+        "Real-time proofs for RWA compliance",
+        "AuditSync™ regulator portals"
+      ],
+      linkText: "Explore Financial Solutions"
+    },
+    {
+      id: "web3",
+      icon: Blocks,
+      icon2: ShieldCheck,
+      title: "Web3 & DeFi",
+      tags: "MiCA • FATF • OFAC • Digital Asset",
+      description: "Prove security and compliance for decentralized protocols without exposing proprietary code or PII.",
+      benefits: [
+        "Smart contract SBOM analysis",
+        "ZKP attestations for security checks",
+        "Travel Rule compliance for DeFi",
+        "Verifiable Credentials for DAOs"
+      ],
+      linkText: "Explore Web3 Solutions"
+    },
+    {
+      id: "government",
+      icon: Landmark,
+      icon2: FileText,
+      title: "Gov & Defense",
+      tags: "FedRAMP • NIST • DoD RMF • OSCAL",
+      description: "Accelerate authorizations by automating OSCAL documentation and enabling continuous ATO workflows.",
+      benefits: [
+        "OSCAL-native generation of SSPs",
+        "Continuous RMF drift detection",
+        "Support for IL4, IL5, IL6 workloads",
+        "Secure evidence-sharing portals"
+      ],
+      linkText: "Explore Gov Solutions"
+    },
+    {
+      id: "enterprise",
+      icon: Cpu,
+      icon2: ShieldCheck,
+      title: "Enterprise SaaS",
+      tags: "ISO 27001 • SOC 2 • GDPR • NIST AI",
+      description: "Keep engineering teams focused while maintaining continuous SOC 2 and ISO audit-readiness.",
+      benefits: [
+        "GitHub-native compliance checks",
+        "Auto-generation of ISO policy packs",
+        "AI/ML control mapping (NIST AI RMF)",
+        "Automated SBOM security tracking"
+      ],
+      linkText: "Explore Enterprise Solutions"
+    }
+  ];
+
   return (
     <Layout>
-      {/* PAGE HERO (restored original layout) */}
-      <Section variant="default" spacing="xl" className="py-0 min-h-screen min-h-svh flex items-center">
-        <div className="absolute right-6 bottom-24 max-w-[55vw] text-md md:text-xl lg:text-3xl xl:text-3xl font-extrabold uppercase text-foreground/90 px-2 py-1 text-right pointer-events-none">
-           Built on <span className="bg-red-500 px-2 rounded-sm">Cryptographic</span>Compliance
-        </div>
-        <div
-          aria-hidden
-          style={{ willChange: "transform" }}
-          className="absolute right-6 bottom-6 pointer-events-none select-none text-[2rem] sm:text-[8rem] md:text-[12rem] lg:text-[16rem] xl:text-[16rem] font-extrabold uppercase leading-none opacity-10 tracking-tight"
-        >
-        solution
+      {/* PAGE HERO */}
+      <Section spacing="xl" className="flex items-start justify-center min-h-[60vh] pt-4 md:pt-8 w-full max-w-7xl mx-auto">
+        <div className="relative w-full">
+          <div className="relative h-[400px] md:h-[500px] overflow-hidden border bg-background/60 shadow-2xl rounded-xl md:rounded-[2rem] flex items-center justify-center">
+            <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 via-background to-background" />
+
+            <div className="relative z-10 px-6 py-12 md:px-10 md:py-16 text-center">
+              <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold uppercase text-foreground/90 tracking-tight leading-none text-center">
+                Built on <br className="hidden md:block" />
+                <span className="bg-red-500 px-4 rounded-md text-white my-2 inline-block">Cryptographic</span><br className="hidden md:block" /> Compliance
+              </h1>
+              <p className="text-lg md:text-xl text-muted-foreground mt-6 max-w-2xl mx-auto font-medium">
+                Tailored proof workflows for high-stakes industries.
+              </p>
+            </div>
+          </div>
+
+          <div aria-hidden style={{ willChange: 'transform' }} className="absolute left-1/2 bottom-[-2rem] md:bottom-[-3rem] -translate-x-1/2 pointer-events-none select-none text-[4rem] sm:text-[8rem] md:text-[12rem] lg:text-[14rem] font-extrabold uppercase leading-none opacity-10 tracking-tight z-0">
+            Solutions
+          </div>
         </div>
       </Section>
 
-
-      {/* INTRO TEXT SECTION (restored original) */}
+      {/* REVEAL SECTION */}
       <Section variant="default" spacing="xl">
         <div className="container mx-auto px-6">
           <div className="max-w-5xl mx-auto">
             <TextRevealByWord
-              text="Industry Solutions Built on Cryptographic Compliance
-Clear, auditable compliance workflows tailored to your domain with privacy-preserving proofs."
-              className=""
+              text="Industry Solutions Built on Cryptographic Compliance. Clear, auditable compliance workflows tailored to your domain."
+              className="text-foreground font-space-grotesk"
             />
+          </div>
+        </div>
+      </Section>
 
-            <div className="flex items-center justify-center gap-2 mt-4">
-              <Button variant="outline">Request Security Brief </Button>
-              <Button>
-                View Privacy Architecture <ArrowRightIcon className="size-4 ml-1" />
+      {/* SOLUTIONS GRID */}
+      <Section spacing="xl">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            {solutions.map((s, i) => (
+              <AnimatedContainer key={s.id} delay={i * 0.1}>
+                <div className="group relative h-full flex flex-col justify-between overflow-hidden rounded-[2.5rem] border bg-background/40 p-10 backdrop-blur-md hover:border-red-500/40 transition-all duration-500 hover:shadow-2xl hover:shadow-red-500/5">
+                  <div className="space-y-6">
+                    <div className="flex items-center gap-3">
+                      <span className="w-12 h-12 rounded-2xl bg-red-500/10 flex items-center justify-center">
+                        <s.icon className="text-red-500" size={24} />
+                      </span>
+                      <span className="text-sm font-bold tracking-widest uppercase text-muted-foreground">{s.tags}</span>
+                    </div>
+
+                    <h3 className="text-3xl font-extrabold tracking-tight">{s.title}</h3>
+                    <p className="text-lg text-muted-foreground leading-relaxed font-medium">
+                      {s.description}
+                    </p>
+
+                    <div className="space-y-3 pt-4">
+                      {s.benefits.map((benefit, idx) => (
+                        <div key={idx} className="flex items-start gap-3 text-foreground/80">
+                          <CheckCircle size={18} className="text-red-500 mt-1 shrink-0" />
+                          <span className="font-medium">{benefit}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="pt-10">
+                    <Link to="/contact">
+                      <Button className="w-full h-14 rounded-2xl group/btn bg-foreground text-background hover:bg-red-500 hover:text-white transition-all text-lg font-bold">
+                        {s.linkText}
+                        <ArrowRight className="ml-2 size-5 group-hover/btn:translate-x-1 transition-transform" />
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              </AnimatedContainer>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      {/* METRICS SECTION */}
+      <Section variant="default" className="py-24 border-y">
+        <div className="max-w-6xl mx-auto px-4">
+          <SectionHeader title="The Impact of Proof" className="text-center mb-16" />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {[
+              { label: "Audit Preparation", val: "75%", desc: "Faster cycles" },
+              { label: "Evidence Reuse", val: "90%", desc: "Across frameworks" },
+              { label: "Operating Cost", val: "60%", desc: "Lower burden" },
+              { label: "Engineering Time", val: "40%", desc: "Reclaimed" }
+            ].map((stat, idx) => (
+              <div key={idx} className="text-center space-y-2">
+                <div className="text-4xl md:text-5xl font-black text-red-500">{stat.val}</div>
+                <div className="font-bold text-sm tracking-widest uppercase">{stat.label}</div>
+                <div className="text-muted-foreground text-sm">{stat.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      {/* FINAL CTA */}
+      <Section className="text-center pb-24 pt-24">
+        <div className="relative mx-auto flex w-full max-w-4xl flex-col justify-between gap-y-12 border-y bg-[radial-gradient(35%_80%_at_25%_0%,--theme(--color-foreground/.08),transparent)] px-6 py-16 rounded-3xl">
+          <PlusIcon className="absolute top-[-12.5px] left-[-11.5px] z-1 size-6" strokeWidth={1} />
+          <PlusIcon className="absolute top-[-12.5px] right-[-11.5px] z-1 size-6" strokeWidth={1} />
+          <PlusIcon className="absolute bottom-[-12.5px] left-[-11.5px] z-1 size-6" strokeWidth={1} />
+          <PlusIcon className="absolute right-[-11.5px] bottom-[-12.5px] z-1 size-6" strokeWidth={1} />
+
+          <div className="space-y-4">
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight">Every Industry. One standard.</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto italic">
+              "CompliLedger is the only platform that allows us to prove compliance state without revealing sensitive data."
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <Link to="/contact">
+              <Button size="lg" variant="outline" className="px-10 border-2">Contact Sales</Button>
+            </Link>
+            <Link to="/demo">
+              <Button size="lg" className="px-10 bg-red-500 hover:bg-red-600 text-white">
+                Request Demo <ArrowRightIcon className="size-4 ml-1" />
               </Button>
-            </div>
+            </Link>
           </div>
         </div>
       </Section>
-
-      {/* Solutions Overview */}
-      <Section variant="default" spacing="xl">
-        <div className="max-w-6xl mx-auto px-4">
-          <SectionHeader
-
-            title="Industry Solutions Built on Cryptographic Compliance"
-            description="Clear, auditable compliance workflows tailored to your domain — with privacy-preserving proofs."
-            className="text-center mb-12"
-          />
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Financial Services & Tokenization */}
-            <div className="group relative rounded-2xl p-[1px] bg-gradient-to-r from-primary/30 via-primary/10 to-transparent hover:from-primary/60 transition-colors">
-            <Card id="financial" className="h-full rounded-2xl border-border/60 bg-background/60 backdrop-blur shadow-lg transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-0.5">
-              <CardHeader className="px-6 pt-6">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center ring-1 ring-primary/20 shadow-sm group-hover:shadow-primary/20">
-                    <Building2 className="w-6 h-6 text-primary" />
-                  </div>
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 hidden sm:flex items-center justify-center ring-1 ring-primary/20 shadow-sm">
-                    <Globe className="w-6 h-6 text-primary" />
-                  </div>
-                </div>
-                <CardTitle className="mt-4">Compliance for Banks, Fintechs, and Tokenization.</CardTitle>
-                <CardDescription className="mt-1">
-                  <span className="text-xs text-muted-foreground">DORA • PCI DSS • SOX • Basel III • AML/BSA</span>
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6 px-6 pb-6">
-                <p className="text-muted-foreground">
-                  Traditional financial institutions and tokenization platforms face heavy oversight and fragmented compliance requirements. CompliLedger automates evidence collection, maps controls to frameworks, and provides auditor-ready attestations for financial and tokenized ecosystems.
-                </p>
-                <div className="space-y-2 text-sm text-muted-foreground">
-                  <div className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5" /><span>Continuous evidence from KYC, AML, and payment systems</span></div>
-                  <div className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5" /><span>Automated policy → control mapping for DORA, PCI DSS, Basel III</span></div>
-                  <div className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5" /><span>Real-time proofs for RWA/tokenization compliance</span></div>
-                  <div className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5" /><span>AuditSync™ portals for regulators and auditors</span></div>
-                </div>
-                <Link to="/solutions#financial">
-                  <Button size="sm" className="mt-2 transition-transform group-hover:translate-x-0.5">
-                    Explore Financial Solutions
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
-            </div>
-
-            {/* Web3 & DeFi */}
-            <div className="group relative rounded-2xl p-[1px] bg-gradient-to-r from-primary/30 via-primary/10 to-transparent hover:from-primary/60 transition-colors">
-            <Card id="web3" className="h-full rounded-2xl border-border/60 bg-background/60 backdrop-blur shadow-lg transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-0.5">
-              <CardHeader className="px-6 pt-6">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center ring-1 ring-primary/20 shadow-sm group-hover:shadow-primary/20">
-                    <Blocks className="w-6 h-6 text-primary" />
-                  </div>
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 hidden sm:flex items-center justify-center ring-1 ring-primary/20 shadow-sm">
-                    <ShieldCheck className="w-6 h-6 text-primary" />
-                  </div>
-                </div>
-                <CardTitle className="mt-4">proof and Compliance for Decentralized Protocols.</CardTitle>
-                <CardDescription className="mt-1">
-                  <span className="text-xs text-muted-foreground">MiCA • FATF Travel Rule • OFAC • SEC/CFTC Digital Asset • GDPR</span>
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6 px-6 pb-6">
-                <p className="text-muted-foreground">
-                  DeFi protocols and Web3 platforms need to prove they are safe and compliant — without exposing proprietary code or sensitive data. CompliLedger provides continuous compliance proofs, ZKP attestations, and smart contract SBOM analysis to meet regulatory expectations while preserving decentralization.
-                </p>
-                <div className="space-y-2 text-sm text-muted-foreground">
-                  <div className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5" /><span>Smart contract ingestion &amp; SBOM mapping</span></div>
-                  <div className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5" /><span>Continuous compliance testing for upgrades &amp; governance</span></div>
-                  <div className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5" /><span>ZKPs to prove security &amp; AML checks without revealing raw data</span></div>
-                  <div className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5" /><span>DID/VC credentialing for DAOs and liquidity providers</span></div>
-                </div>
-                <Link to="/solutions#web3">
-                  <Button size="sm" className="mt-2 transition-transform group-hover:translate-x-0.5">
-                    Explore Web3 & DeFi Solutions
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
-            </div>
-
-            {/* Exchanges */}
-            <div className="group relative rounded-2xl p-[1px] bg-gradient-to-r from-primary/30 via-primary/10 to-transparent hover:from-primary/60 transition-colors">
-            <Card id="exchanges" className="h-full rounded-2xl border-border/60 bg-background/60 backdrop-blur shadow-lg transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-0.5">
-              <CardHeader className="px-6 pt-6">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center ring-1 ring-primary/20 shadow-sm group-hover:shadow-primary/20">
-                    <ShieldCheck className="w-6 h-6 text-primary" />
-                  </div>
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 hidden sm:flex items-center justify-center ring-1 ring-primary/20 shadow-sm">
-                    <Blocks className="w-6 h-6 text-primary" />
-                  </div>
-                </div>
-                <CardTitle className="mt-4">Exchange-Grade AML & Licensing Compliance.</CardTitle>
-                <CardDescription className="mt-1">
-                  <span className="text-xs text-muted-foreground">BSA/"Genius" • FinCEN Travel Rule • FATF • AMLD6 • MiCA • NYDFS BitLicense</span>
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6 px-6 pb-6">
-                <p className="text-muted-foreground">
-                  Crypto and digital asset exchanges are under the strictest AML/BSA oversight globally. CompliLedger enables exchanges to demonstrate compliance continuously — from KYC/KYB onboarding to FATF Travel Rule reporting — with immutable evidence trails and regulator-facing attestations.
-                </p>
-                <div className="space-y-2 text-sm text-muted-foreground">
-                  <div className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5" /><span>Continuous monitoring of KYC/KYB, transaction logs, and sanctions checks</span></div>
-                  <div className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5" /><span>Integration with AML partners (Chainalysis, Elliptic, TRM Labs)</span></div>
-                  <div className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5" /><span>Proof-ready SAR filing trails</span></div>
-                  <div className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5" /><span>ZK proofs for regulator reports without disclosing customer PII</span></div>
-                </div>
-                <Link to="/solutions#exchanges">
-                  <Button size="sm" className="mt-2 transition-transform group-hover:translate-x-0.5">
-                    Explore Exchange Solutions
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
-            </div>
-
-            {/* Government & Defense */}
-            <div className="group relative rounded-2xl p-[1px] bg-gradient-to-r from-primary/30 via-primary/10 to-transparent hover:from-primary/60 transition-colors">
-            <Card id="government" className="h-full rounded-2xl border-border/60 bg-background/60 backdrop-blur shadow-lg transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-0.5">
-              <CardHeader className="px-6 pt-6">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center ring-1 ring-primary/20 shadow-sm group-hover:shadow-primary/20">
-                    <Landmark className="w-6 h-6 text-primary" />
-                  </div>
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 hidden sm:flex items-center justify-center ring-1 ring-primary/20 shadow-sm">
-                    <FileText className="w-6 h-6 text-primary" />
-                  </div>
-                </div>
-                <CardTitle className="mt-4">Modernizing Government Compliance.</CardTitle>
-                <CardDescription className="mt-1">
-                  <span className="text-xs text-muted-foreground">FedRAMP • NIST SP 800-53 • DoD RMF IL4–IL6 • OSCAL</span>
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6 px-6 pb-6">
-                <p className="text-muted-foreground">
-                  Government contractors and defense programs face slow, paper-heavy compliance cycles. CompliLedger accelerates authorizations by automating OSCAL documentation, enabling continuous ATO workflows, and providing auditor-ready evidence portals.
-                </p>
-                <div className="space-y-2 text-sm text-muted-foreground">
-                  <div className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5" /><span>OSCAL-native generation of SSPs and controls</span></div>
-                  <div className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5" /><span>Continuous RMF compliance with drift detection</span></div>
-                  <div className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5" /><span>Support for IL4, IL5, IL6 impact levels</span></div>
-                  <div className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5" /><span>Evidence-sharing portals for auditors and government regulators</span></div>
-                </div>
-                <Link to="/solutions#government">
-                  <Button size="sm" className="mt-2 transition-transform group-hover:translate-x-0.5">
-                    Explore Gov & Defense Solutions
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
-            </div>
-
-            {/* Healthcare */}
-            <div className="group relative rounded-2xl p-[1px] bg-gradient-to-r from-primary/30 via-primary/10 to-transparent hover:from-primary/60 transition-colors">
-            <Card id="healthcare" className="h-full rounded-2xl border-border/60 bg-background/60 backdrop-blur shadow-lg transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-0.5">
-              <CardHeader className="px-6 pt-6">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center ring-1 ring-primary/20 shadow-sm group-hover:shadow-primary/20">
-                    <Lock className="w-6 h-6 text-primary" />
-                  </div>
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 hidden sm:flex items-center justify-center ring-1 ring-primary/20 shadow-sm">
-                    <FileText className="w-6 h-6 text-primary" />
-                  </div>
-                </div>
-                <CardTitle className="mt-4">Continuous HIPAA & Health Data Compliance.</CardTitle>
-                <CardDescription className="mt-1">
-                  <span className="text-xs text-muted-foreground">HIPAA • HITECH • GDPR Health Data • HIproof</span>
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6 px-6 pb-6">
-                <p className="text-muted-foreground">
-                  Healthcare organizations must balance security with compliance for PHI. CompliLedger integrates access control evidence, encryption checks, and SBOM analysis into HIPAA compliance workflows — reducing audit burden and strengthening patient proof.
-                </p>
-                <div className="space-y-2 text-sm text-muted-foreground">
-                  <div className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5" /><span>Automated mapping to HIPAA safeguards &amp; HITECH rules</span></div>
-                  <div className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5" /><span>Continuous monitoring of PHI-related systems</span></div>
-                  <div className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5" /><span>ZKP attestations to prove encryption &amp; access controls without exposing PHI</span></div>
-                  <div className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5" /><span>AuditSync™ evidence rooms for healthcare auditors &amp; regulators</span></div>
-                </div>
-                <Link to="/solutions#healthcare">
-                  <Button size="sm" className="mt-2 transition-transform group-hover:translate-x-0.5">
-                    Explore Healthcare Solutions
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
-            </div>
-
-            {/* AI & Enterprise SaaS */}
-            <div className="group relative rounded-2xl p-[1px]  hover:from-primary/60 transition-colors">
-            <Card id="enterprise" className="h-full rounded-2xl border-border/60 bg-background/60 backdrop-blur shadow-lg transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-0.5">
-              <CardHeader>
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center ring-1 ring-primary/20 shadow-sm group-hover:shadow-primary/20">
-                    <Cpu className="w-6 h-6 text-primary" />
-                  </div>
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 hidden sm:flex items-center justify-center ring-1 ring-primary/20 shadow-sm">
-                    <ShieldCheck className="w-6 h-6 text-primary" />
-                  </div>
-                </div>
-                <CardTitle className="mt-4">Enterprise-Ready Compliance Automation.</CardTitle>
-                <CardDescription className="mt-1">
-                  <span className="text-xs text-muted-foreground">SOX • ISO 27001/27701 • PCI DSS • DORA • NIST AI RMF</span>
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <p className="text-muted-foreground">
-                  SaaS and AI companies scale fast — but compliance can’t lag behind. CompliLedger helps enterprise teams stay audit-ready year-round, generating SOC 2 evidence, ISO documentation, and PCI attestations automatically.
-                </p>
-                <div className="space-y-2 text-sm text-muted-foreground">
-                  <div className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5" /><span>GitHub-native compliance checks and integrations</span></div>
-                  <div className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5" /><span>Continuous drift detection for configs and SBOMs</span></div>
-                  <div className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5" /><span>Auto-generation of FedRAMP evidence &amp; ISO policy packs</span></div>
-                  <div className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-primary mt-0.5" /><span>AI/ML control mapping aligned to NIST AI RMF</span></div>
-                </div>
-                <Link to="/solutions#enterprise">
-                  <Button size="sm" className="mt-2 transition-transform group-hover:translate-x-0.5">
-                    Explore Enterprise Solutions
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
-            </div>
-          </div>
-        </div>
-      </Section>
-       {/* NEW SECTION — Replace Trust with Continuous Proof */}
-      <Section spacing="xl" className="pt-8">
-        <div className="max-w-6xl mx-auto px-4">
-          <SectionHeader title="Replace Trust with Continuous Proof" />
-
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto text-center mt-4">
-            CompliLedger turns compliance into a shared, continuously verifiable proof system. Controls are enforced in real time, evidence is generated automatically, and auditors and regulators can verify compliance without exposing sensitive data.
-          </p>
-
-          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            <div className="p-6 border rounded-lg text-center">
-              <div className="text-2xl md:text-3xl font-extrabold">60–80%</div>
-              <div className="text-sm text-muted-foreground mt-2">reduction in audit preparation</div>
-            </div>
-
-            <div className="p-6 border rounded-lg text-center">
-              <div className="text-2xl md:text-3xl font-extrabold">80–90%</div>
-              <div className="text-sm text-muted-foreground mt-2">evidence reuse across frameworks</div>
-            </div>
-
-            <div className="p-6 border rounded-lg text-center">
-              <div className="text-2xl md:text-3xl font-extrabold">40–60%</div>
-              <div className="text-sm text-muted-foreground mt-2">lower compliance operating cost</div>
-            </div>
-
-            <div className="p-6 border rounded-lg text-center">
-              <div className="text-2xl md:text-3xl font-extrabold">30–50%</div>
-              <div className="text-sm text-muted-foreground mt-2">engineering time reclaimed</div>
-            </div>
-
-            <div className="p-6 border rounded-lg text-center md:col-span-2 lg:col-auto">
-              <div className="text-2xl md:text-3xl font-extrabold">50–70%</div>
-              <div className="text-sm text-muted-foreground mt-2">fewer audit findings</div>
-            </div>
-          </div>
-        </div>
-      </Section>
-      {/* SECTION — FINAL CTA (match other pages) */}
-      <Section className="text-center">
-        <div className="relative mx-auto flex w-full max-w-3xl flex-col justify-between gap-y-6 border-y bg-[radial-gradient(35%_80%_at_25%_0%,--theme(--color-foreground/.08),transparent)] px-4 py-8">
-          <PlusIcon
-            className="absolute top-[-12.5px] left-[-11.5px] z-1 size-6"
-            strokeWidth={1}
-          />
-          <PlusIcon
-            className="absolute top-[-12.5px] right-[-11.5px] z-1 size-6"
-            strokeWidth={1}
-          />
-          <PlusIcon
-            className="absolute bottom-[-12.5px] left-[-11.5px] z-1 size-6"
-            strokeWidth={1}
-          />
-          <PlusIcon
-            className="absolute right-[-11.5px] bottom-[-12.5px] z-1 size-6"
-            strokeWidth={1}
-          />
-
-          <div className="-inset-y-6 pointer-events-none absolute left-0 w-px border-l" />
-          <div className="-inset-y-6 pointer-events-none absolute right-0 w-px border-r" />
-
-          <div className="-z-10 absolute top-0 left-1/2 h-full border-l border-dashed" />
-
-          <div className="space-y-1">
-            <h2 className="text-center font-bold text-2xl">Start private. Scale compliant.</h2>
-          </div>
-
-          <div className="flex items-center justify-center gap-2">
-            <Link to="/contact"><Button variant="outline">Contact Sales</Button></Link>
-            <Link to="/demo"><Button>
-              Get Started <ArrowRightIcon className="size-4 ml-1" />
-            </Button></Link>
-          </div>
-        </div>
-      </Section>
-
     </Layout>
   );
 };
